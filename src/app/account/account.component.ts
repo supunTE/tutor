@@ -21,7 +21,11 @@ export class AccountComponent implements OnInit {
 
   constructor(public auth: AngularFireAuth, private afs: AngularFirestore, private accountService: AcconutService) {
     // this.users = this.accountService.getAllUsers();
-    this.updateUser(firebase.auth().currentUser);
+    auth.authState.subscribe(user => {
+      if (user) {
+        this.updateUser(firebase.auth().currentUser);
+      }
+    });
   }
 
   updateUser(user){

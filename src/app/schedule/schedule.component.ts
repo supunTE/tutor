@@ -74,7 +74,11 @@ export class ScheduleComponent implements OnInit {
   
 
   constructor(public auth: AngularFireAuth, private afs: AngularFirestore, private accountService: AcconutService) {
-    this.checkCategory(firebase.auth().currentUser);
+    auth.authState.subscribe(user => {
+      if (user) {
+        this.checkCategory(firebase.auth().currentUser);
+      }
+    });
    }
 
   checkCategory(userID){
