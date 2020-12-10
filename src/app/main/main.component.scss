@@ -1,0 +1,17 @@
+.main-section{
+    height: 100%;
+    width: 100%;
+    background-color: goldenrod;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.topic{
+    font-size: 400%;
+}
+
+.button i{
+    padding: 0 5px !important;
+}

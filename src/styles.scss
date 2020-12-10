@@ -1,1 +1,14 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Staatliches&display=swap');
+
+.font-1{
+    font-family: 'Nanum Gothic Coding', monospace;
+}
+
+.font-2{
+    font-family: 'Staatliches', cursive;
+}
+
+html, body{
+    height: 100%;
+    width: 100%;
+}

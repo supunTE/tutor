@@ -1,0 +1,161 @@
+<div class="main-section">
+  <div class="top-bar">
+    <ng-template [ngIf]="stateStudent">
+      <div class="main-btn">
+        <button class="btn btn-success">Find a class</button>
+      </div>
+    </ng-template>
+    <ng-template [ngIf]="stateTeacher">
+      <div class="main-part">
+        <button class="btn btn-success" (click)="showSchedule = !showSchedule">Schedule a class</button>
+      </div>
+    </ng-template>
+  </div>
+
+  <div class="schedule-class">
+
+    <form class="row">
+      <div class="col-sm-3 section-column">
+        <div class="mb-2">
+          <label for="classNameID" class="form-label">Class Name</label>
+          <input type="text" class="form-control" id="classNameID" formControlName="className">
+        </div>
+        <div class="mb-2">
+          <label for="subjectID" class="form-label">Subject</label>
+          <input type="text" class="form-control" id="subjectID" formControlName="subject">
+        </div>
+        <div class="mb-2">
+          <label for="categoryID" class="form-label">Category</label>
+          <select class="form-select" aria-label="Default select example">
+            <option value="1">Theory</option>
+            <option value="2">Revision</option>
+            <option value="3">Paper</option>
+          </select>
+        </div>
+        <div class="mb-2">
+          <label for="exampleInputEmail1" class="form-label">Batch Year</label>
+          <select class="form-select" aria-label="Default select example">
+            <option value="1">20</option>
+            <option value="2">21</option>
+            <option value="3">22</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-sm-3 section-column">
+        <div class="mb-2">
+          <label for="exampleInputEmail1" class="form-label">Number of weeks</label>
+          <select class="form-select" aria-label="Default select example">
+            <option value="1">1 Week</option>
+            <option value="2">2 Weeks</option>
+            <option value="3">3 Weeks</option>
+            <option value="3">4 Weeks</option>
+          </select>
+        </div>
+        <div class="mb-2">
+          <label for="exampleInputEmail1" class="form-label">Classes per week</label>
+          <select class="form-select" aria-label="Default select example">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="3">4</option>
+            <option value="3">5</option>
+          </select>
+        </div>
+        <div class="mb-2">
+          <label for="exampleInputEmail1" class="form-label">Weekdays</label>
+          <br>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+            <label class="form-check-label" for="defaultCheck1">
+              Monday
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+            <label class="form-check-label" for="defaultCheck1">
+              Tuesday
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+            <label class="form-check-label" for="defaultCheck1">
+              Wednesday
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+            <label class="form-check-label" for="defaultCheck1">
+              Thursday
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+            <label class="form-check-label" for="defaultCheck1">
+              Friday
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+            <label class="form-check-label" for="defaultCheck1">
+              Saturday
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+            <label class="form-check-label" for="defaultCheck1">
+              Sunday
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-3 section-column">
+        <div class="mb-2">
+          <label for="exampleInputEmail1" class="form-label">Time</label>
+          <div class="input-group mb-3">
+            <span class="input-group-text time-label" id="basic-addon1">Monday</span>
+            <input type="time" id="outside-access" class="form-control" placeholder="Select time">
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text time-label" id="basic-addon1">Tuesday</span>
+            <input type="time" id="outside-access" class="form-control" placeholder="Select time">
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text time-label" id="basic-addon1">Wednesday</span>
+            <input type="time" id="outside-access" class="form-control" placeholder="Select time">
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text time-label" id="basic-addon1">Thursday</span>
+            <input type="time" id="outside-access" class="form-control" placeholder="Select time">
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text time-label" id="basic-addon1">Friday</span>
+            <input type="time" id="outside-access" class="form-control" placeholder="Select time">
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text time-label" id="basic-addon1">Saturday</span>
+            <input type="time" id="outside-access" class="form-control" placeholder="Select time">
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text time-label" id="basic-addon1">Sunday</span>
+            <input type="time" id="outside-access" class="form-control" placeholder="Select time">
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="col-sm-3 section-column">
+        <div class="mb-2">
+          <label for="exampleInputEmail1" class="form-label">Other details</label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+
+
+    </form>
+  </div>
+
+</div>
+

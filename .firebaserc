@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "tutor-b6fbb": {
+      "hosting": {
+        "tutor": [
+          "tutor-b6fbb"
+        ]
+      }
+    }
+  }
+}
