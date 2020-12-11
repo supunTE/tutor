@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { User } from '../interfaces/user';
+import { ClassInterface } from '../interfaces/class';
 
 @Injectable({
   providedIn: 'root'
@@ -24,5 +25,9 @@ export class AcconutService {
   getAllUsers(){
     return this.afs.collection<User>('users').valueChanges()
   }
-  
+
+  createClass(classData: ClassInterface){
+    return this.afs.collection<ClassInterface>(`classes`).add(classData);
+  }
+
 }

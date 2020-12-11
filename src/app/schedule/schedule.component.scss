@@ -11,7 +11,9 @@
     height: 10vh;
     width: 100%;
     padding: 3% 5%;
+    z-index: 10;
     background-color: #4f1188;
+    position: fixed;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -20,11 +22,18 @@
 
 .schedule-class{
     width: 100%;
-    padding: 3%;
+    padding: 0 3% 3%;
+    margin-top: 10vh;
     background-color: #0d5734;
     color: white;
 }
 
 .time-label{
     width: 50%;
+}
+
+.schedule-succcess{
+    display: block;
+    color: black;
+
 }

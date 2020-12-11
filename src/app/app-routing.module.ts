@@ -8,7 +8,7 @@ const routes: Routes = [
   { path: 'main', component: MainComponent },
   { path: 'account', component: AccountComponent },
   { path: 'schedule', component: ScheduleComponent },
-  // { path: '', redirectTo: '/main', pathMatch: 'full' }
+  { path: '', redirectTo: '/main', pathMatch: 'full' }
 ];
 
 @NgModule({

@@ -35,11 +35,11 @@ export class AccountComponent implements OnInit {
   addUser(user){
     this.accountService.getUser(user).pipe(take(1), map((userDb: User) => {
       if(userDb){
-        console.log(true)
+        // console.log(true)
         const {joined, category, displayName} = userDb;
         return ({joined, category, displayName});
       }else{
-        console.log(false)
+        // console.log(false)
         return ({joined: new Date(), category: 'student', displayName: user.displayName});
       }
     })).subscribe(({joined, category, displayName}) => {

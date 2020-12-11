@@ -1,4 +1,4 @@
-<div class="main-section font-1">
+<div class="main-section font-1" *ngIf="auth.user | async as userA">
   <div class="top-bar">
     <ng-template [ngIf]="stateStudent">
       <div class="main-btn">
@@ -12,29 +12,39 @@
     </ng-template>
   </div>
 
+  
   <div class="schedule-class" *ngIf="showSchedule">
+    <button class="btn" (click)="funct()"></button>
 
-    <form class="row">
+    <form class="row" [formGroup]="scheduleForm" (ngSubmit)="onScheduleSubmit(userA)">
       <div class="col-sm-3 section-column">
         <div class="mb-2">
-          <label for="classNameID" class="form-label">Class Name</label>
-          <input type="text" class="form-control" id="classNameID" formControlName="className">
+          <label for="classNameID" class="form-label">Class Name*</label>
+          <input type="text" class="form-control" id="classNameID" formControlName="className" placeholder="Physics Lesson 01 A/L 2021" required>
         </div>
         <div class="mb-2">
-          <label for="subjectID" class="form-label">Subject</label>
-          <input type="text" class="form-control" id="subjectID" formControlName="subject">
+          <label for="subjectID" class="form-label">Subject*</label>
+          <input type="text" class="form-control" id="subjectID" formControlName="subject" placeholder="Physics" required>
         </div>
         <div class="mb-2">
-          <label for="categoryID" class="form-label">Category</label>
-          <select class="form-select" aria-label="Default select example">
+          <label for="teacherNameID" class="form-label">Teacher's Name</label>
+          <input type="text" class="form-control" id="teacherNameID" formControlName="teacherName">
+        </div>
+        <div class="mb-2">
+          <label for="lessonID" class="form-label">Lesson*</label>
+          <input type="text" class="form-control" id="lessonID" formControlName="lesson" placeholder="Lesson 01 - Topic" required>
+        </div>
+        <div class="mb-2">
+          <label for="categoryID" class="form-label">Category*</label>
+          <select class="form-select" id="categoryID" formControlName="category" required>
             <option value="1">Theory</option>
             <option value="2">Revision</option>
             <option value="3">Paper</option>
           </select>
         </div>
         <div class="mb-2">
-          <label for="exampleInputEmail1" class="form-label">Batch Year</label>
-          <select class="form-select" aria-label="Default select example">
+          <label for="batchYearID" class="form-label">Batch Year*</label>
+          <select class="form-select" id="batchYearID" formControlName="batchYear" required>
             <option value="1">20</option>
             <option value="2">21</option>
             <option value="3">22</option>
@@ -44,8 +54,8 @@
 
       <div class="col-sm-3 section-column">
         <div class="mb-2">
-          <label for="exampleInputEmail1" class="form-label">Number of weeks</label>
-          <select class="form-select" aria-label="Default select example">
+          <label for="numberOfWeeksID" class="form-label">Number of weeks*</label>
+          <select class="form-select" id="numberOfWeeksID" formControlName="numberOfWeeks" required>
             <option value="1">1 Week</option>
             <option value="2">2 Weeks</option>
             <option value="3">3 Weeks</option>
@@ -53,8 +63,8 @@
           </select>
         </div>
         <div class="mb-2">
-          <label for="exampleInputEmail1" class="form-label">Classes per week</label>
-          <select class="form-select" aria-label="Default select example">
+          <label for="classesPerWeekID" class="form-label">Classes per week*</label>
+          <select class="form-select" id="classesPerWeekID" formControlName="classesPerWeek" required>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -63,47 +73,46 @@
           </select>
         </div>
         <div class="mb-2">
-          <label for="exampleInputEmail1" class="form-label">Weekdays</label>
-          <br>
+          <label class="form-label">Weekdays</label>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-            <label class="form-check-label" for="defaultCheck1">
+            <input class="form-check-input" type="checkbox" formControlName="mondayData" id="mondayDataID">
+            <label class="form-check-label" for="mondayDataID">
               Monday
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-            <label class="form-check-label" for="defaultCheck1">
+            <input class="form-check-input" type="checkbox" formControlName="tuesdayData" id="tuesdayDataID">
+            <label class="form-check-label" for="tuesdayDataID">
               Tuesday
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-            <label class="form-check-label" for="defaultCheck1">
+            <input class="form-check-input" type="checkbox" formControlName="wednesdayData" id="wednesdayDataID">
+            <label class="form-check-label" for="wednesdayDataID">
               Wednesday
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-            <label class="form-check-label" for="defaultCheck1">
+            <input class="form-check-input" type="checkbox" formControlName="thursdayData" id="thursdayDataID">
+            <label class="form-check-label" for="thursdayDataID">
               Thursday
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-            <label class="form-check-label" for="defaultCheck1">
+            <input class="form-check-input" type="checkbox" formControlName="fridayData" id="fridayDataID">
+            <label class="form-check-label" for="fridayDataID">
               Friday
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-            <label class="form-check-label" for="defaultCheck1">
+            <input class="form-check-input" type="checkbox" formControlName="saturdayData" id="saturdayDataID">
+            <label class="form-check-label" for="saturdayDataID">
               Saturday
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-            <label class="form-check-label" for="defaultCheck1">
+            <input class="form-check-input" type="checkbox" formControlName="sundayData" id="sundayDataID">
+            <label class="form-check-label" for="sundayDataID">
               Sunday
             </label>
           </div>
@@ -112,49 +121,71 @@
 
       <div class="col-sm-3 section-column">
         <div class="mb-2">
-          <label for="exampleInputEmail1" class="form-label">Time</label>
-          <div class="input-group mb-3">
-            <span class="input-group-text time-label" id="basic-addon1">Monday</span>
-            <input type="time" id="outside-access" class="form-control" placeholder="Select time">
+          <label class="form-label">Time</label>
+          <div class="input-group mb-3" *ngIf="scheduleForm.get('mondayData').value">
+            <span class="input-group-text time-label">Monday</span>
+            <input type="time" id="mondayTimeID" class="form-control" formControlName="mondayTime" placeholder="Select time">
           </div>
-          <div class="input-group mb-3">
-            <span class="input-group-text time-label" id="basic-addon1">Tuesday</span>
-            <input type="time" id="outside-access" class="form-control" placeholder="Select time">
+          <div class="input-group mb-3" *ngIf="scheduleForm.get('tuesdayData').value">
+            <span class="input-group-text time-label">Tuesday</span>
+            <input type="time" id="tuesdayTimeID" class="form-control" formControlName="tuesdayTime" placeholder="Select time">
           </div>
-          <div class="input-group mb-3">
-            <span class="input-group-text time-label" id="basic-addon1">Wednesday</span>
-            <input type="time" id="outside-access" class="form-control" placeholder="Select time">
+          <div class="input-group mb-3" *ngIf="scheduleForm.get('wednesdayData').value">
+            <span class="input-group-text time-label">Wednesday</span>
+            <input type="time" id="wednesdayTimeID" class="form-control" formControlName="wednesdayTime" placeholder="Select time">
           </div>
-          <div class="input-group mb-3">
-            <span class="input-group-text time-label" id="basic-addon1">Thursday</span>
-            <input type="time" id="outside-access" class="form-control" placeholder="Select time">
+          <div class="input-group mb-3" *ngIf="scheduleForm.get('thursdayData').value">
+            <span class="input-group-text time-label">Thursday</span>
+            <input type="time" id="thursdayTimeID" class="form-control" formControlName="tuesdayTime" placeholder="Select time">
           </div>
-          <div class="input-group mb-3">
-            <span class="input-group-text time-label" id="basic-addon1">Friday</span>
-            <input type="time" id="outside-access" class="form-control" placeholder="Select time">
+          <div class="input-group mb-3" *ngIf="scheduleForm.get('fridayData').value">
+            <span class="input-group-text time-label">Friday</span>
+            <input type="time" id="fridayTimeID" class="form-control" formControlName="fridayTime" placeholder="Select time">
           </div>
-          <div class="input-group mb-3">
-            <span class="input-group-text time-label" id="basic-addon1">Saturday</span>
-            <input type="time" id="outside-access" class="form-control" placeholder="Select time">
+          <div class="input-group mb-3" *ngIf="scheduleForm.get('saturdayData').value">
+            <span class="input-group-text time-label">Saturday</span>
+            <input type="time" id="saturdayTimeID" class="form-control" formControlName="saturdayTime" placeholder="Select time">
           </div>
-          <div class="input-group mb-3">
-            <span class="input-group-text time-label" id="basic-addon1">Sunday</span>
-            <input type="time" id="outside-access" class="form-control" placeholder="Select time">
+          <div class="input-group mb-3" *ngIf="scheduleForm.get('sundayData').value">
+            <span class="input-group-text time-label">Sunday</span>
+            <input type="time" id="sundayTimeID" class="form-control" formControlName="sundayTime" placeholder="Select time">
           </div>
         </div>
       </div>
-
       
       <div class="col-sm-3 section-column">
         <div class="mb-2">
-          <label for="exampleInputEmail1" class="form-label">Other details</label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+          <label for="linkDataID" class="form-label">Zoom/Team Link*</label>
+          <input type="text" class="form-control" id="linkDataID" formControlName="linkData" required>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="mb-2">
+          <label for="otherDetailsID" class="form-label">Other details</label>
+          <textarea class="form-control" id="otherDetailsID" formControlName="otherDetails" rows="4"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="scheduleForm.valid">Submit</button>
       </div>
 
 
     </form>
+    
+    <div class="modal modal-dialog-centered schedule-succcess" tabindex="-1" *ngIf="scheduleComplete" id="scheduleSuccess">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Success</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="scheduleComplete = !scheduleComplete; showSchedule = !showSchedule"></button>
+          </div>
+          <div class="modal-body">
+            <p>Schedule is completed successfuly.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="scheduleComplete = !scheduleComplete; showSchedule = !showSchedule">Okay</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   </div>
 
 </div>
