@@ -21,6 +21,7 @@ import { ScheduleComponent } from './schedule/schedule.component';
     MainComponent,
     AccountComponent,
     ScheduleComponent
+    
   ],
   imports: [
     BrowserModule,

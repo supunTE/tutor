@@ -22,7 +22,7 @@
 
 .schedule-class{
     width: 100%;
-    padding: 0 3% 3%;
+    padding: 3%;
     margin-top: 10vh;
     background-color: #0d5734;
     color: white;
@@ -35,5 +35,135 @@
 .schedule-succcess{
     display: block;
     color: black;
+}
 
+.class-list{
+    margin: 6.5rem 2rem;
+    width: 85%;
+}
+
+.class-list div.class-item{
+    background-color: #212529;
+    border-bottom: 10px solid red;
+    color: white;
+    padding: 1.2rem;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    transition: 1s;
+}
+
+.class-list .class-info{
+    display: flex;
+    flex-direction: row;
+}
+
+.class-list .class-data{
+    padding: 0.4em;
+    margin: 0.5em;
+    font-size: 80%;
+    border-radius: 5px;
+    border-bottom: 2px solid black;
+    display: flex;
+    flex-direction: row;
+    color: black;
+    background-color: white;
+}
+
+.class-list .class-data.more-info-btn{
+    cursor: pointer;
+}
+
+.class-list .class-data .material-icons{
+    margin-top: -0.1em;
+}
+
+.class-list .more-info{
+    width: 100%;
+    margin-top: 5px;
+    background-color: #51565a;
+    border-radius: 5px;
+    transition: 1s, visibility 0s, opacity 1.5s linear;
+}
+
+.class-list .info-hide{
+    visibility: hidden;
+    // display: none;
+    max-height: 0;
+    opacity: 0;
+}
+
+.class-list .info-unhide{
+    visibility: visible;
+    transition: 1s, visibility 0s, opacity 1.5s linear;
+    // display: block;
+    max-height: 500px;
+    opacity: 1;
+}
+
+.class-list .more-info-btn.class-data-main{
+    transition: 0.5s;
+    background-color: black;
+    color: white;
+}
+
+.class-list .more-info .more-info-row{
+    margin-bottom: 5px;
+    display: flex;
+    flex-direction: row;
+}
+
+.class-list .more-info .class-data-main{
+    background-color: black;
+    color: white;
+}
+
+.class-list .more-info .other-details{
+    padding: 0.4em;
+    margin: 0.5em;
+    font-size: 80%;
+    border-radius: 5px;
+    border-bottom: 2px solid black;
+    color: black;
+    background-color: white;
+    min-width: 500px;
+    height: 100px;
+    overflow-y: scroll;
+}
+
+.class-list .more-info .more-info-row.functions-row{
+    justify-content: flex-end;
+}
+
+.class-list .more-info .more-info-row .class-delete{
+    padding: 0.4em;
+    margin: 0.5em;
+    font-size: 80%;
+    border-radius: 5px;
+    border-bottom: 2px solid black;
+    display: flex;
+    flex-direction: row;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+    background-color: #dc3545;
+}
+
+.class-list .more-info .more-info-row .class-delete:hover{
+    background-color: #ff172f !important;
+}
+
+.search-class{
+    width: 100%;
+    padding: 3%;
+    margin-top: 10vh;
+    background-color: #0d5734;
+    color: white;
+}
+
+.search-class .form-floating{
+    color: black;
+}
+
+.class-search-input{
+    border-radius: 10px;
 }

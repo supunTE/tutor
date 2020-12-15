@@ -23,6 +23,8 @@ export class ScheduleComponent implements OnInit {
   showSchedule = false;
   scheduleComplete = false;
   userData: User;
+  userClasses: Observable<ClassInterface[]>;
+  moreInfoID
 
   // className: string = '';
   // subject: string = '';
@@ -80,13 +82,26 @@ export class ScheduleComponent implements OnInit {
         const authUserData = firebase.auth().currentUser;
         this.checkCategory(authUserData);
         this.getValues(authUserData);
+        this.getUserClasses(authUserData)
       }
     });
     
    }
 
-   funct(){
-    console.log(this.scheduleForm.get('mondayData').value)
+   unhide(id){
+     if(this.moreInfoID == id){
+      this.moreInfoID = ''
+     }else{
+      this.moreInfoID = id;
+     }
+   }
+
+   deleteClass(id){
+     this.accountService.deleteSelectedClass(id);
+   }
+
+   getUserClasses(user){
+     this.userClasses = this.accountService.getUserClass(user);
    }
 
    async getValues(user){

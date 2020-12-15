@@ -40,7 +40,7 @@ export class AccountComponent implements OnInit {
         return ({joined, category, displayName});
       }else{
         // console.log(false)
-        return ({joined: new Date(), category: 'student', displayName: user.displayName});
+        return ({joined: new Date(), category: 'Student', displayName: user.displayName});
       }
     })).subscribe(({joined, category, displayName}) => {
       const newUser: User = {

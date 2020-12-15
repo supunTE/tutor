@@ -27,7 +27,16 @@ export class AcconutService {
   }
 
   createClass(classData: ClassInterface){
-    return this.afs.collection<ClassInterface>(`classes`).add(classData);
+    return this.afs.collection<ClassInterface>('classes').add(classData);
+  }
+
+  getUserClass(user: User){
+    console.log(user.uid);
+    return this.afs.collection<ClassInterface>(`classes`, ref => ref.where('teacherID', '==', user.uid)).valueChanges({idField: 'docId'});
+  }
+
+  deleteSelectedClass(id){
+    return this.afs.doc<ClassInterface>(`classes/${id}`).delete();
   }
 
 }
