@@ -1,0 +1,33 @@
+<div class="message" *ngIf="auth.user | async as userA">
+    <div class="top-bar">
+        Ask Questions
+    </div>
+    <div class="chat">
+        <div class="msgs">            
+            <div class="class-name" *ngIf="selectedClass">
+                <div class="class">
+                    <b>{{ selectedClass.className }}</b> | {{ selectedClass.teacherName }}
+                </div>
+            </div>
+            <div class="cloud-list">
+            <div class="clouds">
+                <span *ngFor="let msg of classMesssages | async">
+                    <div class="msgIn" *ngIf="msg.uid == userA.uid; else elseBlock">
+                        {{ msg.message }}
+                        <p class="msg-time">{{ msg.time.toDate() | date:'hh:mm aa dd.MMM.yyyy' }}</p>
+                    </div>
+                    <ng-template #elseBlock>   
+                        <div class="msgOut">{{ msg.message }}
+                        <p class="msg-time">{{ msg.time.toDate() | date:'hh:mm aa dd.MMM.yyyy' }}</p>
+                        </div>
+                    </ng-template>  
+                </span>
+            </div>
+            </div>
+            <div class="input">
+                <input type="text" [(ngModel)]="chatInput" id="chatInputId" (keyup.enter)="sendMessage(userA.uid, selectedClass.docId)" placeholder="Question...">
+            </div>
+        </div>
+    </div>
+    
+</div>

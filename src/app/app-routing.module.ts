@@ -3,11 +3,16 @@ import { Routes, RouterModule } from '@angular/router';
 import { MainComponent } from './main/main.component';
 import { AccountComponent } from './account/account.component';
 import { ScheduleComponent } from './schedule/schedule.component';
+import { MessageComponent } from './schedule/message/message.component';
 
 const routes: Routes = [
   { path: 'main', component: MainComponent },
   { path: 'account', component: AccountComponent },
-  { path: 'schedule', component: ScheduleComponent },
+  { path: 'class', component: ScheduleComponent, 
+    children: [
+      { path: ':id', outlet: 'message', component: MessageComponent}
+    ]
+  },
   { path: '', redirectTo: '/main', pathMatch: 'full' }
 ];
 

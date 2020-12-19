@@ -37,9 +37,17 @@
     color: black;
 }
 
-.class-list{
-    margin: 6.5rem 2rem;
-    width: 85%;
+.class-main{
+    padding: 7.5rem 0.5rem;
+    width:  100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.class-list {
+    // padding: 0;
 }
 
 .class-list div.class-item{
@@ -152,6 +160,30 @@
     background-color: #ff172f !important;
 }
 
+.class-list .class-bookmark, .class-list .class-ask{
+    padding: 0.4em;
+    margin: 0.5em;
+    font-size: 80%;
+    border-radius: 5px;
+    border-bottom: 2px solid black;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.class-list .class-ask a{
+    text-decoration: none;
+    color: white;
+}
+
+.class-list .class-bookmark:hover, .class-list .class-ask:hover{
+    background-color: #ff172f !important;
+}
+
 .search-class{
     width: 100%;
     padding: 3%;
@@ -166,4 +198,39 @@
 
 .class-search-input{
     border-radius: 10px;
+}
+
+.class-list .class-teacher{
+    background-color: #0068ff;
+    color: white;
+    border-bottom: 2px solid white;
+}
+
+.side-panel{   
+    padding: 0.2rem;
+    height: 100%;
+    position: fixed;
+    right: 0;
+}
+
+.side-panel div{
+    // margin-bottom: 10px;
+}
+
+.side-panel-body{
+    display: flex;
+    height: 65vh;
+    width: 95%;
+    flex-direction: column;
+}
+
+.side-panel .bookmarks{
+    height: 30%;
+    margin-bottom: 10px;
+    background-color: #3e6e9e;
+    padding: 1.2rem;
+}
+
+.side-panel .message{
+    height: 65vh;
 }

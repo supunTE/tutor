@@ -8,6 +8,8 @@ import { User } from '../interfaces/user';
 import { ClassInterface } from '../interfaces/class';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AcconutService } from '../services/acconut.service';
+import {bookmark} from '../interfaces/bookmark'
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-schedule',
@@ -22,30 +24,13 @@ export class ScheduleComponent implements OnInit {
   userState: string = '';
   showSchedule = false;
   scheduleComplete = false;
+  showSearch = false;
+  bookmarkBar:boolean;
+  chatBar:boolean;
   userData: User;
   userClasses: Observable<ClassInterface[]>;
+  everyClasses: Observable<ClassInterface[]>;
   moreInfoID
-
-  // className: string = '';
-  // subject: string = '';
-  // category: string = '';
-  // batchYear: string = '';
-  // numberOfWeeks: string = '';
-  // classesPerWeek: string = '';
-  // monday = false;
-  // tuesday = false;
-  // wednesday = false;
-  // thursday = false;
-  // friday = false;
-  // saturday = false;
-  // sunday = false;
-  // mondayTime: string = '';
-  // tuesdayTime: string = '';
-  // wednesdayTime: string = '';
-  // thursdayTime: string = '';
-  // fridayTime: string = '';
-  // saturdayTime: string = '';
-  // sundayTime: string = '';
 
   scheduleForm = new FormGroup({
     className: new FormControl(''),
@@ -76,16 +61,48 @@ export class ScheduleComponent implements OnInit {
   });
   
 
-  constructor(public auth: AngularFireAuth, private afs: AngularFirestore, private accountService: AcconutService) {
+  constructor(private route: ActivatedRoute, public auth: AngularFireAuth, private afs: AngularFirestore, private accountService: AcconutService) {
     auth.authState.subscribe(user => {
       if (user) {
         const authUserData = firebase.auth().currentUser;
         this.checkCategory(authUserData);
         this.getValues(authUserData);
         this.getUserClasses(authUserData)
+        this.getEveryClasses()
+
       }
     });
     
+   }
+
+   chatBarEnable(){
+    this.bookmarkBar = false;
+    this.chatBar = true;
+   }
+
+   bookmarkClass(classID, userID){
+    this.bookmarkBar = true;
+    this.chatBar = false;
+    this.accountService.getBookmarkedClass(classID, userID).pipe(take(1), map((bookmark: bookmark) => {
+      if(bookmark){
+        if(bookmark.bookmark){
+          return ({bookmark: false, uid: userID, classid: classID});
+        }else{
+          return ({bookmark: true, uid: userID, classid: classID});
+        }
+      }else{
+        return ({bookmark: true, uid: userID, classid: classID});
+      }
+
+    })).subscribe(({bookmark, uid, classid}) => {
+      const newBM: bookmark = {
+        bookmark,
+        uid,
+        classid 
+      }
+
+      this.accountService.bookmarkClass(classID, userID, newBM);
+    });
    }
 
    unhide(id){
@@ -99,6 +116,10 @@ export class ScheduleComponent implements OnInit {
    deleteClass(id){
      this.accountService.deleteSelectedClass(id);
    }
+
+   getEveryClasses(){
+    this.everyClasses = this.accountService.getEveryClass();
+  }
 
    getUserClasses(user){
      this.userClasses = this.accountService.getUserClass(user);
@@ -133,8 +154,6 @@ export class ScheduleComponent implements OnInit {
   }
 
   takeState(state){
-    console.log(state);
-
     if(state === 'Student'){
       this.stateStudent = true;
       this.stateTeacher = false;
@@ -146,6 +165,12 @@ export class ScheduleComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.route.params.subscribe(async params => {
+      if(params.id){
+        this.chatBar = true;
+      }
+  })
+   }
 
 }

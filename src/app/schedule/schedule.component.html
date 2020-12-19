@@ -38,9 +38,9 @@
         <div class="mb-2">
           <label for="categoryID" class="form-label">Category*</label>
           <select class="form-select" id="categoryID" formControlName="category" required>
-            <option value="1">Theory</option>
-            <option value="2">Revision</option>
-            <option value="3">Paper</option>
+            <option value="Theory">Theory</option>
+            <option value="Revision">Revision</option>
+            <option value="Paper">Paper</option>
           </select>
         </div>
         <div class="mb-2">
@@ -258,9 +258,92 @@
   </div>
 
   <div class="search-class" *ngIf="showSearch">
-    <div class="form-floating mb-3 col-3">
-      <input type="text" class="form-control class-search-input" id="floatingInput" placeholder="Class Name">
-      <label for="floatingInput">Search for classes</label>
+    <div class="mb-3 col-md-3 d-md-flex">
+      <input type="text" class="form-control form-control-sm class-search-input" id="floatingInput"
+        placeholder="Class Name">
+      <span class="material-icons">
+        search
+      </span>
+    </div>
+  </div>
+
+  <div class="row class-main" *ngIf="stateStudent">
+    <div class="col-8 class-list">
+      <div class="class-list-items" *ngFor="let class of everyClasses | async">
+        <div class="class-item" id="{{class.docId}}">
+          <h4 class="class-name font-2">{{ class.className }}</h4>
+          <div class="class-info">
+            <span class="class-data class-teacher">Teacher: {{ class.teacherName }}</span>
+            <span class="class-data">Subject: {{ class.subject }}</span>
+            <span class="class-data">Lesson: {{ class.lesson }}</span>
+            <span class="class-data">Category: {{ class.category }}</span>
+            <span class="class-data">Batch: {{ class.batchYear }}</span>
+            <span
+              [className]="(moreInfoID == class.docId) ? 'class-data more-info-btn class-data-main' : 'class-data more-info-btn'"
+              (click)="unhide(class.docId)">More
+              <span class="material-icons">
+                keyboard_arrow_down
+              </span>
+            </span>
+          </div>
+          <div [className]="(moreInfoID == class.docId) ? 'more-info info-unhide' : 'more-info info-hide'">
+            <div class="more-info-row">
+              <span class="class-data">Number of weeks: {{ class.numberOfWeeks }}</span>
+              <span class="class-data">Classes per week: {{ class.classesPerWeek }}</span>
+            </div>
+            <div class="more-info-row">
+              <span class="class-data class-data-main">Class times</span>
+              <span class="class-data" *ngIf="class.mondayData">Monday: {{class.mondayTime}}</span>
+              <span class="class-data" *ngIf="class.tuesdayData">Tuesday: {{class.tuesdayTime}}</span>
+              <span class="class-data" *ngIf="class.wednesdayData">Wednesday: {{class.wednesdayTime}}</span>
+              <span class="class-data" *ngIf="class.thursdayData">Thursday: {{class.thursdayTime}}</span>
+              <span class="class-data" *ngIf="class.fridayData">Friday: {{class.fridayTime}}</span>
+              <span class="class-data" *ngIf="class.saturdayData">Saturday: {{class.saturdayTime}}</span>
+              <span class="class-data" *ngIf="class.sundayData">Sunday: {{class.sundayTime}}</span>
+            </div>
+            <div class="more-info-row">
+              <span class="class-data class-data-main">Link</span>
+              <span class="class-data" *ngIf="class.linkData">
+                <a href="{{class.linkData}}" target="blank">{{class.linkData}}</a>
+                <span class="material-icons">
+                  launch
+                </span>
+              </span>
+            </div>
+            <div class="more-info-row">
+              <span class="other-details">
+                <h6><b>Other Details</b></h6>
+                {{class.otherDetails}}
+              </span>
+            </div>
+            <div class="more-info-row functions-row">
+              <span class="bg-primary btn class-bookmark" (click)="bookmarkClass(class.docId, userA.uid)">
+                <span class="material-icons">
+                  bookmark
+                </span>
+              </span>
+              <span class="bg-primary class-ask" >
+                <a [routerLink]="['/class', {outlets:{'message': [class.docId]}}]" (click)="chatBarEnable()">
+                  <span class="material-icons">
+                    chat
+                  </span>
+                </a>
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-4 side-panel">
+      <div class="side-panel-body">
+        <div class="bookmarks" *ngIf="bookmarkBar">
+          <app-bookmarks></app-bookmarks>
+        </div>
+        <div class="message" *ngIf="chatBar">
+          <router-outlet name="message"></router-outlet>
+        </div>
+      </div>
     </div>
   </div>
 

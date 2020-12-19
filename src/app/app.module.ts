@@ -13,6 +13,9 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { MainComponent } from './main/main.component';
 import { AccountComponent } from './account/account.component';
 import { ScheduleComponent } from './schedule/schedule.component';
+import { BookmarksComponent } from './schedule/bookmarks/bookmarks.component';
+import { MessageComponent } from './schedule/message/message.component';
+import { ProfileComponent } from './schedule/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,10 @@ import { ScheduleComponent } from './schedule/schedule.component';
     NavbarComponent,
     MainComponent,
     AccountComponent,
-    ScheduleComponent
+    ScheduleComponent,
+    BookmarksComponent,
+    MessageComponent,
+    ProfileComponent
     
   ],
   imports: [
