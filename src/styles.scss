@@ -11,4 +11,16 @@ html, body{
     height: 100%;
     width: 100%;
     background-color: goldenrod;
-}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+}             
+
+.icon-btn{
+    display: flex !important;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+.icon-btn i, .icon-btn span{
+    padding: 0 2px;
+    font-size: 100%;
+    line-height: 1.5;
+}

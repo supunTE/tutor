@@ -1,6 +1,7 @@
 export interface ClassInterface {  
     className: string,
     teacherName: string,
+    teacherID: string,
     subject: string,
     lesson: string,
     category: string,

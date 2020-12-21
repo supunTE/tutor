@@ -16,6 +16,7 @@ import { ScheduleComponent } from './schedule/schedule.component';
 import { BookmarksComponent } from './schedule/bookmarks/bookmarks.component';
 import { MessageComponent } from './schedule/message/message.component';
 import { ProfileComponent } from './schedule/profile/profile.component';
+import { LinebrPipe } from './pipes/linebr.pipe';
 
 @NgModule({
   declarations: [
@@ -26,8 +27,8 @@ import { ProfileComponent } from './schedule/profile/profile.component';
     ScheduleComponent,
     BookmarksComponent,
     MessageComponent,
-    ProfileComponent
-    
+    ProfileComponent,
+    LinebrPipe
   ],
   imports: [
     BrowserModule,

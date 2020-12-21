@@ -273,7 +273,9 @@
         <div class="class-item" id="{{class.docId}}">
           <h4 class="class-name font-2">{{ class.className }}</h4>
           <div class="class-info">
+            <a [routerLink]="['/class', {outlets:{'message': 'profile/'+[class.teacherID]}}]" (click)="chatBarEnable()">
             <span class="class-data class-teacher">Teacher: {{ class.teacherName }}</span>
+            </a>
             <span class="class-data">Subject: {{ class.subject }}</span>
             <span class="class-data">Lesson: {{ class.lesson }}</span>
             <span class="class-data">Category: {{ class.category }}</span>

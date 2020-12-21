@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { User } from '../interfaces/user';
+import { Teacher } from '../interfaces/teacher';
 import { ClassInterface } from '../interfaces/class';
 import {bookmark} from '../interfaces/bookmark';
 import {message} from '../interfaces/message'
@@ -65,5 +66,10 @@ export class AcconutService {
   messageClass(classID, userID, data){
     return this.afs.collection<message>(`messages/${classID}/messages/${userID}/message`).add(data);
   }
+
+  getTeacher(id){
+    return this.afs.doc<Teacher>(`users/${id}`).valueChanges();
+  }
+
 
 }

@@ -1,31 +1,104 @@
-<div class="message" *ngIf="auth.user | async as userA">
+<div class="message" *ngIf="selectedTeacher">
     <div class="top-bar">
-        Ask Questions
+        Teacher's Profile
     </div>
     <div class="chat">
         <div class="msgs">            
-            <div class="class-name" *ngIf="selectedClass">
+            <div class="class-name">
                 <div class="class">
-                    <b>{{ selectedClass.className }}</b> | {{ selectedClass.teacherName }}
+                    <b>{{ selectedTeacher.displayName }}</b>
                 </div>
             </div>
-            <div class="cloud-list">
-            <div class="clouds">
-                <span *ngFor="let msg of classMesssages | async">
-                    <div class="msgIn" *ngIf="msg.uid == userA.uid; else elseBlock">
-                        {{ msg.message }}
-                        <p class="msg-time">{{ msg.time.toDate() | date:'hh:mm aa dd.MMM.yyyy' }}</p>
-                    </div>
-                    <ng-template #elseBlock>   
-                        <div class="msgOut">{{ msg.message }}
-                        <p class="msg-time">{{ msg.time.toDate() | date:'hh:mm aa dd.MMM.yyyy' }}</p>
+            <div class="data">
+            <div class="details">
+                <img [src]="selectedTeacher.img" alt="" [className]="(selectedTeacher.verified) ? 'account-img verified-t' : 'account-img verified-f'">
+                <div *ngIf="!selectedTeacher.verified" class="verify-tag icon-btn verified-f"> <i class="material-icons">closed</i>non-Verified Teacher</div>
+                <div *ngIf="selectedTeacher.verified" class="verify-tag icon-btn verified-t"> <i class="material-icons">check</i>Verified Teacher</div>
+                <div class="stats row font-1">
+                    <div id="completedClasses" class="box">
+                        Classes
+                        <div class="num icon-btn font-2">
+                            <span class="material-icons">
+                                assignment_turned_in
+                            </span>
+                            35
                         </div>
-                    </ng-template>  
-                </span>
+                    </div>
+                    <div id="rating" class="box">
+                        Rating
+                        <div class="num icon-btn font-2">
+                            <span class="material-icons">
+                                star
+                            </span>
+                            3.5/10
+                        </div>                       
+                    </div>
+                </div>
+                <div class="teacher-desc">
+                    Description
+                    <p [innerHTML]="description | linebr"></p>
+                </div>
+                <div class="input" *ngIf="auth.user | async as userA">
+                    Add Rating
+                    <div class="rating">
+                        <span class="material-icons star1" [style.color]="star1 ? '#212529' : '#c2c2c2'" (click)="starFunction(1)">
+                            star
+                        </span>
+                        <span class="material-icons star2" [style.color]="star2 ? '#212529' : '#c2c2c2'" (click)="starFunction(2)">
+                            star
+                        </span>
+                        <span class="material-icons star3" [style.color]="star3 ? '#212529' : '#c2c2c2'" (click)="starFunction(3)">
+                            star
+                        </span>
+                        <span class="material-icons star4" [style.color]="star4 ? '#212529' : '#c2c2c2'" (click)="starFunction(4)">
+                            star
+                        </span>
+                        <span class="material-icons star5" [style.color]="star5 ? '#212529' : '#c2c2c2'" (click)="starFunction(5)">
+                            star
+                        </span>
+                    </div>
+                    <textarea type="text" [(ngModel)]="chatInput" id="chatInputId" (keyup.enter)="sendMessage(userA.uid, selectedClass.docId)" placeholder="Add Rating..."></textarea>
+                </div>
+
+                <div class="other-ratings">
+                    <div class="rate-box">
+                        <div class="rater-name">
+                            <img [src]="selectedTeacher.img" class="rater-img">
+                            Supun Tharinda
+                        </div>
+                        <div class="rate-msg">
+                            <div class="rate-stars">
+                                <span class="material-icons" *ngFor='let in of arrStars(5); let i = index' [style.color]="'#212529'">
+                                    star
+                                </span>
+                                <div class="rate-msg-box">
+                                    This teacher is awesome. This is an example text. Under construction... This is an example text. Under construction... This is an example text. Under construction... 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rate-box">
+                        <div class="rater-name">
+                            <img [src]="selectedTeacher.img" class="rater-img">
+                            User 12
+                        </div>
+                        <div class="rate-msg">
+
+                            <div class="rate-stars">
+                                <span class="material-icons" *ngFor='let in of arrStars(2); let i = index' [style.color]="'#212529'">
+                                    star
+                                </span>
+                                <div class="rate-msg-box">
+                                    This teacher is awesome. This is an example text. Under construction... This is an example text. Under construction... This is an example text. Under construction... 
+                                </div>
+                            </div>
+                            
+                            
+                        </div>
+                    </div>
+                </div>
             </div>
-            </div>
-            <div class="input">
-                <input type="text" [(ngModel)]="chatInput" id="chatInputId" (keyup.enter)="sendMessage(userA.uid, selectedClass.docId)" placeholder="Question...">
             </div>
         </div>
     </div>
