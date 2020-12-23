@@ -1,11 +1,13 @@
-<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark font-1">
-    <div class="container-fluid">
-      <a class="navbar-brand" routerLink="./main">Tutor</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> -->
+
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark font-1">
+    <div class="container-fluid bg-dark">
+      <span (click)="openNav()" class="navbar-btn">
         <span class="navbar-toggler-icon"></span>
-      </button>
+      </span>
+      <a class="navbar-brand font-2" routerLink="./main">Tutor</a>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <li class="nav-item">
             <a class="nav-link" routerLink="./account">Account</a>
           </li>
@@ -15,10 +17,19 @@
           <li class="nav-item">
             <a class="nav-link">Bookmarks</a>
           </li>
-          <!-- <li class="nav-item">
+          <li class="nav-item">
             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-          </li> -->
+          </li>
         </ul>
       </div>
     </div>
-  </nav>
+  </nav> 
+
+  <div id="mySidenav" class="sidenav font-1">
+    <span class="closebtn" (click)="closeNav()"><i class="material-icons">close</i></span>
+    <a routerLink="./main">Home</a>
+    <a routerLink="./account">Account</a>
+    <a routerLink="./class">Classes</a>
+    <a href="#">Bookmarks</a>
+    <a href="#">Contact</a>
+  </div>

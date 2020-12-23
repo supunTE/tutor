@@ -3,7 +3,7 @@ $anim-d-time: 100s;
 .main-section{
     width: 100%;
     height: 100%;
-    background-color: goldenrod;
+    background-color: #212529;
     background-size: cover;
     animation: bgChange $anim-d-time linear 0s infinite;
     display: flex;
@@ -22,7 +22,8 @@ $anim-d-time: 100s;
 .overlay-dots{
     width: 100%;
     height: 100%;
-    opacity: 0.5;
+    opacity: 0.6;
+    background-size: 3px;
     position: absolute;
     background-image: url(../../assets/images/bg/bg__dots.png);
 }
@@ -40,9 +41,15 @@ $anim-d-time: 100s;
 .topic{
     font-size: 400%;
     color: white;
+    -webkit-text-stroke: 1px black;
 }
 
-.button i{
+.launch-btn:hover{
+    background-color: rgb(189, 189, 189);
+    border-color: black;
+}
+
+.launch-btn i{
     padding: 0 5px !important;
 }
 
@@ -54,12 +61,19 @@ $anim-d-time: 100s;
     bottom: 2.5em;
     border-radius: 0;
     padding: 1em 5em 1em 2em;
-    color: #ffffff;
-    border-right: 5px solid #ffffff;
+    color: #ffffffad;
+    border-right: 5px solid #ffffffad;
+    transition: 0.5s;
     background: rgb(0 0 0 / 0.5);
     // box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
     backdrop-filter: blur( 8.5px );
     // box-shadow: 0px 0px 20px 0px #00000073;
+}
+
+.credits:hover {
+    background-color: #ffffff3b;
+    border-right: 5px solid white;
+    color: white;
 }
 
 @keyframes bgChange{
@@ -67,7 +81,15 @@ $anim-d-time: 100s;
         background: url(../../assets/images/bg/1.jpg);
         background-size: 100% 100%;
     }
+    8%{
+        background: url(../../assets/images/bg/1.jpg);
+        background-size: 100% 100%;
+    }
     10%{
+        background: url(../../assets/images/bg/2.jpg);
+        background-size: 100% 100%;
+    }
+    18%{
         background: url(../../assets/images/bg/2.jpg);
         background-size: 100% 100%;
     }
@@ -75,7 +97,15 @@ $anim-d-time: 100s;
         background: url(../../assets/images/bg/3.jpg);
         background-size: 100% 100%;
     }
+    28%{
+        background: url(../../assets/images/bg/3.jpg);
+        background-size: 100% 100%;
+    }
     30%{
+        background: url(../../assets/images/bg/4.jpg);
+        background-size: 100% 100%;
+    }
+    38%{
         background: url(../../assets/images/bg/4.jpg);
         background-size: 100% 100%;
     }
@@ -83,7 +113,15 @@ $anim-d-time: 100s;
         background: url(../../assets/images/bg/5.jpg);
         background-size: 100% 100%;
     }
+    48%{
+        background: url(../../assets/images/bg/5.jpg);
+        background-size: 100% 100%;
+    }
     50%{
+        background: url(../../assets/images/bg/6.jpg);
+        background-size: 100% 100%;
+    }
+    58%{
         background: url(../../assets/images/bg/6.jpg);
         background-size: 100% 100%;
     }
@@ -91,7 +129,15 @@ $anim-d-time: 100s;
         background: url(../../assets/images/bg/7.jpg);
         background-size: 100% 100%;
     }
+    68%{
+        background: url(../../assets/images/bg/7.jpg);
+        background-size: 100% 100%;
+    }
     70%{
+        background: url(../../assets/images/bg/8.jpg);
+        background-size: 100% 100%;
+    }
+    78%{
         background: url(../../assets/images/bg/8.jpg);
         background-size: 100% 100%;
     }
@@ -99,7 +145,15 @@ $anim-d-time: 100s;
         background: url(../../assets/images/bg/9.jpg);
         background-size: 100% 100%;
     }
+    88%{
+        background: url(../../assets/images/bg/9.jpg);
+        background-size: 100% 100%;
+    }
     90%{
+        background: url(../../assets/images/bg/10.jpg);
+        background-size: 100% 100%;
+    }
+    98%{
         background: url(../../assets/images/bg/10.jpg);
         background-size: 100% 100%;
     }
@@ -110,246 +164,57 @@ $anim-d-time: 100s;
 }
 
 .credits.cr-1{
-    animation: cr1anim $anim-d-time linear 0s infinite;
+    animation: cranim $anim-d-time linear 0s infinite;
     opacity: 0;
     visibility: hidden;
 }
-
-@keyframes cr1anim{
-    0%{
-        opacity: 0;
-    }
-    1%{
-        opacity: 1;
-        visibility: visible;
-    }
-    9%{
-        opacity: 1;
-    }
-    10%{
-        opacity: 0;
-        visibility: hidden;
-    }
-    100%{
-        opacity: 0;
-    }
-}
-
 .credits.cr-2{
-    animation: cr2anim $anim-d-time linear 9s infinite;
+    animation: cranim $anim-d-time linear 10s infinite;
     opacity: 0;
     visibility: hidden;
 }
-
-@keyframes cr2anim{
-    0%{
-        opacity: 0;
-    }
-    1%{
-        opacity: 1;
-        visibility: visible;
-    }
-    9%{
-        opacity: 1;
-    }
-    10%{
-        opacity: 0;
-        visibility: hidden;
-    }
-    100%{
-        opacity: 0;
-    }
-}
-
 .credits.cr-3{
-    animation: cr3anim $anim-d-time linear 19s infinite;
+    animation: cranim $anim-d-time linear 20s infinite;
     opacity: 0;
     visibility: hidden;
 }
-
-@keyframes cr3anim{
-    0%{
-        opacity: 0;
-    }
-    1%{
-        opacity: 1;
-        visibility: visible;
-    }
-    9%{
-        opacity: 1;
-    }
-    10%{
-        opacity: 0;
-        visibility: hidden;
-    }
-    100%{
-        opacity: 0;
-    }
-}
-
 .credits.cr-4{
-    animation: cr4anim $anim-d-time linear 29s infinite;
+    animation: cranim $anim-d-time linear 30s infinite;
     opacity: 0;
     visibility: hidden;
 }
-
-@keyframes cr4anim{
-    0%{
-        opacity: 0;
-    }
-    1%{
-        opacity: 1;
-        visibility: visible;
-    }
-    9%{
-        opacity: 1;
-    }
-    10%{
-        opacity: 0;
-        visibility: hidden;
-    }
-    100%{
-        opacity: 0;
-    }
-}
-
 .credits.cr-5{
-    animation: cr5anim $anim-d-time linear 39s infinite;
+    animation: cranim $anim-d-time linear 40s infinite;
     opacity: 0;
     visibility: hidden;
 }
-
-@keyframes cr5anim{
-    0%{
-        opacity: 0;
-    }
-    1%{
-        opacity: 1;
-        visibility: visible;
-    }
-    9%{
-        opacity: 1;
-    }
-    10%{
-        opacity: 0;
-        visibility: hidden;
-    }
-    100%{
-        opacity: 0;
-    }
-}
-
 .credits.cr-6{
-    animation: cr6anim $anim-d-time linear 49s infinite;
+    animation: cranim $anim-d-time linear 50s infinite;
     opacity: 0;
     visibility: hidden;
 }
-
-@keyframes cr6anim{
-    0%{
-        opacity: 0;
-    }
-    1%{
-        opacity: 1;
-        visibility: visible;
-    }
-    9%{
-        opacity: 1;
-    }
-    10%{
-        opacity: 0;
-        visibility: hidden;
-    }
-    100%{
-        opacity: 0;
-    }
-}
-
 .credits.cr-7{
-    animation: cr7anim $anim-d-time linear 59s infinite;
+    animation: cranim $anim-d-time linear 60s infinite;
     opacity: 0;
     visibility: hidden;
 }
-
-@keyframes cr7anim{
-    0%{
-        opacity: 0;
-    }
-    1%{
-        opacity: 1;
-        visibility: visible;
-    }
-    9%{
-        opacity: 1;
-    }
-    10%{
-        opacity: 0;
-        visibility: hidden;
-    }
-    100%{
-        opacity: 0;
-    }
-}
-
 .credits.cr-8{
-    animation: cr8anim $anim-d-time linear 69s infinite;
+    animation: cranim $anim-d-time linear 70s infinite;
     opacity: 0;
     visibility: hidden;
 }
-
-@keyframes cr8anim{
-    0%{
-        opacity: 0;
-    }
-    1%{
-        opacity: 1;
-        visibility: visible;
-    }
-    9%{
-        opacity: 1;
-    }
-    10%{
-        opacity: 0;
-        visibility: hidden;
-    }
-    100%{
-        opacity: 0;
-    }
-}
-
 .credits.cr-9{
-    animation: cr9anim $anim-d-time linear 79s infinite;
+    animation: cranim $anim-d-time linear 80s infinite;
     opacity: 0;
     visibility: hidden;
 }
-
-@keyframes cr9anim{
-    0%{
-        opacity: 0;
-    }
-    1%{
-        opacity: 1;
-        visibility: visible;
-    }
-    9%{
-        opacity: 1;
-    }
-    10%{
-        opacity: 0;
-        visibility: hidden;
-    }
-    100%{
-        opacity: 0;
-    }
-}
-
 .credits.cr-10{
-    animation: cr10anim $anim-d-time linear 89s infinite;
+    animation: cranim $anim-d-time linear 89s infinite;
     opacity: 0;
     visibility: hidden;
 }
 
-@keyframes cr10anim{
+@keyframes cranim{
     0%{
         opacity: 0;
     }
@@ -397,15 +262,15 @@ $anim-d-time: 100s;
 
     .credits{
         z-index: 1;
-        font-size: 80%;
+        font-size: 60%;
         position: absolute;
         left: 0;
         bottom: 0;
         width: 100%;
         border-radius: 0;
         padding: 1em 2em;
-        color: #ffffff;
-        border-top: 3px solid #ffffff;
+        color: #ffffffad;
+        border-top: 1px solid #ffffffad;
         border-right: 0px;
         background: rgb(0 0 0 / 0.5);
         text-align: center;
@@ -421,11 +286,23 @@ $anim-d-time: 100s;
             background: url(../../assets/images/bg/1.jpg);
             background-size: cover;
         }
+        9%{
+            background: url(../../assets/images/bg/1.jpg);
+            background-size: cover;
+        }
         10%{
             background: url(../../assets/images/bg/2.jpg);
             background-size: cover;
         }
+        19%{
+            background: url(../../assets/images/bg/2.jpg);
+            background-size: cover;
+        }    
         20%{
+            background: url(../../assets/images/bg/3.jpg);
+            background-size: cover;
+        }
+        29%{
             background: url(../../assets/images/bg/3.jpg);
             background-size: cover;
         }
@@ -433,7 +310,15 @@ $anim-d-time: 100s;
             background: url(../../assets/images/bg/4.jpg);
             background-size: cover;
         }
+        39%{
+            background: url(../../assets/images/bg/4.jpg);
+            background-size: cover;
+        }
         40%{
+            background: url(../../assets/images/bg/5.jpg);
+            background-size: cover;
+        }
+        49%{
             background: url(../../assets/images/bg/5.jpg);
             background-size: cover;
         }
@@ -441,7 +326,15 @@ $anim-d-time: 100s;
             background: url(../../assets/images/bg/6.jpg);
             background-size: cover;
         }
+        59%{
+            background: url(../../assets/images/bg/6.jpg);
+            background-size: cover;
+        }
         60%{
+            background: url(../../assets/images/bg/7.jpg);
+            background-size: cover;
+        }
+        69%{
             background: url(../../assets/images/bg/7.jpg);
             background-size: cover;
         }
@@ -449,11 +342,23 @@ $anim-d-time: 100s;
             background: url(../../assets/images/bg/8.jpg);
             background-size: cover;
         }
+        79%{
+            background: url(../../assets/images/bg/8.jpg);
+            background-size: cover;
+        }
         80%{
             background: url(../../assets/images/bg/9.jpg);
             background-size: cover;
         }
+        89%{
+            background: url(../../assets/images/bg/9.jpg);
+            background-size: cover;
+        }
         90%{
+            background: url(../../assets/images/bg/10.jpg);
+            background-size: cover;
+        }
+        99%{
             background: url(../../assets/images/bg/10.jpg);
             background-size: cover;
         }
