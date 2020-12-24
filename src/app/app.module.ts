@@ -6,6 +6,7 @@ import { environment } from '../environments/environment';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -32,6 +33,7 @@ import { LinebrPipe } from './pipes/linebr.pipe';
   ],
   imports: [
     BrowserModule,
+    AngularFireStorageModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,

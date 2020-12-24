@@ -1,4 +1,5 @@
 <div class="main-section font-1">
+    <div class="account-out">
     <div class="account">
         <h3 class="font-2">Account</h3>
 
@@ -13,11 +14,22 @@
 
         <div class="main-part" *ngIf="auth.user | async as userA; else showLogin">
 
-            <img [src]="userA.photoURL" alt="" class="account-img">
+            <img *ngIf="userData" [src]="userData.img" alt="" class="account-img">
 
             <div class="part part-a">                
                 <h5>Hello,</h5><h4 class="hello-text font-2" *ngIf="userData">{{ userData.displayName }}</h4>
+                <p class="description-txt" *ngIf="userData">{{ userData.description }}</p>
                 <button class="btn btn-danger logout-btn" (click)="logout()">Logout</button>
+            </div>
+
+            <div class="type part">
+                <div class="emoji btn btn-dark icon-btn" (click)="fileUploader.click()">
+                    Change Profile Image:
+                    <span class="material-icons imgup">image</span>
+                  </div>
+                <div class="type-buttons sub-part">
+                    <input type="file"  accept="image/png,image/jpg,image/jpeg,image/gif" class="upload-image" name="image" autocomplete="off" #fileUploader (change)="uploadFile($event, userA)">
+                </div>
             </div>
 
             <div class="type part">
@@ -37,6 +49,18 @@
                     <button class="btn btn-sm btn-primary" (click)="changeName(userA)">Change</button>
                 </span>
             </div>
+
+            <div class="name part">
+                <span>Description: {{description}}</span>
+                <div class="name-box sub-part">
+                    <input type="text" [(ngModel)]="description">
+                    <!-- (keyup.enter)="addBr()" -->
+                </div>
+                <span>
+                    <button class="btn btn-sm btn-primary" (click)="changeDescription(userA)">Change</button>
+                </span>
+            </div>
         </div>
+    </div>
     </div>
 </div>
