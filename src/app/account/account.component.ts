@@ -20,6 +20,7 @@ export class AccountComponent implements OnInit {
   userData: User;
   userName: string = '';
   description = '';
+  editData: boolean = false;
   // descriptionDis = '';
 
   constructor(public auth: AngularFireAuth, private afs: AngularFirestore, private accountService: AcconutService, private storage: AngularFireStorage) {
@@ -31,6 +32,10 @@ export class AccountComponent implements OnInit {
     });
   }
 
+  editDataFunction(){
+    this.editData = !this.editData
+  }
+
   updateUser(user){
     this.accountService.getUser(user).subscribe(user => this.userData = user)
   }
@@ -39,20 +44,20 @@ export class AccountComponent implements OnInit {
     this.accountService.getUser(user).pipe(take(1), map((userDb: User) => {
       if(userDb){
         // console.log(true)
-        const {joined, category, displayName, description} = userDb;
-        return ({joined, category, displayName, description});
+        const {joined, category, displayName, description, img} = userDb;
+        return ({joined, category, displayName, description, img});
       }else{
         // console.log(false)
-        return ({joined: new Date(), category: 'Student', displayName: user.displayName, description: ''});
+        return ({joined: new Date(), category: 'Student', displayName: user.displayName, description: '', img: user.photoURL});
       }
-    })).subscribe(({joined, category, displayName, description}) => {
+    })).subscribe(({joined, category, displayName, description, img}) => {
       const newUser: User = {
         displayName,
         description,
         uid: user.uid,
         joined,
         category,
-        img: user.photoURL
+        img
       }
 
       this.accountService.createUser(newUser);

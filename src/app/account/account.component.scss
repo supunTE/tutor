@@ -75,7 +75,7 @@ img.account-img{
 .part-a{
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    // justify-content: center;
     align-items: center;
     text-align: center;
 }
@@ -86,6 +86,11 @@ img.account-img{
 
 .description-txt{
     font-size: 90%;
+}
+
+.part-a .btn{
+    margin-top: 0.8em;
+    width: 80%;
 }
 
 .part{
@@ -99,7 +104,11 @@ img.account-img{
 }
 
 .part span{
-    padding: 10px;
+    // padding: 10px;
+}
+
+.part span.material-icon{
+    font-size: 150%
 }
 
 .sub-part{
@@ -126,6 +135,14 @@ img.account-img{
     justify-content: center;
     align-items: center;
     flex-direction: row;
+}
+
+.verify-text{
+    color: green;
+}
+
+.not-verify-text{
+    color: red;
 }
 
 .type-buttons .upload-image{

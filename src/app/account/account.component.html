@@ -16,49 +16,47 @@
 
             <img *ngIf="userData" [src]="userData.img" alt="" class="account-img">
 
-            <div class="part part-a">                
-                <h5>Hello,</h5><h4 class="hello-text font-2" *ngIf="userData">{{ userData.displayName }}</h4>
-                <p class="description-txt" *ngIf="userData">{{ userData.description }}</p>
+            <div class="part part-a" *ngIf="userData">                
+                <h5>Hello,</h5><h4 class="hello-text font-2">{{ userData.displayName }}</h4>
+                <p class="description-txt">{{ userData.description }}</p>
+                <button class="btn btn-secondary edit-btn" (click)="editDataFunction()">Edit Profile</button>
                 <button class="btn btn-danger logout-btn" (click)="logout()">Logout</button>
             </div>
 
-            <div class="type part">
-                <div class="emoji btn btn-dark icon-btn" (click)="fileUploader.click()">
+            <div class="type part" *ngIf="editData">
+                <div class="btn btn-dark icon-btn" (click)="fileUploader.click()">
                     Change Profile Image:
                     <span class="material-icons imgup">image</span>
                   </div>
                 <div class="type-buttons sub-part">
                     <input type="file"  accept="image/png,image/jpg,image/jpeg,image/gif" class="upload-image" name="image" autocomplete="off" #fileUploader (change)="uploadFile($event, userA)">
                 </div>
-            </div>
-
-            <div class="type part">
-                <span *ngIf="userData">Account Type: {{ userData.category }}</span>
-                <div class="type-buttons sub-part">
-                    <button class="btn btn-success" (click)="changeCategory(userA, 'Teacher')">Teacher</button>
-                    <button class="btn btn-warning" (click)="changeCategory(userA, 'Student')">Student</button>
+                <hr>
+                <div *ngIf="userData">Account Type: {{ userData.category }}</div>
+                <p class="mb-1 verify-text" *ngIf="userData.verified"><b>(This account is verified)</b></p>
+                <p class="mb-1 not-verify-text" *ngIf="!userData.verified"><b>(This account is not verified)</b></p>
+                <div class="type-buttons sub-part mb-2">
+                    <button class="btn btn-secondary" (click)="changeCategory(userA, 'Teacher')">Teacher</button>
+                    <button class="btn btn-secondary" (click)="changeCategory(userA, 'Student')">Student</button>
                 </div>
-            </div>
-
-            <div class="name part">
-                <span>Name: {{ userName }}</span>
+                <button class="btn btn-sm btn-dark">Request for verify account</button>
+                <hr>
+                <div>Name: {{ userName }}</div>
                 <div class="name-box sub-part">
                     <input type="text" [(ngModel)]="userName">
                 </div>
-                <span>
-                    <button class="btn btn-sm btn-primary" (click)="changeName(userA)">Change</button>
-                </span>
-            </div>
-
-            <div class="name part">
-                <span>Description: {{description}}</span>
+                <div>
+                    <button class="btn btn-sm btn-dark" (click)="changeName(userA)">Change</button>
+                </div>
+                <hr>
+                <div>Description: {{description}}</div>
                 <div class="name-box sub-part">
                     <input type="text" [(ngModel)]="description">
                     <!-- (keyup.enter)="addBr()" -->
                 </div>
-                <span>
-                    <button class="btn btn-sm btn-primary" (click)="changeDescription(userA)">Change</button>
-                </span>
+                <div>
+                    <button class="btn btn-sm btn-dark" (click)="changeDescription(userA)">Change</button>
+                </div>
             </div>
         </div>
     </div>
