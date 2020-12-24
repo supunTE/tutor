@@ -36,10 +36,10 @@
                 <p class="mb-1 verify-text" *ngIf="userData.verified"><b>(This account is verified)</b></p>
                 <p class="mb-1 not-verify-text" *ngIf="!userData.verified"><b>(This account is not verified)</b></p>
                 <div class="type-buttons sub-part mb-2">
-                    <button class="btn btn-secondary" (click)="changeCategory(userA, 'Teacher')">Teacher</button>
-                    <button class="btn btn-secondary" (click)="changeCategory(userA, 'Student')">Student</button>
+                    <button class="btn btn-white" disabled>Teacher</button>
+                    <button class="btn btn-light" (click)="changeCategory(userA, 'Student')">Student</button>
                 </div>
-                <button class="btn btn-sm btn-dark">Request for verify account</button>
+                <!-- <button class="btn btn-sm btn-dark" *ngIf="userData.verified">Request for verify account</button> -->
                 <hr>
                 <div>Name: {{ userName }}</div>
                 <div class="name-box sub-part">
