@@ -21,6 +21,8 @@ export class AccountComponent implements OnInit {
   userName: string = '';
   description = '';
   editData: boolean = false;
+  onSafari: boolean = false;
+
   // descriptionDis = '';
 
   constructor(public auth: AngularFireAuth, private afs: AngularFirestore, private accountService: AcconutService, private storage: AngularFireStorage) {
@@ -173,6 +175,27 @@ export class AccountComponent implements OnInit {
   }
 
   ngOnInit(): void {
+     this.getBrowserName();
   }
+
+  getBrowserName() {
+   
+    // if(navigator.userAgent.indexOf("MSIE")!=-1){
+    //     name = "MSIE";
+    // }
+    // else if(navigator.userAgent.indexOf("Firefox")!=-1){
+    //     name = "Firefox";
+    // }
+    // else if(navigator.userAgent.indexOf("Opera")!=-1){
+    //     name = "Opera";
+    // }
+    // else if(navigator.userAgent.indexOf("Chrome") != -1){
+    //     name = "Chrome";
+    // }
+    // else 
+    if(navigator.userAgent.indexOf("Safari")!=-1){
+      this.onSafari = true;
+    }
+}
 
 }

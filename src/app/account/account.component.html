@@ -1,5 +1,5 @@
-<div class="main-section font-1">
-    <div class="account-out">
+<div [className]="onSafari ? 'main-section safariSet font-1' : 'main-section font-1'">
+    <div [className]="onSafari ? 'account-out safariSet' : 'account-out' ">
     <div class="account">
         <h3 class="font-2">Account</h3>
 
@@ -39,6 +39,7 @@
                     <button class="btn btn-white" disabled>Teacher</button>
                     <button class="btn btn-light" (click)="changeCategory(userA, 'Student')">Student</button>
                 </div>
+                <!-- <p>Contact us for making a teacher's account</p> -->
                 <!-- <button class="btn btn-sm btn-dark" *ngIf="userData.verified">Request for verify account</button> -->
                 <hr>
                 <div>Name: {{ userName }}</div>
