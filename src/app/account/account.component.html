@@ -1,4 +1,8 @@
 <div [className]="onSafari ? 'main-section safariSet font-1' : 'main-section font-1'">
+    <ngx-spinner  name="accountSpin"  bdColor = "rgba(0, 0, 0, 0.8)" 
+    size = "medium" color = "#fff" type = "ball-spin" 
+    [fullScreen] = "true"><p style="color: white" > Loading... </p>
+</ngx-spinner>
     <div [className]="onSafari ? 'account-out safariSet' : 'account-out' ">
     <div class="account">
         <h3 class="font-2">Account</h3>
@@ -16,8 +20,8 @@
 
             <img *ngIf="userData" [src]="userData.img" alt="" class="account-img">
 
-            <div class="part part-a" *ngIf="userData">                
-                <h5>Hello,</h5><h4 class="hello-text font-2">{{ userData.displayName }}</h4>
+            <div class="part part-a" *ngIf="userData">  
+                <h5>Hello,</h5><h4 class="hello-text font-2"> {{ userData.displayName }}</h4>
                 <p class="description-txt">{{ userData.description }}</p>
                 <button class="btn btn-secondary edit-btn" (click)="editDataFunction()">Edit Profile</button>
                 <button class="btn btn-danger logout-btn" (click)="logout()">Logout</button>

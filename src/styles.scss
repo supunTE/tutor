@@ -10,7 +10,9 @@
 html, body{
     height: 100%;
     width: 100%;
-    background-color: goldenrod;
+    overflow: hidden;
+    // background-color: goldenrod;
+    background-color: #141619;
 }             
 
 .icon-btn{
@@ -24,3 +26,5 @@ html, body{
     font-size: 100%;
     line-height: 1.5;
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

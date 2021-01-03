@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import firebase from 'firebase/app';
@@ -8,6 +8,9 @@ import { User } from '../interfaces/user';
 import { AcconutService } from '../services/acconut.service';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { LinebrPipe } from '../pipes/linebr.pipe';
+import { NgxSpinnerService } from "ngx-spinner";
+import { Subject } from 'rxjs';
+
 
 @Component({
   selector: 'app-account',
@@ -15,7 +18,7 @@ import { LinebrPipe } from '../pipes/linebr.pipe';
   styleUrls: ['./account.component.scss']
 })
 
-export class AccountComponent implements OnInit {
+export class AccountComponent implements OnInit, OnDestroy {
   users: Observable<User[]>;
   userData: User;
   userName: string = '';
@@ -23,9 +26,11 @@ export class AccountComponent implements OnInit {
   editData: boolean = false;
   onSafari: boolean = false;
 
+  private ngUnsubscribe = new Subject();
+
   // descriptionDis = '';
 
-  constructor(public auth: AngularFireAuth, private afs: AngularFirestore, private accountService: AcconutService, private storage: AngularFireStorage) {
+  constructor(private spinner: NgxSpinnerService, public auth: AngularFireAuth, private afs: AngularFirestore, private accountService: AcconutService, private storage: AngularFireStorage) {
     // this.users = this.accountService.getAllUsers();
     auth.authState.subscribe(user => {
       if (user) {
@@ -39,7 +44,12 @@ export class AccountComponent implements OnInit {
   }
 
   updateUser(user){
-    this.accountService.getUser(user).subscribe(user => this.userData = user)
+  
+    this.accountService.getUser(user).subscribe(user =>{
+    this.userData = user
+    
+      this.spinner.hide("accountSpin");
+  })
   }
 
   addUser(user){
@@ -176,6 +186,17 @@ export class AccountComponent implements OnInit {
 
   ngOnInit(): void {
      this.getBrowserName();
+
+     this.spinner.show("accountSpin");
+  }
+
+  ngAfterViewInit(): void {
+    this.spinner.show("accountSpin");
+
+  setTimeout(() => {
+    this.spinner.hide("accountSpin");
+  }, 6000);
+
   }
 
   getBrowserName() {
@@ -196,6 +217,11 @@ export class AccountComponent implements OnInit {
     if(navigator.userAgent.indexOf("Safari")!=-1){
       this.onSafari = true;
     }
+}
+
+ngOnDestroy() {
+  this.ngUnsubscribe.next();
+  this.ngUnsubscribe.complete();
 }
 
 }

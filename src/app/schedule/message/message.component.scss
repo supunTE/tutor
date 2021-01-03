@@ -28,7 +28,7 @@
     height: 100%;
     width: 100%;
     border-radius: 10px;
-    background-color: #e8e8e8;
+    background-color: #f3f3f3;
     border: 1px solid #00000038;
     box-shadow: 1px 1px 11px 0px #0000004a;
 }
@@ -142,4 +142,11 @@ p.msg-time {
     margin: 0;
     font-size: 70%;
     color: gray;
+}
+
+@media screen and (max-width: 768px){
+    .top-bar{
+        height: 5% !important;
+        color: black;
+    }
 }

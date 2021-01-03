@@ -2,14 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import firebase from 'firebase/app';
-import { Observable, Subscriber } from 'rxjs';
+import { from, Observable, Subscriber } from 'rxjs';
 import { map, take } from 'rxjs/operators';
+
 import { User } from '../interfaces/user';
 import { ClassInterface } from '../interfaces/class';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AcconutService } from '../services/acconut.service';
 import {bookmark} from '../interfaces/bookmark'
 import { ActivatedRoute } from '@angular/router';
+import { message } from '../interfaces/message';
+import { ProfileComponent } from './profile/profile.component'
 
 @Component({
   selector: 'app-schedule',
@@ -20,6 +23,7 @@ export class ScheduleComponent implements OnInit {
 
   stateStudent = false;
   stateTeacher = false;
+  pathId:string = '';
   classData: ClassInterface;
   userState: string = '';
   showSchedule = false;
@@ -30,7 +34,9 @@ export class ScheduleComponent implements OnInit {
   userData: User;
   userClasses: Observable<ClassInterface[]>;
   everyClasses: Observable<ClassInterface[]>;
-  moreInfoID
+  moreInfoID;
+  searchValue: string = "";
+  results: any;
 
   scheduleForm = new FormGroup({
     className: new FormControl(''),
@@ -75,9 +81,25 @@ export class ScheduleComponent implements OnInit {
     
    }
 
-   chatBarEnable(){
-    this.bookmarkBar = false;
-    this.chatBar = true;
+   searchClassF() {
+    this.everyClasses = this.accountService.searchClass(this.searchValue)
+  }
+
+   chatBarEnable(id){
+     if(id == this.pathId){
+      this.pathId = '';
+      this.bookmarkBar = false;
+      this.chatBar = false;
+     }else{
+      this.pathId = id;
+      this.bookmarkBar = false;
+      this.chatBar = true;
+     }
+    
+   }
+
+   closeBPanel(){
+    this.chatBar = false;
    }
 
    bookmarkClass(classID, userID){

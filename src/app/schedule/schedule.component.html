@@ -2,7 +2,11 @@
   <div class="top-bar">
     <ng-template [ngIf]="stateStudent">
       <div class="main-btn">
-        <button class="btn btn-success" (click)="showSearch = !showSearch">Find a class</button>
+        <button mat-raised-button color="primary" (click)="showSearch = !showSearch">
+          <span class="material-icons">
+            search
+          </span>
+        Find a class</button>
       </div>
     </ng-template>
     <ng-template [ngIf]="stateTeacher">
@@ -257,25 +261,44 @@
     </div>
   </div>
 
-  <div class="search-class" *ngIf="showSearch">
-    <div class="mb-3 col-md-3 d-md-flex">
-      <input type="text" class="form-control form-control-sm class-search-input" id="floatingInput"
-        placeholder="Class Name">
-      <span class="material-icons">
-        search
-      </span>
+  <div color="primary" class="search-class" *ngIf="showSearch">
+    <div class="d-md-flex">
+      <!-- <input type="text" class="form-control form-control-sm class-search-input" id="floatingInput"
+        placeholder="Class Name"> -->
+        <mat-form-field>
+          <mat-label>Class</mat-label>
+          <input matInput placeholder="Ex. Physics 2021" (keyup)="searchClassF()" [(ngModel)]="searchValue">
+        </mat-form-field>   
+        <mat-form-field>
+          <mat-label>Teacher</mat-label>
+          <input matInput placeholder="Ex. Teacher Name" (keyup)="searchClassF()" [(ngModel)]="searchValue">
+        </mat-form-field>   
+        <mat-form-field>
+          <mat-label>Lesson</mat-label>
+          <input matInput placeholder="Ex. Teacher Name" (keyup)="searchClassF()" [(ngModel)]="searchValue">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Batch Year/Grade</mat-label>
+          <input matInput placeholder="Ex. Teacher Name" (keyup)="searchClassF()" [(ngModel)]="searchValue">
+        </mat-form-field>   
     </div>
   </div>
 
-  <div class="row class-main" *ngIf="stateStudent">
-    <div class="col-8 class-list">
+  <div [class]="showSearch ? 'row class-main extra-top-margin' : 'row class-main'" *ngIf="stateStudent">
+    <div  [class]="chatBar ? 'col-md-8 col-12 class-list' : 'col-12 class-list'">
       <div class="class-list-items" *ngFor="let class of everyClasses | async">
-        <div class="class-item" id="{{class.docId}}">
+        <mat-card class="class-item" id="{{class.docId}}">
           <h4 class="class-name font-2">{{ class.className }}</h4>
           <div class="class-info">
-            <a [routerLink]="['/class', {outlets:{'message': 'profile/'+[class.teacherID]}}]" (click)="chatBarEnable()">
-            <span class="class-data class-teacher">Teacher: {{ class.teacherName }}</span>
-            </a>
+            <button mat-raised-button color="primary" [routerLink]="['/class', {outlets:{'message': 'profile/'+[class.teacherID]}}]" (click)="chatBarEnable(class.docId)">
+              <span class="material-icons">
+                person_pin
+              </span>
+              Teacher: {{ class.teacherName }}
+            </button>
+            <!-- <a [routerLink]="['/class', {outlets:{'message': 'profile/'+[class.teacherID]}}]" (click)="chatBarEnable()">
+            <span class="class-data class-teacher"></span>
+            </a> -->
             <span class="class-data">Subject: {{ class.subject }}</span>
             <span class="class-data">Lesson: {{ class.lesson }}</span>
             <span class="class-data">Category: {{ class.category }}</span>
@@ -305,7 +328,7 @@
             </div>
             <div class="more-info-row">
               <span class="class-data class-data-main">Link</span>
-              <span class="class-data" *ngIf="class.linkData">
+              <span class="class-data class-link" *ngIf="class.linkData">
                 <a href="{{class.linkData}}" target="blank">{{class.linkData}}</a>
                 <span class="material-icons">
                   launch
@@ -333,16 +356,27 @@
               </span>
             </div>
           </div>
-
-        </div>
+        </mat-card>
       </div>
     </div>
-    <div class="col-4 side-panel">
+    <div class="col-md-4 d-md-block d-none side-panel"  *ngIf="chatBar">
       <div class="side-panel-body">
         <div class="bookmarks" *ngIf="bookmarkBar">
           <app-bookmarks></app-bookmarks>
         </div>
-        <div class="message" *ngIf="chatBar">
+        <div class="message-window" *ngIf="chatBar">
+          <router-outlet name="message"></router-outlet>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 d-md-none bottom-panel" *ngIf="chatBar">
+      <span class="panel-close-btn" (click)="closeBPanel()"><i class="material-icons">close</i></span>
+      <div class="bottom-panel-body">
+        <div class="bookmarks" *ngIf="bookmarkBar">
+          <app-bookmarks></app-bookmarks>
+        </div>
+        <div class="message-window" *ngIf="chatBar">
           <router-outlet name="message"></router-outlet>
         </div>
       </div>

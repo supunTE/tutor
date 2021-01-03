@@ -1,6 +1,11 @@
-<div class="message" *ngIf="selectedTeacher">
-    <div class="top-bar">
+<mat-card class="message font-1" *ngIf="selectedTeacher">
+    <div class="top-bar row">
+        <span class="col-10">
         Teacher's Profile
+        </span>
+        <!-- <span class="col-2 text-danger text-end material-icons">
+            cancel
+        </span> -->
     </div>
     <div class="chat">
         <div class="msgs">            
@@ -103,4 +108,4 @@
         </div>
     </div>
     
-</div>
+</mat-card>

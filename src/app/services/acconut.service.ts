@@ -42,6 +42,16 @@ export class AcconutService {
     return this.afs.collection<ClassInterface>(`classes`).valueChanges({idField: 'docId'});
   }
 
+  searchClass(searchValue){
+    // return this.afs.collection<ClassInterface>(`classes`).valueChanges({idField: 'docId'});
+    return this.afs.collection<ClassInterface>(`classes`, ref => ref
+      .orderBy("className")
+      .startAt(searchValue.toLowerCase())
+      .endAt(searchValue.toLowerCase()+"\uf8ff")
+      .limit(10))
+      .valueChanges();
+  }
+
   deleteSelectedClass(id){
     return this.afs.doc<ClassInterface>(`classes/${id}`).delete();
   }

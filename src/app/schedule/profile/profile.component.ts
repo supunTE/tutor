@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { RouterModule, Routes, Router, ActivatedRoute } from '@angular/router';
 import firebase from 'firebase/app';
@@ -28,6 +28,7 @@ export class ProfileComponent implements OnInit {
   star4:boolean;
   star5:boolean;
   arrStars = Array; 
+  close: boolean = true;
 
   description:string = '';
   body:string = 'This is an \nexample. \n one\ntwo';
@@ -44,6 +45,10 @@ export class ProfileComponent implements OnInit {
   })
   }
 
+  closeMe(){
+    // console.log(this.count);
+    // this.count = false;
+  }
 
   starFunction(n){
     if(this.stars == n){
