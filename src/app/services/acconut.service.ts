@@ -42,6 +42,10 @@ export class AcconutService {
     return this.afs.collection<ClassInterface>(`classes`).valueChanges({idField: 'docId'});
   }
 
+  getClass(bookmark: bookmark){
+    return this.afs.doc<ClassInterface>(`classes/${bookmark.classid}`).valueChanges();
+  }
+
   searchClass(searchValue){
     // return this.afs.collection<ClassInterface>(`classes`).valueChanges({idField: 'docId'});
     return this.afs.collection<ClassInterface>(`classes`, ref => ref
@@ -61,11 +65,24 @@ export class AcconutService {
   }
 
   getBookmarkedClass(classID, userID){
-    return this.afs.doc<bookmark>(`bookmarks/${userID}/bookmarks/${classID}`).valueChanges();
+    return this.afs.doc<bookmark>(`bookmarks/${userID}/bookmarks/${classID}`).valueChanges({idField: 'docId'});
   }
 
   bookmarkClass(classID, userID, data){
     return this.afs.doc<bookmark>(`bookmarks/${userID}/bookmarks/${classID}`).set(data);
+  }
+
+  deleteBookmarkClass(classID, userID){
+    return this.afs.doc<bookmark>(`bookmarks/${userID}/bookmarks/${classID}`).delete();
+  }
+
+  getAllBookmarkedClasses(uid){
+    // bookmarks/${user.uid}/
+    // return this.afs.collection<ClassInterface>(`classes`, ref => ref.where('teacherID', '==', user.uid)).valueChanges({idField: 'docId'});
+
+    // return this.afs.collection<ClassInterface>(`classes`, ref => 
+    //   ref.where(`bookmark`, '==', 'true')).valueChanges({idField: 'docId'});
+    return this.afs.collection<bookmark>(`bookmarks/${uid}/bookmarks`).valueChanges();
   }
 
   getMessageClass(classID, userID){

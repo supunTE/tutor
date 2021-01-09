@@ -1,3 +1,6 @@
+
+@import "../../../shared/variable";
+
 .message{
     height: 100%;
     width: 100%;
@@ -34,7 +37,7 @@
 }
 
 .class-name{
-    background-color: #4f1188;
+    background-color: $color-primary;
     font-size: 80%;
     display: flex;
     /* justify-content: center; */
@@ -67,7 +70,7 @@
 // }
 
 .cloud-list{
-    height: 80%;
+    height: 82%;
 }
 
 .clouds{
@@ -78,28 +81,31 @@
     overflow-y: scroll;
 }
 
-.clouds::-webkit-scrollbar {
+  .clouds::-webkit-scrollbar {
     width: 8px;
   }
   
   .clouds::-webkit-scrollbar-track {
     background: #c2c2c2;
+    margin: 10px 0;
+    // border-radius:  0 0 10px 0;
+    border-radius: 10px;
   }
   
   .clouds::-webkit-scrollbar-thumb {
     background-color: #8c939e;
-    // border-radius: 20px;
+    border-radius: 20px;
     // border: 3px solid orange;
   }
 
   .clouds::-webkit-scrollbar-thumb:hover {
     background-color: #141619;
-    // border-radius: 20px;
     // border: 3px solid orange;
   }
 
+
 .input{
-    height: 12%;
+    height: 10%;
 }
 
 .input input{
@@ -144,9 +150,32 @@ p.msg-time {
     color: gray;
 }
 
+
 @media screen and (max-width: 768px){
-    .top-bar{
-        height: 5% !important;
-        color: black;
+    .message{
+        height: 500px;
     }
+
+    .top-bar{
+        height: 6%;
+    }
+
+    .chat{
+        height: 94%;
+    }
+
+    .class-name{
+        height: 6%;
+    }
+
+    .cloud-list{
+        height: 84%;
+    }
+
+    .account-img{
+        width: 250px;
+        height: 250px;
+    }
+
+
 }

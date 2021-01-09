@@ -3,6 +3,8 @@ export interface ClassInterface {
     teacherName: string,
     teacherID: string,
     subject: string,
+    fee: boolean,
+    bookmarkedBy: any,
     lesson: string,
     category: string,
     batchYear: number,

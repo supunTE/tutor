@@ -4,6 +4,7 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import firebase from 'firebase/app';
 import { from, Observable, Subscriber } from 'rxjs';
 import { map, take } from 'rxjs/operators';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 import { User } from '../interfaces/user';
 import { ClassInterface } from '../interfaces/class';
@@ -26,14 +27,19 @@ export class ScheduleComponent implements OnInit {
   pathId:string = '';
   classData: ClassInterface;
   userState: string = '';
+  showClasses = true;
   showSchedule = false;
   scheduleComplete = false;
   showSearch = false;
-  bookmarkBar:boolean;
+  showBookmarks = false;
+  sideBar: string = '';
   chatBar:boolean;
   userData: User;
   userClasses: Observable<ClassInterface[]>;
   everyClasses: Observable<ClassInterface[]>;
+  bookmarks: Observable<bookmark[]>;
+  // bookmarkedClass: Observable<ClassInterface>;
+  // bookmarkClasses: Observable<ClassInterface[]>;
   moreInfoID;
   searchValue: string = "";
   results: any;
@@ -67,64 +73,123 @@ export class ScheduleComponent implements OnInit {
   });
   
 
-  constructor(private route: ActivatedRoute, public auth: AngularFireAuth, private afs: AngularFirestore, private accountService: AcconutService) {
+  constructor(private _snackBar: MatSnackBar, private route: ActivatedRoute, public auth: AngularFireAuth, private afs: AngularFirestore, private accountService: AcconutService) {
     auth.authState.subscribe(user => {
       if (user) {
         const authUserData = firebase.auth().currentUser;
         this.checkCategory(authUserData);
         this.getValues(authUserData);
-        this.getUserClasses(authUserData)
+        this.getUserClasses(authUserData);
+        this.getBookmarkClasses(authUserData);
         this.getEveryClasses()
 
-      }
+      }      
     });
-    
    }
+
+   getBookmarkClasses(user){
+      this.bookmarks = this.accountService.getAllBookmarkedClasses(user.uid);
+    // console.log(this.bookmarks);
+    // this.bookmarkClasses.pipe(map((clList : ClassInterface[]) => {
+    //   this.bookmarks.subscribe(data =>{
+    //     data.forEach(childObj => {
+    //       this.bookmarkedClass = this.accountService.getClass(childObj);
+    //       console.log(this.bookmarkedClass)
+    //       // clList.push(this.bookmarkedClass);
+    //     })        
+    //   })      
+    // }))
+   }
+
+   showC(){     
+    this.showClasses = true;
+    this.chatBar = false;
+    this.showBookmarks = false;
+   }
+
+   showBMF(){
+    this.showClasses = false;
+    this.chatBar = false;
+    this.showBookmarks = true;
+   }
+
+   openSnackBar(message: string, action: string, duration: number) {
+    this._snackBar.open(message, action, {
+      duration: duration,
+    });
+  }
 
    searchClassF() {
     this.everyClasses = this.accountService.searchClass(this.searchValue)
   }
 
-   chatBarEnable(id){
-     if(id == this.pathId){
+   profileBarEnable(id){
+     if(id == this.pathId &&  this.sideBar == 'P'){
       this.pathId = '';
-      this.bookmarkBar = false;
+      // this.bookmarkBar = false;
       this.chatBar = false;
      }else{
       this.pathId = id;
-      this.bookmarkBar = false;
+      // this.bookmarkBar = false;
       this.chatBar = true;
      }
-    
+     this.sideBar = 'P';
    }
+
+   QuestionBarEnable(id){     
+    if(id == this.pathId &&  this.sideBar == 'Q'){
+     this.pathId = '';
+     // this.bookmarkBar = false;
+     this.chatBar = false;
+    }else{
+     this.pathId = id;
+     // this.bookmarkBar = false;
+     this.chatBar = true;
+    }
+    this.sideBar = 'Q';
+  }
 
    closeBPanel(){
     this.chatBar = false;
    }
 
-   bookmarkClass(classID, userID){
-    this.bookmarkBar = true;
-    this.chatBar = false;
+   bookmarkClass(classID, userID, cName, tName, tid){
+    // this.bookmarkBar = true;
+    // this.chatBar = false;
     this.accountService.getBookmarkedClass(classID, userID).pipe(take(1), map((bookmark: bookmark) => {
       if(bookmark){
         if(bookmark.bookmark){
-          return ({bookmark: false, uid: userID, classid: classID});
+          this.openSnackBar('Class is been removed from the bookmarks.', 'OK', 5000);
+          return ({bookmark: false});
         }else{
-          return ({bookmark: true, uid: userID, classid: classID});
+          this.openSnackBar('Class is been added to the bookmarks.', 'OK', 5000);
+          return ({bookmark: true});
         }
       }else{
-        return ({bookmark: true, uid: userID, classid: classID});
+        this.openSnackBar('Class is been added to the bookmarks.', 'OK', 5000);
+        return ({bookmark: true});
       }
 
-    })).subscribe(({bookmark, uid, classid}) => {
+    })).subscribe(({bookmark}) => {
+
+      if(bookmark){
       const newBM: bookmark = {
         bookmark,
-        uid,
-        classid 
+        uid: userID,
+        classid: classID,
+        className: cName,
+        teacherName: tName,
+        teacherID: tid,
       }
 
       this.accountService.bookmarkClass(classID, userID, newBM);
+      }else{
+        this.accountService.deleteBookmarkClass(classID, userID);
+      }
+     
     });
+
+
    }
 
    unhide(id){

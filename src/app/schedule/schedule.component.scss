@@ -1,3 +1,5 @@
+@import "../../shared/variable";
+
 .main-section{
     width: 100%;
     height: 100%;
@@ -27,6 +29,10 @@ button:focus{
     align-items: center;
 }
 
+.main-btn{
+    margin: 0.5em;
+}
+
 .schedule-class{
     width: 100%;
     padding: 3%;
@@ -45,9 +51,12 @@ button:focus{
 }
 
 .class-main{
-    padding: 6rem 0rem;
+    padding: 1rem 0rem;
+    margin-top: 5rem;
+    margin-bottom: 4rem;
+    height: 100%;
     width:  100%;
-    overflow: scroll;
+    overflow-y: scroll;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -63,8 +72,8 @@ button:focus{
 }
 
 .class-list mat-card.class-item{
-    // background-color: #212529;
-    border-bottom: 2px solid #c2185b;
+    background-color: $color-lash;
+    border-bottom: 2px solid $color-primary;
     // color: white;
     // padding: 1.2rem;
     // border-radius: 10px;
@@ -76,6 +85,13 @@ button:focus{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.class-list .class-info .teacher-name-btn{
+    width: 100%;
+    margin-bottom: 5px;
 }
 
 .class-list .class-data{
@@ -92,23 +108,37 @@ button:focus{
 
 .class-list .class-data.more-info-btn{
     cursor: pointer;
+    transition: 0.4s;
+}
+
+.class-list .class-data.more-info-btn:hover{
+    background-color: #212529;    
+    color: white;
 }
 
 .class-list .class-data .material-icons{
     margin-top: -0.1em;
 }
 
+.more-close-btn{
+    color: white;
+    font-size: 2em;
+    float: right;
+    cursor: pointer;
+}
+
 .class-list .more-info{
     width: 100%;
-    margin-top: 15px;
-    background-color: #51565a;
+    padding: 10px;
+    margin-top: 3rem;
+    background-color: $color-lash;
     border-radius: 5px;
     transition: 1s, visibility 0s, opacity 1.5s linear;
 }
 
 .class-list .info-hide{
     visibility: hidden;
-    // display: none;
+    display: none;
     max-height: 0;
     opacity: 0;
 }
@@ -116,9 +146,29 @@ button:focus{
 .class-list .info-unhide{
     visibility: visible;
     transition: 1s, visibility 0s, opacity 1.5s linear;
-    // display: block;
-    max-height: 500px;
+    padding: 1.5rem;
+    position: absolute;
+    z-index: 55;
     opacity: 1;
+    width: 100%;
+    overflow-y: scroll;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background-color: rgba(48, 48, 48, 0.8);
+    backdrop-filter: blur(8.5px);
+    -webkit-backdrop-filter: blur(8.5px);
+    -moz-backdrop-filter: blur(8.5px);
+    -o-backdrop-filter: blur(8.5px);
+    -ms-backdrop-filter: blur(8.5px);
+}
+
+.class-list .info-unhide .class-info{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 .class-list .more-info-btn.class-data-main{
@@ -131,6 +181,7 @@ button:focus{
     margin-bottom: 5px;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .class-list .more-info .class-data-main{
@@ -146,7 +197,7 @@ button:focus{
     // border-bottom: 2px solid black;
     color: black;
     background-color: white;
-    min-width: 500px;
+    width: 100%;
     height: 100px;
     overflow-y: scroll;
 }
@@ -174,15 +225,14 @@ button:focus{
 }
 
 .class-list .class-bookmark, .class-list .class-ask{
-    padding: 0.4em;
     margin: 0.5em;
     font-size: 80%;
     border-radius: 5px;
-    border-bottom: 2px solid black;
+    // border-bottom: 2px solid black;
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
+    align-items: center;
+    justify-content: center;
     color: white;
     cursor: pointer;
     transition: 0.2s;
@@ -194,17 +244,22 @@ button:focus{
 }
 
 .class-list .class-bookmark:hover, .class-list .class-ask:hover{
-    background-color: #ff172f !important;
+    // background-color: #ff172f !important;
 }
 
 .search-class{
     width: 100%;
     position: fixed;
-    padding: 0 1rem;
+    padding: 0.5rem 1rem;
     margin-top: 5rem;
     margin-bottom: -4rem;
-    background-color: #303030;
-    color: white;
+    z-index: 12;
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(8.5px);
+    -webkit-backdrop-filter: blur(8.5px);
+    -moz-backdrop-filter: blur(8.5px);
+    -o-backdrop-filter: blur(8.5px);
+    -ms-backdrop-filter: blur(8.5px);
 }
 
 .search-class .form-floating{
@@ -216,7 +271,7 @@ button:focus{
 }
 
 .class-list .class-teacher{
-    background-color: #0068ff;
+    background-color: $color-primary;
     color: white;
     border-bottom: 2px solid white;
 }
@@ -225,7 +280,7 @@ button:focus{
     padding: 0.2rem;
     height: 100%;
     position: fixed;
-    right: 0;
+    right: calc(var(--bs-gutter-x)/ 2);
 }
 
 .side-panel div{
@@ -250,13 +305,40 @@ button:focus{
     height: 65vh;
 }
 
+.class-info.bookmark-info button{
+    margin: 0.4em;
+}
+
 @media screen and (max-width: 768px){
-    .class-main.extra-top-margin{
-        margin-top: 0rem;
+    .top-bar{
+        overflow-x: scroll;
+        justify-content: normal;
     }
+
+    .main-btn{
+        margin: 0;
+        padding-right: 0.5em;
+    }
+
+    .class-main.extra-top-margin{
+        // margin-top: 0rem;
+    }    
     
     .class-list .info-unhide{
         max-height: none;
+    }
+
+    .more-close-btn{
+        position: absolute;
+        right: 1.5rem;
+    }
+
+    .class-list .info-unhide .class-info{
+        margin-top: 2.5rem;
+    }
+
+    .class-list .more-info{
+        margin-top: 1rem;
     }
 
     .class-list .more-info .more-info-row{
@@ -290,6 +372,7 @@ button:focus{
         margin: auto;
         flex-direction: column;
         position: fixed;
+        left: 0;
         top: 0;
         z-index: 55;
         background-color: rgb(48 48 48 / 0.8);

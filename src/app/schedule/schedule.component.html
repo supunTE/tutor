@@ -2,22 +2,36 @@
   <div class="top-bar">
     <ng-template [ngIf]="stateStudent">
       <div class="main-btn">
-        <button mat-raised-button color="primary" (click)="showSearch = !showSearch">
+        <button mat-raised-button color="primary" (click)="showSearch = !showSearch; showC()">
           <span class="material-icons">
             search
           </span>
         Find a class</button>
       </div>
+      <div class="main-btn">
+        <button mat-raised-button color="primary" (click)="showBMF()">
+          <span class="material-icons">
+            bookmark
+          </span>
+        Bookmarked classes</button>
+      </div>
+      <div class="main-btn">
+        <button mat-raised-button color="primary" (click)="showSearch = !showSearch">
+          <span class="material-icons">
+            class
+          </span>
+        Joined classes</button>
+      </div>
     </ng-template>
     <ng-template [ngIf]="stateTeacher">
       <div class="main-part">
-        <button class="btn btn-success" (click)="showSchedule = !showSchedule">Schedule a class</button>
+        <button class="btn btn-success" (click)="showSchedule = !showSchedule; showClasses = true">Schedule a class</button>
       </div>
     </ng-template>
   </div>
 
 
-  <div class="schedule-class" *ngIf="showSchedule">
+  <div class="schedule-class" *ngIf="showSchedule && showClasses">
     <form class="row" [formGroup]="scheduleForm" (ngSubmit)="onScheduleSubmit(userA)">
       <div class="col-sm-3 section-column">
         <div class="mb-2">
@@ -201,7 +215,7 @@
     </div>
   </div>
 
-  <div class="class-list" *ngIf="stateTeacher">
+  <div class="class-list" *ngIf="stateTeacher && showClasses">
     <div *ngFor="let class of userClasses | async">
       <div class="class-item" id="{{class.docId}}">
         <h4 class="class-name font-2">{{ class.className }}</h4>
@@ -261,7 +275,7 @@
     </div>
   </div>
 
-  <div color="primary" class="search-class" *ngIf="showSearch">
+  <div color="primary" class="search-class" *ngIf="showSearch && showClasses">
     <div class="d-md-flex">
       <!-- <input type="text" class="form-control form-control-sm class-search-input" id="floatingInput"
         placeholder="Class Name"> -->
@@ -284,21 +298,169 @@
     </div>
   </div>
 
-  <div [class]="showSearch ? 'row class-main extra-top-margin' : 'row class-main'" *ngIf="stateStudent">
+  <div [class]="showSearch ? 'row class-main extra-top-margin' : 'row class-main'" *ngIf="stateStudent && showClasses">
     <div  [class]="chatBar ? 'col-md-8 col-12 class-list' : 'col-12 class-list'">
-      <div class="class-list-items" *ngFor="let class of everyClasses | async">
+      <div [class]="chatBar ? 'row row-cols-1 row-cols-lg-2 g-0 g-md-3' : 'row row-cols-1 row-cols-md-2 row-cols-lg-3 g-0 g-md-3'">
+      <div class="col class-list-items" *ngFor="let class of everyClasses | async">
         <mat-card class="class-item" id="{{class.docId}}">
           <h4 class="class-name font-2">{{ class.className }}</h4>
           <div class="class-info">
-            <button mat-raised-button color="primary" [routerLink]="['/class', {outlets:{'message': 'profile/'+[class.teacherID]}}]" (click)="chatBarEnable(class.docId)">
+            <button mat-raised-button color="primary" class="teacher-name-btn" [routerLink]="['/class', {outlets:{'message': 'profile/'+[class.teacherID]}}]" (click)="profileBarEnable(class.docId)">
               <span class="material-icons">
                 person_pin
               </span>
               Teacher: {{ class.teacherName }}
             </button>
-            <!-- <a [routerLink]="['/class', {outlets:{'message': 'profile/'+[class.teacherID]}}]" (click)="chatBarEnable()">
+            <span class="class-data">Subject: {{ class.subject }}</span>
+            <span class="class-data">Lesson: {{ class.lesson }}</span>
+            <span class="class-data">Category: {{ class.category }}</span>
+            <span class="class-data">Batch: {{ class.batchYear }}</span>
+            <span
+              [className]="(moreInfoID == class.docId) ? 'class-data more-info-btn class-data-main' : 'class-data more-info-btn'"
+              (click)="unhide(class.docId)">More
+              <span class="material-icons">
+                keyboard_arrow_down
+              </span>
+            </span>
+          </div>          
+        </mat-card>
+        <div [className]="(moreInfoID == class.docId) ? 'info-unhide' : 'info-hide'">
+          <span class="more-close-btn d-block d-md-none" (click)="unhide(class.docId)"><i class="material-icons color-white float-right">close</i></span>
+          <div class="class-info">
+            <button mat-raised-button color="primary" [routerLink]="['/class', {outlets:{'message': 'profile/'+[class.teacherID]}}]" (click)="profileBarEnable(class.docId)">
+              <span class="material-icons">
+                person_pin
+              </span>
+              Teacher: {{ class.teacherName }}
+            </button>
+            <span class="class-data">Subject: {{ class.subject }}</span>
+            <span class="class-data">Lesson: {{ class.lesson }}</span>
+            <span class="class-data">Category: {{ class.category }}</span>
+            <span class="class-data">Batch: {{ class.batchYear }}</span>
+            <span class="more-close-btn d-none d-md-block" (click)="unhide(class.docId)"><i class="material-icons color-white float-right">close</i></span>
+          </div>
+          <div class="more-info">
+          <div class="more-info-row">
+            <span class="class-data">Number of weeks: {{ class.numberOfWeeks }}</span>
+            <span class="class-data">Classes per week: {{ class.classesPerWeek }}</span>
+          </div>
+          <div class="more-info-row">
+            <span class="class-data class-data-main">Class times</span>
+            <span class="class-data" *ngIf="class.mondayData">Monday: {{class.mondayTime}}</span>
+            <span class="class-data" *ngIf="class.tuesdayData">Tuesday: {{class.tuesdayTime}}</span>
+            <span class="class-data" *ngIf="class.wednesdayData">Wednesday: {{class.wednesdayTime}}</span>
+            <span class="class-data" *ngIf="class.thursdayData">Thursday: {{class.thursdayTime}}</span>
+            <span class="class-data" *ngIf="class.fridayData">Friday: {{class.fridayTime}}</span>
+            <span class="class-data" *ngIf="class.saturdayData">Saturday: {{class.saturdayTime}}</span>
+            <span class="class-data" *ngIf="class.sundayData">Sunday: {{class.sundayTime}}</span>
+          </div>
+          <div class="more-info-row">
+            <div >                
+              <a mat-raised-button class="class-data bg-success">
+                <span class="material-icons">
+                  mood
+                </span>
+                Free Class - Join</a>
+
+            </div>
+            <div >                
+              <a mat-raised-button class="class-data bg-warning">
+                <span class="material-icons">
+                  monetization_on
+                </span>
+                Paid Class - Join</a>
+            </div>
+            <!-- *ngIf="class.fee" -->
+            
+            <!-- <span class="class-data class-data-main">Link</span>
+            <span class="class-data class-link" *ngIf="class.linkData">
+              <a href="{{class.linkData}}" target="blank">{{class.linkData}}</a>
+              <span class="material-icons">
+                launch
+              </span>
+            </span> -->
+          </div>
+          <div class="more-info-row">
+            <span class="other-details">
+              <h6><b>Other Details</b></h6>
+              {{class.otherDetails}}
+            </span>
+          </div>
+          <div class="more-info-row functions-row">
+            <a mat-raised-button color="primary" class="class-bookmark" (click)="bookmarkClass(class.docId, userA.uid, class.className, class.teacherName, class.teacherID)">
+              <span class="material-icons">
+                bookmark
+              </span>
+              Bookmark Class
+            </a>
+            <a mat-raised-button color="primary" class="class-ask" [routerLink]="['/class', {outlets:{'message': [class.docId]}}]" (click)="QuestionBarEnable(class.docId)">
+              <span class="material-icons">
+                chat
+              </span>
+              Ask Questions
+            </a>               
+          </div>
+        </div>
+        </div>    
+      </div>
+      </div>
+      
+    </div>
+    <div class="col-md-4 d-md-block d-none side-panel"  *ngIf="chatBar">
+      <div class="side-panel-body">
+        <div class="bookmarks" *ngIf="bookmarkBar">
+          <app-bookmarks></app-bookmarks>
+        </div>
+        <div class="message-window" *ngIf="chatBar">
+          <router-outlet name="message"></router-outlet>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-md-none bottom-panel" *ngIf="chatBar">
+     <div class="col-12 col-sm-8 mx-auto">
+      <span class="panel-close-btn" (click)="closeBPanel()"><i class="material-icons">close</i></span>
+      <div class="bottom-panel-body">
+        <div class="bookmarks" *ngIf="bookmarkBar">
+          <app-bookmarks></app-bookmarks>
+        </div>
+        <div class="message-window" *ngIf="chatBar">
+          <router-outlet name="message"></router-outlet>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <div [class]="showSearch ? 'row class-main extra-top-margin' : 'row class-main'" *ngIf="stateStudent && showBookmarks">
+    <div  [class]="chatBar ? 'col-md-8 col-12 class-list' : 'col-12 class-list'">
+      <div [class]="chatBar ? 'row row-cols-1 row-cols-lg-2 g-0 g-md-3' : 'row row-cols-1 row-cols-md-2 row-cols-lg-3 g-0 g-md-3'">
+      <div class="class-list-items" *ngFor="let bookmark of bookmarks | async">
+        <mat-card class="class-item" id="">
+          <h4 class="class-name font-2">{{ bookmark.className }}</h4>
+         <div class="class-info bookmark-info">
+            <button mat-raised-button color="primary" [routerLink]="['/class', {outlets:{'message': 'profile/'+[bookmark.teacherID]}}]" (click)="profileBarEnable(bookmark.docId)">
+              <span class="material-icons">
+                person_pin
+              </span>
+              Teacher: {{ bookmark.teacherName }}
+            </button>
+            <button mat-raised-button color="primary" [routerLink]="['/class', {outlets:{'message': 'profile/'+[bookmark.teacherID]}}]" (click)="profileBarEnable(bookmark.docId)">
+              <span class="material-icons">
+                launch
+              </span>
+              Open
+            </button>
+            <button mat-raised-button class="bg-danger text-white" [routerLink]="['/class', {outlets:{'message': 'profile/'+[bookmark.teacherID]}}]" (click)="profileBarEnable(bookmark.docId)">
+              <span class="material-icons">
+                delete_forever
+              </span>
+              Delete Bookmark
+            </button>
+         </div>
+           <!--   <a [routerLink]="['/class', {outlets:{'message': 'profile/'+[class.teacherID]}}]" (click)="profileBarEnable()">
             <span class="class-data class-teacher"></span>
-            </a> -->
+            </a>
             <span class="class-data">Subject: {{ class.subject }}</span>
             <span class="class-data">Lesson: {{ class.lesson }}</span>
             <span class="class-data">Category: {{ class.category }}</span>
@@ -327,13 +489,21 @@
               <span class="class-data" *ngIf="class.sundayData">Sunday: {{class.sundayTime}}</span>
             </div>
             <div class="more-info-row">
-              <span class="class-data class-data-main">Link</span>
-              <span class="class-data class-link" *ngIf="class.linkData">
-                <a href="{{class.linkData}}" target="blank">{{class.linkData}}</a>
-                <span class="material-icons">
-                  launch
-                </span>
-              </span>
+              <div >                
+                <a mat-raised-button class="class-data bg-success">
+                  <span class="material-icons">
+                    mood
+                  </span>
+                  Free Class - Join</a>
+
+              </div>
+              <div >                
+                <a mat-raised-button class="class-data bg-warning">
+                  <span class="material-icons">
+                    monetization_on
+                  </span>
+                  Paid Class - Join</a>
+              </div> 
             </div>
             <div class="more-info-row">
               <span class="other-details">
@@ -342,21 +512,22 @@
               </span>
             </div>
             <div class="more-info-row functions-row">
-              <span class="bg-primary btn class-bookmark" (click)="bookmarkClass(class.docId, userA.uid)">
+              <a mat-raised-button color="primary" class="class-bookmark" (click)="bookmarkClass(class.docId, userA.uid)">
                 <span class="material-icons">
                   bookmark
                 </span>
-              </span>
-              <span class="bg-primary class-ask" >
-                <a [routerLink]="['/class', {outlets:{'message': [class.docId]}}]" (click)="chatBarEnable()">
-                  <span class="material-icons">
-                    chat
-                  </span>
-                </a>
-              </span>
+                Bookmark Class
+              </a>
+              <a mat-raised-button color="primary" class="class-ask" [routerLink]="['/class', {outlets:{'message': [class.docId]}}]" (click)="profileBarEnable(class.docId)">
+                <span class="material-icons">
+                  chat
+                </span>
+                Ask Questions
+              </a>               
             </div>
-          </div>
+          </div>-->
         </mat-card>
+      </div>
       </div>
     </div>
     <div class="col-md-4 d-md-block d-none side-panel"  *ngIf="chatBar">
