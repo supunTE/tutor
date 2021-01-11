@@ -13,7 +13,8 @@ import { AcconutService } from '../services/acconut.service';
 import {bookmark} from '../interfaces/bookmark'
 import { ActivatedRoute } from '@angular/router';
 import { message } from '../interfaces/message';
-import { ProfileComponent } from './profile/profile.component'
+import { ProfileComponent } from './profile/profile.component';
+import { SharedService } from '../services/shared.service';
 
 @Component({
   selector: 'app-schedule',
@@ -32,6 +33,7 @@ export class ScheduleComponent implements OnInit {
   scheduleComplete = false;
   showSearch = false;
   showBookmarks = false;
+  showBookmarkClass = false;
   sideBar: string = '';
   chatBar:boolean;
   userData: User;
@@ -73,7 +75,8 @@ export class ScheduleComponent implements OnInit {
   });
   
 
-  constructor(private _snackBar: MatSnackBar, private route: ActivatedRoute, public auth: AngularFireAuth, private afs: AngularFirestore, private accountService: AcconutService) {
+  constructor(private _snackBar: MatSnackBar, private route: ActivatedRoute, public auth: AngularFireAuth, 
+    private afs: AngularFirestore, private accountService: AcconutService, private SharedService: SharedService) {
     auth.authState.subscribe(user => {
       if (user) {
         const authUserData = firebase.auth().currentUser;
@@ -82,9 +85,26 @@ export class ScheduleComponent implements OnInit {
         this.getUserClasses(authUserData);
         this.getBookmarkClasses(authUserData);
         this.getEveryClasses()
-
+        
+        this.SharedService.bookmarkVisibilityChange.subscribe((value) => {
+          this.showBookmarkClass = value
+        });
+        this.SharedService.sideBarVisibilityChange.subscribe((value) => {
+          this.chatBar = value
+        });
+        this.SharedService.pathIdChange.subscribe((value) => {
+          this.pathId = value
+        });
+        this.SharedService.barChange.subscribe((value) => {
+          this.sideBar = value
+        });
       }      
     });
+   }
+
+   openBookmarkedClass(id){
+      this.SharedService.toggleSidebarVisibility(false, '', '');
+      this.SharedService.toggleBookmarkVisibility();
    }
 
    getBookmarkClasses(user){
@@ -101,16 +121,24 @@ export class ScheduleComponent implements OnInit {
     // }))
    }
 
-   showC(){     
+   showC(){
+    if(!this.showClasses){
     this.showClasses = true;
-    this.chatBar = false;
+    this.SharedService.toggleSidebarVisibility(false, '', '');    
+
     this.showBookmarks = false;
+    this.showBookmarkClass = false;
+    }else{
+      this.showSearch = !this.showSearch; 
+    }
    }
 
    showBMF(){
     this.showClasses = false;
-    this.chatBar = false;
+    this.SharedService.toggleSidebarVisibility(false, '', '');
+    
     this.showBookmarks = true;
+    this.showBookmarkClass = false;
    }
 
    openSnackBar(message: string, action: string, duration: number) {
@@ -125,32 +153,47 @@ export class ScheduleComponent implements OnInit {
 
    profileBarEnable(id){
      if(id == this.pathId &&  this.sideBar == 'P'){
-      this.pathId = '';
-      // this.bookmarkBar = false;
-      this.chatBar = false;
+       this.SharedService.toggleSidebarVisibility(false, '', 'P');
+      // this.pathId = '';
+      // this.chatBar = false;
      }else{
-      this.pathId = id;
-      // this.bookmarkBar = false;
-      this.chatBar = true;
+      this.SharedService.toggleSidebarVisibility(true, id, 'P');
+      //  this.pathId = id;   
+      //   this.chatBar = true;
      }
-     this.sideBar = 'P';
+    //  this.sideBar = 'P';
+     this.moreInfoID = '';
    }
 
    QuestionBarEnable(id){     
     if(id == this.pathId &&  this.sideBar == 'Q'){
-     this.pathId = '';
-     // this.bookmarkBar = false;
-     this.chatBar = false;
+      this.SharedService.toggleSidebarVisibility(false, '', 'Q');
+    //  this.pathId = '';
+    //  this.chatBar = false;
     }else{
-     this.pathId = id;
-     // this.bookmarkBar = false;
-     this.chatBar = true;
+      this.SharedService.toggleSidebarVisibility(true, 'id', 'Q');
+    //  this.pathId = id;
+    //  this.chatBar = true;
     }
-    this.sideBar = 'Q';
+    // this.sideBar = 'Q';
+    this.moreInfoID = '';
+  }
+
+  unhide(id){
+    if(this.moreInfoID == id){
+     this.moreInfoID = ''
+    }else{
+     this.moreInfoID = id;
+    }
+    this.SharedService.toggleSidebarVisibility(false, '', '');
+    // this.chatBar = false;
+    // this.pathId = '';
+    // this.sideBar= '';
   }
 
    closeBPanel(){
     this.chatBar = false;
+    this.pathId = '';
    }
 
    bookmarkClass(classID, userID, cName, tName, tid){
@@ -190,14 +233,6 @@ export class ScheduleComponent implements OnInit {
     });
 
 
-   }
-
-   unhide(id){
-     if(this.moreInfoID == id){
-      this.moreInfoID = ''
-     }else{
-      this.moreInfoID = id;
-     }
    }
 
    deleteClass(id){

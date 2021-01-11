@@ -72,13 +72,18 @@ button:focus{
 }
 
 .class-list mat-card.class-item{
-    background-color: $color-lash;
+    background-color: $color-lash-blur;
     border-bottom: 2px solid $color-primary;
     // color: white;
     // padding: 1.2rem;
     // border-radius: 10px;
     margin-bottom: 10px;
     transition: 1s;
+    backdrop-filter: blur(8.5px);
+    -webkit-backdrop-filter: blur(8.5px);
+    -moz-backdrop-filter: blur(8.5px);
+    -o-backdrop-filter: blur(8.5px);
+    -ms-backdrop-filter: blur(8.5px);
 }
 
 .class-list .class-info{
@@ -103,7 +108,7 @@ button:focus{
     display: flex;
     flex-direction: row;
     color: black;
-    background-color: white;
+    background-color: #ffffffb3;
 }
 
 .class-list .class-data.more-info-btn{
@@ -131,7 +136,12 @@ button:focus{
     width: 100%;
     padding: 10px;
     margin-top: 3rem;
-    background-color: $color-lash;
+    background-color: $color-lash-blur;
+    backdrop-filter: blur(8.5px);
+    -webkit-backdrop-filter: blur(8.5px);
+    -moz-backdrop-filter: blur(8.5px);
+    -o-backdrop-filter: blur(8.5px);
+    -ms-backdrop-filter: blur(8.5px);
     border-radius: 5px;
     transition: 1s, visibility 0s, opacity 1.5s linear;
 }
@@ -155,7 +165,7 @@ button:focus{
     height: 100vh;
     top: 0;
     left: 0;
-    background-color: rgba(48, 48, 48, 0.8);
+    background-color: $color-white-blur;
     backdrop-filter: blur(8.5px);
     -webkit-backdrop-filter: blur(8.5px);
     -moz-backdrop-filter: blur(8.5px);
@@ -173,7 +183,7 @@ button:focus{
 
 .class-list .more-info-btn.class-data-main{
     transition: 0.5s;
-    background-color: black;
+    background-color: #212529;
     color: white;
 }
 
@@ -309,9 +319,30 @@ button:focus{
     margin: 0.4em;
 }
 
+.bookmark-class{
+    visibility: visible;
+    transition: 1s, visibility 0s, opacity 1.5s linear;
+    padding: 1.5rem;
+    position: absolute;
+    z-index: 55;
+    opacity: 1;
+    margin-top: 0;
+    width: 100%;
+    overflow-y: scroll;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background-color: $color-white-blur;
+    backdrop-filter: blur(8.5px);
+    -webkit-backdrop-filter: blur(8.5px);
+    -moz-backdrop-filter: blur(8.5px);
+    -o-backdrop-filter: blur(8.5px);
+    -ms-backdrop-filter: blur(8.5px);
+}
+
 @media screen and (max-width: 768px){
     .top-bar{
-        overflow-x: scroll;
+        overflow-y: scroll;
         justify-content: normal;
     }
 

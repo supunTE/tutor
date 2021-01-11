@@ -1,1 +1,74 @@
-<p>bookmarks works!</p>
+<div *ngIf="auth.user | async as userA">
+<div class="class-list" *ngIf="selectedClass" >
+  <span class="more-close-btn d-block d-md-none" (click)="unhide()"><i class="material-icons color-white float-right">close</i></span>
+  <div class="class-info">
+    <button mat-raised-button color="primary" [routerLink]="['/class', {outlets:{'message': 'profile/'+[selectedClass.teacherID]}}]"
+     (click)="profileBarEnable(selectedClass.docId)">
+      <span class="material-icons">
+        person_pin
+      </span>
+      Teacher: {{ selectedClass.teacherName }}
+    </button>
+    <span class="class-data">Subject: {{ selectedClass.subject }}</span>
+    <span class="class-data">Lesson: {{ selectedClass.lesson }}</span>
+    <span class="class-data">Category: {{ selectedClass.category }}</span>
+    <span class="class-data">Batch: {{ selectedClass.batchYear }}</span>
+    <span class="more-close-btn d-none d-md-block" (click)="unhide()"><i class="material-icons color-white float-right">close</i></span>
+  </div>
+  <div class="more-info">
+  <div class="more-info-row">
+    <span class="class-data">Number of weeks: {{ selectedClass.numberOfWeeks }}</span>
+    <span class="class-data">Classes per week: {{ selectedClass.classesPerWeek }}</span>
+  </div>
+  <div class="more-info-row">
+    <span class="class-data class-data-main">Class times</span>
+    <span class="class-data" *ngIf="selectedClass.mondayData">Monday: {{selectedClass.mondayTime}}</span>
+    <span class="class-data" *ngIf="selectedClass.tuesdayData">Tuesday: {{selectedClass.tuesdayTime}}</span>
+    <span class="class-data" *ngIf="selectedClass.wednesdayData">Wednesday: {{selectedClass.wednesdayTime}}</span>
+    <span class="class-data" *ngIf="selectedClass.thursdayData">Thursday: {{selectedClass.thursdayTime}}</span>
+    <span class="class-data" *ngIf="selectedClass.fridayData">Friday: {{selectedClass.fridayTime}}</span>
+    <span class="class-data" *ngIf="selectedClass.saturdayData">Saturday: {{selectedClass.saturdayTime}}</span>
+    <span class="class-data" *ngIf="selectedClass.sundayData">Sunday: {{selectedClass.sundayTime}}</span>
+  </div>
+  <div class="more-info-row">
+    <div >                
+      <a mat-raised-button class="class-data bg-success">
+        <span class="material-icons">
+          mood
+        </span>
+        Free Class - Join</a>
+
+    </div>
+    <div >                
+      <a mat-raised-button class="class-data bg-warning">
+        <span class="material-icons">
+          monetization_on
+        </span>
+        Paid Class - Join</a>
+    </div>
+    <!-- *ngIf="selectedClass.fee" -->
+    
+    <!-- <span class="class-data class-data-main">Link</span>
+    <span class="class-data class-link" *ngIf="selectedClass.linkData">
+      <a href="{{selectedClass.linkData}}" target="blank">{{selectedClass.linkData}}</a>
+      <span class="material-icons">
+        launch
+      </span>
+    </span> -->
+  </div>
+  <div class="more-info-row">
+    <span class="other-details">
+      <h6><b>Other Details</b></h6>
+      {{selectedClass.otherDetails}}
+    </span>
+  </div>
+  <div class="more-info-row functions-row">
+    <a mat-raised-button color="primary" class="class-ask" [routerLink]="['/class', {outlets:{'message': [selectedClass.docId]}}]" (click)="QuestionBarEnable(selectedClass.docId)">
+      <span class="material-icons">
+        chat
+      </span>
+      Ask Questions
+    </a>               
+  </div>
+</div>
+</div>

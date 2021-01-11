@@ -39,7 +39,8 @@ export class MessageComponent implements OnInit {
   }
 
   sendMessage(uid, cid){
-    console.log(cid)
+    // console.log(cid)
+    if(this.chatInput != ''){
     const todayTime = new Date()
     const newMessage: message = {
       uid: uid,
@@ -49,7 +50,8 @@ export class MessageComponent implements OnInit {
 
     }
     this.accountService.messageClass(cid, uid, newMessage)
-    this.chatInput = ""
+    this.chatInput = ""; 
+    }
   }
 
   ngOnInit(): void {
