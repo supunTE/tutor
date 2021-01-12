@@ -82,7 +82,7 @@ export class AcconutService {
 
     // return this.afs.collection<ClassInterface>(`classes`, ref => 
     //   ref.where(`bookmark`, '==', 'true')).valueChanges({idField: 'docId'});
-    return this.afs.collection<bookmark>(`bookmarks/${uid}/bookmarks`).valueChanges();
+    return this.afs.collection<bookmark>(`bookmarks/${uid}/bookmarks`).valueChanges({idField: 'docId'});
   }
 
   getMessageClass(classID, userID){

@@ -6,11 +6,12 @@ import { ScheduleComponent } from './schedule/schedule.component';
 import { MessageComponent } from './schedule/message/message.component';
 import { ProfileComponent } from './schedule/profile/profile.component';
 import { BookmarksComponent } from './schedule/bookmarks/bookmarks.component';
+import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
 
 const routes: Routes = [
   { path: 'main', component: MainComponent },
   { path: 'account', component: AccountComponent },
-  { path: 'class', component: ScheduleComponent, 
+  { path: 'class', component: ScheduleComponent,  canActivate: [AngularFireAuthGuard],
     children: [
       { path: ':id', outlet: 'message', component: MessageComponent},
       { path: 'profile/:id', outlet: 'profile', component: ProfileComponent},

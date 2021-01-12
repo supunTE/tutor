@@ -5,6 +5,7 @@ import firebase from 'firebase/app';
 import { from, Observable, Subscriber } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { ConnectionService } from 'ng-connection-service'
 
 import { User } from '../interfaces/user';
 import { ClassInterface } from '../interfaces/class';
@@ -22,7 +23,6 @@ import { SharedService } from '../services/shared.service';
   styleUrls: ['./schedule.component.scss']
 })
 export class ScheduleComponent implements OnInit {
-
   stateStudent = false;
   stateTeacher = false;
   pathId:string = '';
@@ -45,6 +45,7 @@ export class ScheduleComponent implements OnInit {
   moreInfoID;
   searchValue: string = "";
   results: any;
+  isConnected = true;
 
   scheduleForm = new FormGroup({
     className: new FormControl(''),
@@ -74,9 +75,13 @@ export class ScheduleComponent implements OnInit {
     otherDetails: new FormControl('')
   });
   
-
   constructor(private _snackBar: MatSnackBar, private route: ActivatedRoute, public auth: AngularFireAuth, 
-    private afs: AngularFirestore, private accountService: AcconutService, private SharedService: SharedService) {
+    private afs: AngularFirestore, private accountService: AcconutService, private SharedService: SharedService,
+    private ConnectionService: ConnectionService) {
+      this.ConnectionService.monitor().subscribe(isC => {
+        this.isConnected = isC;
+
+      })
     auth.authState.subscribe(user => {
       if (user) {
         const authUserData = firebase.auth().currentUser;
@@ -98,6 +103,8 @@ export class ScheduleComponent implements OnInit {
         this.SharedService.barChange.subscribe((value) => {
           this.sideBar = value
         });
+
+
       }      
     });
    }
@@ -231,8 +238,11 @@ export class ScheduleComponent implements OnInit {
       }
      
     });
+   }
 
-
+   deleteBookmark(cid, uid){
+    this.accountService.deleteBookmarkClass(cid, uid);
+    this.openSnackBar('Bookmark has been deleted', 'OK', 5000);
    }
 
    deleteClass(id){

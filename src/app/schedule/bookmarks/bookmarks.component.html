@@ -2,7 +2,7 @@
 <div class="class-list" *ngIf="selectedClass" >
   <span class="more-close-btn d-block d-md-none" (click)="unhide()"><i class="material-icons color-white float-right">close</i></span>
   <div class="class-info">
-    <button mat-raised-button color="primary" [routerLink]="['/class', {outlets:{'message': 'profile/'+[selectedClass.teacherID]}}]"
+    <button mat-raised-button color="primary" [routerLink]="['/class', {outlets:{'message': 'profile/'+[selectedClass.teacherID]}}, {skipLocationChange : true}]"
      (click)="profileBarEnable(selectedClass.docId)">
       <span class="material-icons">
         person_pin
@@ -63,7 +63,7 @@
     </span>
   </div>
   <div class="more-info-row functions-row">
-    <a mat-raised-button color="primary" class="class-ask" [routerLink]="['/class', {outlets:{'message': [selectedClass.docId]}}]" (click)="QuestionBarEnable(selectedClass.docId)">
+    <a mat-raised-button color="primary" class="class-ask" [routerLink]="['/class', {outlets:{'message': [selectedClass.docId]}}, {skipLocationChange : true}]" (click)="QuestionBarEnable(selectedClass.docId)">
       <span class="material-icons">
         chat
       </span>
