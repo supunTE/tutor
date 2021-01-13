@@ -4,6 +4,7 @@ import { User } from '../interfaces/user';
 import { Teacher } from '../interfaces/teacher';
 import { ClassInterface } from '../interfaces/class';
 import {bookmark} from '../interfaces/bookmark';
+import {joined} from '../interfaces/joined';
 import {message} from '../interfaces/message'
 
 
@@ -69,6 +70,11 @@ export class AcconutService {
   }
 
   bookmarkClass(classID, userID, data){
+    if(data.bookmark){
+      this.afs.doc(`classes/${classID}/bookmarkedBy/${userID}`).set({bookmark:true});
+    }else{
+      this.afs.doc(`classes/${classID}/bookmarkedBy/${userID}`).set({bookmark:false});
+    }
     return this.afs.doc<bookmark>(`bookmarks/${userID}/bookmarks/${classID}`).set(data);
   }
 
@@ -77,11 +83,6 @@ export class AcconutService {
   }
 
   getAllBookmarkedClasses(uid){
-    // bookmarks/${user.uid}/
-    // return this.afs.collection<ClassInterface>(`classes`, ref => ref.where('teacherID', '==', user.uid)).valueChanges({idField: 'docId'});
-
-    // return this.afs.collection<ClassInterface>(`classes`, ref => 
-    //   ref.where(`bookmark`, '==', 'true')).valueChanges({idField: 'docId'});
     return this.afs.collection<bookmark>(`bookmarks/${uid}/bookmarks`).valueChanges({idField: 'docId'});
   }
 
@@ -94,8 +95,20 @@ export class AcconutService {
     return this.afs.collection<message>(`messages/${classID}/messages/${userID}/message`).add(data);
   }
 
+  deleteMessage(cid, uid, id){
+    return this.afs.doc(`messages/${cid}/messages/${uid}/message/${id}`).update({delete: true});
+  }
+
   getTeacher(id){
     return this.afs.doc<Teacher>(`users/${id}`).valueChanges();
+  }
+
+  joinClass(cid, uid, data){
+    return this.afs.doc<bookmark>(`joined/${uid}/joined/${cid}`).set(data);
+  }
+
+  getAllJoinedClasses(uid){
+    return this.afs.collection<joined>(`joined/${uid}/joined`).valueChanges({idField: 'docId'});
   }
 
 

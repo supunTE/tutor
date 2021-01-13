@@ -12,7 +12,8 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ConnectionServiceModule } from 'ng-connection-service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,6 +26,7 @@ import { MessageComponent } from './schedule/message/message.component';
 import { ProfileComponent } from './schedule/profile/profile.component';
 import { LinebrPipe } from './pipes/linebr.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { JoinedInClassesComponent } from './schedule/joined-in-classes/joined-in-classes.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BookmarksComponent,
     MessageComponent,
     ProfileComponent,
-    LinebrPipe
+    LinebrPipe,
+    JoinedInClassesComponent
   ],
   imports: [
     MatSliderModule,
@@ -55,7 +58,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AngularFireAuthModule,
     AngularFirestoreModule,
     CommonModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

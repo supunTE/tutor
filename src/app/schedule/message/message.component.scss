@@ -15,7 +15,7 @@
     height: 8%;
     padding: 4px 10px;
     color: white;
-    background-color: #141619;
+    background-color: #212529;
 }
 
 .chat{
@@ -99,7 +99,7 @@
   }
 
   .clouds::-webkit-scrollbar-thumb:hover {
-    background-color: #141619;
+    background-color: #212529;
     // border: 3px solid orange;
   }
 
@@ -114,7 +114,7 @@
     transition: 0.5s;
     border-radius: 0 0 10px 10px;
     padding: 5px 10px;
-    border-width: 0.5px 0 2px;
+    border-width: 1px 0px 0px;
     border-style: solid;
     border-color: #00000014;
     color: white;
@@ -123,20 +123,57 @@
 
 .input input:focus{
     outline: 0;
-    background-color: #141619;
+    background-color: #212529;
 }
 
-.clouds div{
+.clouds div.msgIn, .clouds div.msgOut{
     margin: 5px;
     padding: 5px;
     overflow-wrap: break-word;
     border-radius: 5px;
     font-size: 80%;
+    transition: 0.4s;
 }
 
-.msgIn{
+.msgIn .delete-btn{
+    font-size: 1.5em;
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
+    display: none;
+    opacity: 0;
+    transition: 0.4s;
+}
+
+.msgIn.not-deleted:hover .delete-btn{
+    visibility: visible;
+    opacity: 1;
+    float: right;
+    cursor: pointer;
+    height: auto;
+    display: block;
+}
+
+.msgIn.not-deleted{
     text-align: right;
     background-color:  #ffffff;
+}
+
+.msgIn.deleted{
+    text-align: right;
+    border: 1px solid #82828259;
+    font-style: italic;
+    background-color: transparent;
+    color: #828282;
+    font-size: 70% !important;
+}
+
+.msgIn.deleted .msg-data{
+    display: none;
+}
+
+.msgIn.deleted::after{
+    content: 'This message was deleted.'
 }
 
 .msgOut{
@@ -175,6 +212,11 @@ p.msg-time {
     .account-img{
         width: 250px;
         height: 250px;
+    }
+
+    .msgIn .delete-btn{
+        width: auto;
+        float: right;
     }
 
 

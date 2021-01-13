@@ -54,6 +54,10 @@ export class MessageComponent implements OnInit {
     }
   }
 
+  deleteMessage(uid, cid, id){
+    this.accountService.deleteMessage(cid, uid, id)
+  }
+
   ngOnInit(): void {
   }
 

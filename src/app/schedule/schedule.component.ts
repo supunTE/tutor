@@ -16,6 +16,7 @@ import { ActivatedRoute } from '@angular/router';
 import { message } from '../interfaces/message';
 import { ProfileComponent } from './profile/profile.component';
 import { SharedService } from '../services/shared.service';
+import { joined } from '../interfaces/joined';
 
 @Component({
   selector: 'app-schedule',
@@ -34,12 +35,15 @@ export class ScheduleComponent implements OnInit {
   showSearch = false;
   showBookmarks = false;
   showBookmarkClass = false;
+  showJoined = false;
+  showJoinedClass = false;
   sideBar: string = '';
   chatBar:boolean;
   userData: User;
   userClasses: Observable<ClassInterface[]>;
   everyClasses: Observable<ClassInterface[]>;
   bookmarks: Observable<bookmark[]>;
+  joinedClasses: Observable<joined[]>;
   // bookmarkedClass: Observable<ClassInterface>;
   // bookmarkClasses: Observable<ClassInterface[]>;
   moreInfoID;
@@ -90,6 +94,7 @@ export class ScheduleComponent implements OnInit {
         this.getUserClasses(authUserData);
         this.getBookmarkClasses(authUserData);
         this.getEveryClasses()
+        this.getJoinedClasses(authUserData);
         
         this.SharedService.bookmarkVisibilityChange.subscribe((value) => {
           this.showBookmarkClass = value
@@ -116,36 +121,49 @@ export class ScheduleComponent implements OnInit {
 
    getBookmarkClasses(user){
       this.bookmarks = this.accountService.getAllBookmarkedClasses(user.uid);
-    // console.log(this.bookmarks);
-    // this.bookmarkClasses.pipe(map((clList : ClassInterface[]) => {
-    //   this.bookmarks.subscribe(data =>{
-    //     data.forEach(childObj => {
-    //       this.bookmarkedClass = this.accountService.getClass(childObj);
-    //       console.log(this.bookmarkedClass)
-    //       // clList.push(this.bookmarkedClass);
-    //     })        
-    //   })      
-    // }))
    }
+
+   
+   getJoinedClasses(user){
+    this.joinedClasses = this.accountService.getAllJoinedClasses(user.uid);
+  }
 
    showC(){
     if(!this.showClasses){
     this.showClasses = true;
     this.SharedService.toggleSidebarVisibility(false, '', '');    
-
-    this.showBookmarks = false;
-    this.showBookmarkClass = false;
     }else{
       this.showSearch = !this.showSearch; 
     }
+    this.showBookmarks = false;
+    this.showBookmarkClass = false;
+    this.showJoined = false;
+    this.showJoinedClass = false;
    }
 
    showBMF(){
     this.showClasses = false;
+    this.showSearch = false;
     this.SharedService.toggleSidebarVisibility(false, '', '');
     
     this.showBookmarks = true;
     this.showBookmarkClass = false;
+
+    this.showJoined = false;
+    this.showJoinedClass = false;
+   }
+
+   showJ(){
+    this.showClasses = false;
+    this.showSearch = false;
+    this.SharedService.toggleSidebarVisibility(false, '', '');    
+
+    this.showBookmarks = false;
+    this.showBookmarkClass = false;
+
+    this.showJoined = true;
+    this.showJoinedClass = false;
+
    }
 
    openSnackBar(message: string, action: string, duration: number) {
@@ -240,6 +258,24 @@ export class ScheduleComponent implements OnInit {
     });
    }
 
+   joinClass(classID, userID, cName, tName, tid, complete){
+    // this.bookmarkBar = true;
+    // this.chatBar = false;
+      this.openSnackBar('You joined to this class!', 'OK', 5000);
+
+      const newJ: joined = {
+        joined: true,
+        complete: complete,
+        uid: userID,
+        classid: classID,
+        className: cName,
+        teacherName: tName,
+        teacherID: tid,
+      }
+
+      this.accountService.joinClass(classID, userID, newJ);
+   }
+
    deleteBookmark(cid, uid){
     this.accountService.deleteBookmarkClass(cid, uid);
     this.openSnackBar('Bookmark has been deleted', 'OK', 5000);
@@ -303,6 +339,7 @@ export class ScheduleComponent implements OnInit {
         this.chatBar = true;
       }
   })
+
    }
 
 }

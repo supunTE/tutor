@@ -12,11 +12,16 @@
             <div class="cloud-list">
             <div class="clouds">
                 <span *ngFor="let msg of classMesssages | async">
-                    <div class="msgIn" *ngIf="msg.uid == userA.uid; else elseBlock">
-                        {{ msg.message }}
-                        <p class="msg-time">{{ msg.time.toDate() | date:'hh:mm aa dd.MMM.yyyy' }}</p>
+                    <div class="msgIn" [class]="msg.delete ? 'deleted' : 'not-deleted'" *ngIf="msg.uid == userA.uid; else elseBlock" >
+                        <div class="msg-data">
+                            {{ msg.message }}
+                            <p class="msg-time">{{ msg.time.toDate() | date:'hh:mm aa dd.MMM.yyyy' }}</p>
+                        </div>                 
+                        <span class="delete-btn material-icons text-danger" (click)="deleteMessage(userA.uid, selectedClass.docId, msg.docId)">
+                            delete
+                        </span>
                     </div>
-                    <ng-template #elseBlock>   
+                    <ng-template #elseBlock>                        
                         <div class="msgOut">{{ msg.message }}
                         <p class="msg-time">{{ msg.time.toDate() | date:'hh:mm aa dd.MMM.yyyy' }}</p>
                         </div>

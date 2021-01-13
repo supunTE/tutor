@@ -7,6 +7,8 @@ import { MessageComponent } from './schedule/message/message.component';
 import { ProfileComponent } from './schedule/profile/profile.component';
 import { BookmarksComponent } from './schedule/bookmarks/bookmarks.component';
 import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
+import { JoinedInClassesComponent } from './schedule/joined-in-classes/joined-in-classes.component';
+
 
 const routes: Routes = [
   { path: 'main', component: MainComponent },
@@ -15,7 +17,8 @@ const routes: Routes = [
     children: [
       { path: ':id', outlet: 'message', component: MessageComponent},
       { path: 'profile/:id', outlet: 'profile', component: ProfileComponent},
-      { path: 'bookmark/:id', outlet: 'bookmark', component: BookmarksComponent}
+      { path: 'bookmark/:id', outlet: 'bookmark', component: BookmarksComponent},
+      { path: 'joined/:id', outlet: 'joined', component: JoinedInClassesComponent}
     ]
   },
   { path: '', redirectTo: '/main', pathMatch: 'full' }
