@@ -1,0 +1,236 @@
+.class-list mat-card.class-item{
+    background-color: $color-lash-blur;
+    border-bottom: 2px solid $color-primary;
+    // color: white;
+    // padding: 1.2rem;
+    // border-radius: 10px;
+    margin-bottom: 10px;
+    transition: 1s;
+    backdrop-filter: blur(8.5px);
+    -webkit-backdrop-filter: blur(8.5px);
+    -moz-backdrop-filter: blur(8.5px);
+    -o-backdrop-filter: blur(8.5px);
+    -ms-backdrop-filter: blur(8.5px);
+}
+
+.class-list .class-info{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.class-list .class-info .teacher-name-btn{
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.class-list .class-data{
+    padding: 0.4em;
+    margin: 0.5em;
+    font-size: 80%;
+    border-radius: 5px;
+    // border-bottom: 2px solid black;
+    display: flex;
+    flex-direction: row;
+    color: black;
+    background-color: #ffffffb3;
+}
+
+.class-list .class-data.more-info-btn{
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.class-list .class-data.more-info-btn:hover{
+    background-color: #212529;    
+    color: white;
+}
+
+.class-list .class-data .material-icons{
+    line-height: 0.8em;
+}
+
+.more-close-btn{
+    color: white;
+    font-size: 2em;
+    float: right;
+    cursor: pointer;
+}
+
+.class-list .more-info{
+    width: 100%;
+    padding: 10px;
+    margin-top: 3rem;
+    background-color: $color-lash-blur;
+    backdrop-filter: blur(8.5px);
+    -webkit-backdrop-filter: blur(8.5px);
+    -moz-backdrop-filter: blur(8.5px);
+    -o-backdrop-filter: blur(8.5px);
+    -ms-backdrop-filter: blur(8.5px);
+    border-radius: 5px;
+    transition: 1s, visibility 0s, opacity 1.5s linear;
+}
+
+.class-list .more-info-btn.class-data-main{
+    transition: 0.5s;
+    background-color: #00000038;
+    color: white;
+}
+
+.class-list .more-info .more-info-row{
+    margin-bottom: 5px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.class-list .more-info .more-info-row .input-group{
+    width: auto;
+    height: 100%;
+}
+
+.class-list .more-info .more-info-row .input-group .form-control{
+    padding: 0.315rem  0.7rem;
+    font-size: 0.8rem;
+}
+
+.class-list .more-info .more-info-row .input-group .btn{
+    padding: 0.315rem  0.35rem;
+    font-size: 0.8rem;
+}
+
+.class-list .more-info .class-data-main{
+    background-color: #0000007a;
+    color: white;
+    width: 100%;
+}
+
+.class-list .more-info .other-details{
+    padding: 0.4em;
+    margin: 0.5em;
+    font-size: 80%;
+    border-radius: 5px;
+    // border-bottom: 2px solid black;
+    color: black;
+    background-color:  #ffffffb3;
+    width: 100%;
+    height: 100px;
+    overflow-y: scroll;
+}
+
+.class-list .class-data:active ~ .slip-details{
+    opacity: 1;
+}
+
+.slip-details {
+    padding: 0.8em;
+    margin: 0.5em;
+    opacity: 0;
+    transition: 0.2s;
+    font-size: 80%;
+    border-radius: 5px;
+    color: black;
+    background-color: rgb(255 255 255);
+    border: 1px solid;
+    position: absolute;
+    margin-top: -2px;
+    border-color: #6c757d;
+    z-index: 56;
+}
+
+.class-list .more-info .more-info-row.functions-row{
+    justify-content: flex-end;
+}
+
+.class-list .more-info .more-info-row .class-delete{
+    padding: 0.4em;
+    margin: 0.5em;
+    font-size: 80%;
+    border-radius: 5px;
+    border-bottom: 2px solid black;
+    display: flex;
+    flex-direction: row;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+    background-color: #dc3545;
+}
+
+.class-list .more-info .more-info-row .class-delete:hover{
+    background-color: #ff172f !important;
+}
+
+.class-list .class-bookmark, .class-list .class-ask{
+    margin: 0.5em;
+    font-size: 80%;
+    border-radius: 5px;
+    // border-bottom: 2px solid black;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.class-list .class-ask a{
+    text-decoration: none;
+    color: white;
+}
+
+.class-list .class-bookmark:hover, .class-list .class-ask:hover{
+    // background-color: #ff172f !important;
+}
+
+.class-list .class-teacher{
+    background-color: $color-primary;
+    color: white;
+    border-bottom: 2px solid white;
+}
+
+.class-info.bookmark-info button{
+    margin: 0.4em;
+}
+
+@media screen and (max-width: 768px){
+
+    .class-list .more-info{
+        margin-top: 1rem;
+    }
+
+    .class-list .more-info .more-info-row{
+        margin-bottom: 5px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .class-list .more-info-btn.class-data-main{
+        width: 100%;
+    }
+
+    .class-list span.class-data.class-link{
+        width: 100%;
+        overflow-x: scroll;
+    }
+
+    .class-list .more-info .other-details{
+        width: 100%;
+        min-width: initial;
+    }
+
+    .class-list .more-info .more-info-row .input-group{
+        padding: 0.5rem 1rem;
+    }
+
+    .more-close-btn{
+        position: absolute;
+        right: 1.5rem;
+        top: 1.5rem;
+    }
+
+}

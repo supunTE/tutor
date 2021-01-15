@@ -570,6 +570,7 @@
               <div class="class-info bookmark-info">
                 <button mat-raised-button color="primary"
                   [routerLink]="['/class', {outlets:{'profile': 'profile/'+[bookmark.teacherID]}}]"
+                  class="teacher-name-btn"
                   (click)="profileBarEnable(bookmark.docId)" skipLocationChange>
                   <span class="material-icons">
                     person_pin
@@ -633,6 +634,7 @@
               <div class="class-info bookmark-info">
                 <button mat-raised-button color="primary"
                   [routerLink]="[{outlets:{'profile': 'profile/'+[joinClass.teacherID]}}]"
+                  class="teacher-name-btn"
                   (click)="profileBarEnable(joinClass.docId)" skipLocationChange>
                   <span class="material-icons">
                     person_pin

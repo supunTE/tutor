@@ -2,7 +2,7 @@
 <div class="class-list" *ngIf="selectedClass" >
   <span class="more-close-btn d-block d-md-none" (click)="unhide()"><i class="material-icons color-white float-right">close</i></span>
   <div class="class-info">
-    <button mat-raised-button color="primary" [routerLink]="['/class', {outlets:{'message': 'profile/'+[selectedClass.teacherID]}}]"
+    <button mat-raised-button color="primary" [routerLink]="['/class', {outlets:{'profile': 'profile/'+[selectedClass.teacherID]}}]"
      (click)="profileBarEnable(selectedClass.docId)" skipLocationChange>
       <span class="material-icons">
         person_pin

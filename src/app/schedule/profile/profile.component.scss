@@ -103,6 +103,7 @@ background-color: #141619;
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
 .account-img{
@@ -199,6 +200,7 @@ background-color: #141619;
 
 .input textarea{
     width: 100%;
+    min-height: 25px;
     max-height: 200px;
     transition: 0.5s, height 0s;
     font-size: 95%;
@@ -208,12 +210,12 @@ background-color: #141619;
     border: 1px solid #0000003d;
     color: white;
     background-color: #c2c2c2;
-    margin-bottom: 1rem;
 }
 
 .input textarea:focus{
     outline: 0;
-    background-color: #141619;
+    min-height: 75px;
+    background-color: #212529;
 }
 
 .rating{
@@ -224,6 +226,20 @@ background-color: #141619;
 
 .rating span{
     cursor: pointer;
+}
+
+.text-count{
+    font-size: 80%;
+    display: block;
+    text-align: right;
+    margin-bottom: 5px;
+}
+
+.rate-submit{
+    padding: .1rem 1rem;
+    font-size: .675rem;
+    border-radius: .2rem;
+    margin: 0.25rem 0 2rem;
 }
 
 .other-ratings {
@@ -239,16 +255,8 @@ background-color: #141619;
     justify-content: flex-start;
 }
 
-.rater-name {
-    height: 1.8rem;
-    font-size: 0.75em;
-}
-
-img.rater-img {
-    height: 1.8rem;
-    width: 1.8rem;
-    object-fit: cover;
-    border-radius: 100%;
+.rate-stars {
+    height: 18px;
 }
 
 .rate-stars span{
@@ -261,6 +269,12 @@ img.rater-img {
     padding: 0.5em;
     border-radius: 5px;
     border: 1px solid #0000003d;
+    margin: 0.1rem 0;
+    word-wrap: break-word;
+}
+
+.rate-time {
+    font-size: 0.6rem;
 }
 
 @media screen and (max-width: 768px){

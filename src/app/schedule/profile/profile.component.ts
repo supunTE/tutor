@@ -4,12 +4,12 @@ import { RouterModule, Routes, Router, ActivatedRoute } from '@angular/router';
 import firebase from 'firebase/app';
 import { Observable, Subscriber, of, Timestamp } from 'rxjs';
 import { AcconutService } from '../../services/acconut.service';
-import {message} from '../../interfaces/message'
+import { message } from '../../interfaces/message'
 import { ClassInterface } from '../../interfaces/class';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Teacher } from '../../interfaces/teacher';
 import { LinebrPipe } from '../../pipes/linebr.pipe';
-
+import { rateTeacher } from '../../interfaces/rate'
 
 @Component({
   selector: 'app-profile',
@@ -21,6 +21,7 @@ export class ProfileComponent implements OnInit {
   private sub: any;
   idnum: any;
   selectedTeacher: Teacher;
+  ratesMessages: Observable<rateTeacher[]>;
   stars: number = 0;
   star1:boolean;
   star2:boolean;
@@ -29,6 +30,10 @@ export class ProfileComponent implements OnInit {
   star5:boolean;
   arrStars = Array; 
   close: boolean = true;
+  chatInput: string;
+  notEnoughLetters:boolean = false;
+  successSubmit:boolean = false;
+  rateuid: string = '';
 
   description:string = '';
   body:string = 'This is an \nexample. \n one\ntwo';
@@ -36,13 +41,35 @@ export class ProfileComponent implements OnInit {
   constructor(private route: ActivatedRoute, public auth: AngularFireAuth, private accountService: AcconutService, private afs: AngularFirestore) { 
     auth.authState.subscribe(user => {
       if (user) {
-    this.sub = this.route.params.subscribe(async params => {
+    this.sub = this.route.params.subscribe(params => {
       this.idnum = params.id;
-      this.getSelectedUser(await this.idnum);
+      this.getSelectedUser(this.idnum);
       this.starCollector(this.stars)
+      this.ratesMessages = this.accountService.getTeachersRate(this.idnum)
     })
     }
   })
+  }
+
+  submitRate(uid,tid){
+    if(this.chatInput.length > 20){
+      const newRate: rateTeacher = {
+        uid: uid,
+        tid: tid,
+        rateMessage: this.chatInput,
+        rateCount: this.stars,
+        time: new Date()
+      }
+  
+      this.accountService.rateSelectedTeacher(uid, tid, newRate);
+      this.notEnoughLetters = false;
+      this.successSubmit = true;
+
+    }else{
+      this.notEnoughLetters = true;
+      this.successSubmit = false;
+    }
+    
   }
 
   closeMe(){
@@ -57,7 +84,7 @@ export class ProfileComponent implements OnInit {
       this.stars = n
     }
     this.starCollector(this.stars)
-    console.log(this.stars)
+    // console.log(this.stars)
   }
 
   starCollector(n){
@@ -104,7 +131,9 @@ export class ProfileComponent implements OnInit {
     this.accountService.getTeacher(id).subscribe(sTeacher => {
 
       this.selectedTeacher = sTeacher
-      this.description = this.selectedTeacher.description.toString()
+      if(this.selectedTeacher.description){
+        this.description = this.selectedTeacher.description.toString()
+      }
       // console.log(this.description.includes('\\n'))
     })
   }

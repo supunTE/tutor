@@ -27,6 +27,7 @@ import { ProfileComponent } from './schedule/profile/profile.component';
 import { LinebrPipe } from './pipes/linebr.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JoinedInClassesComponent } from './schedule/joined-in-classes/joined-in-classes.component';
+import { UserHeadComponent } from './schedule/profile/user-head/user-head.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { JoinedInClassesComponent } from './schedule/joined-in-classes/joined-in
     MessageComponent,
     ProfileComponent,
     LinebrPipe,
-    JoinedInClassesComponent
+    JoinedInClassesComponent,
+    UserHeadComponent
   ],
   imports: [
     MatSliderModule,

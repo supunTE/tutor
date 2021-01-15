@@ -17,7 +17,8 @@
             <div class="data">
             <div class="details">
                 <div class="sub">
-                <img [src]="selectedTeacher.img" alt="" [className]="(selectedTeacher.verified) ? 'account-img verified-t' : 'account-img verified-f'">
+                <img [src]="selectedTeacher.img" alt="" 
+                [className]="(selectedTeacher.verified) ? 'account-img verified-t' : 'account-img verified-f'">
                 <div *ngIf="!selectedTeacher.verified" class="verify-tag icon-btn verified-f"> <i class="material-icons">closed</i>non-Verified Teacher</div>
                 <div *ngIf="selectedTeacher.verified" class="verify-tag icon-btn verified-t"> <i class="material-icons">check</i>Verified Teacher</div>
                 <div class="stats row font-1">
@@ -40,69 +41,66 @@
                         </div>                       
                     </div>
                 </div>
-                <div class="teacher-desc">
+                <div class="teacher-desc" *ngIf="description">
                     Description
                     <p [innerHTML]="description | linebr"></p>
                 </div>
                 <div class="input" *ngIf="auth.user | async as userA">
-                    Add Rating
-                    <div class="rating">
-                        <span class="material-icons star1" [style.color]="star1 ? '#212529' : '#c2c2c2'" (click)="starFunction(1)">
-                            star
+
+                    <ng-container *ngIf='userA.uid != selectedTeacher.uid; else SameUser'>
+                        Add Rating
+                        <div class="rating">
+                            <span class="material-icons star1" [style.color]="star1 ? '#212529' : '#c2c2c2'" (click)="starFunction(1)">
+                                star
+                            </span>
+                            <span class="material-icons star2" [style.color]="star2 ? '#212529' : '#c2c2c2'" (click)="starFunction(2)">
+                                star
+                            </span>
+                            <span class="material-icons star3" [style.color]="star3 ? '#212529' : '#c2c2c2'" (click)="starFunction(3)">
+                                star
+                            </span>
+                            <span class="material-icons star4" [style.color]="star4 ? '#212529' : '#c2c2c2'" (click)="starFunction(4)">
+                                star
+                            </span>
+                            <span class="material-icons star5" [style.color]="star5 ? '#212529' : '#c2c2c2'" (click)="starFunction(5)">
+                                star
+                            </span>
+                        </div>
+                        <textarea type="text" [(ngModel)]="chatInput" (change)="successSubmit=false" id="chatInputId" minlength="20" maxlength="250" (keyup.enter)="sendMessage(userA.uid, selectedClass.docId)" placeholder="Add Rating..."></textarea>
+                        <span class="text-count" *ngIf="chatInput">
+                            <b class="text-danger" *ngIf="notEnoughLetters">Add some more words!&nbsp;</b>
+                            <b class="text-success" *ngIf="successSubmit">Rate was submitted successfully!&nbsp;</b>
+                            <p [class]="chatInput.length < 20 ? 'text-danger' : 'text-success'">{{chatInput.length}}/250</p>
                         </span>
-                        <span class="material-icons star2" [style.color]="star2 ? '#212529' : '#c2c2c2'" (click)="starFunction(2)">
-                            star
-                        </span>
-                        <span class="material-icons star3" [style.color]="star3 ? '#212529' : '#c2c2c2'" (click)="starFunction(3)">
-                            star
-                        </span>
-                        <span class="material-icons star4" [style.color]="star4 ? '#212529' : '#c2c2c2'" (click)="starFunction(4)">
-                            star
-                        </span>
-                        <span class="material-icons star5" [style.color]="star5 ? '#212529' : '#c2c2c2'" (click)="starFunction(5)">
-                            star
-                        </span>
-                    </div>
-                    <textarea type="text" [(ngModel)]="chatInput" id="chatInputId" (keyup.enter)="sendMessage(userA.uid, selectedClass.docId)" placeholder="Add Rating..."></textarea>
+                        <button class="rate-submit btn btn-sm btn-dark" (click)="submitRate(userA.uid,selectedTeacher.uid)">Submit</button>
+                    </ng-container>
+                    <ng-template #SameUser>
+                        <p class="same-userwarning text-danger">You cannot rate on yourself.</p>
+                    </ng-template>
                 </div>
 
                 <div class="other-ratings">
-                    <div class="rate-box">
-                        <div class="rater-name">
-                            <img [src]="selectedTeacher.img" class="rater-img">
-                            Supun Tharinda
-                        </div>
+                    <p *ngIf="!ratesMessages | async">This user has not been rated yet.</p>
+                    <div class="rate-box" *ngFor="let rateM of ratesMessages | async">
+                        <app-user-head [rateuid]=rateM.uid></app-user-head>                        
                         <div class="rate-msg">
-                            <div class="rate-stars">
-                                <span class="material-icons" *ngFor='let in of arrStars(5); let i = index' [style.color]="'#212529'">
+                            <div class="rate-stars">                                
+                                <span class="material-icons" *ngFor='let in of arrStars(rateM.rateCount); let i = index' [style.color]="'#212529'">
                                     star
                                 </span>
-                                <div class="rate-msg-box">
-                                    This teacher is awesome. This is an example text. Under construction... This is an example text. Under construction... This is an example text. Under construction... 
-                                </div>
+                                <span class="material-icons" *ngFor='let in of arrStars(5-rateM.rateCount); let i = index' [style.color]="'#c2c2c2'">
+                                    star
+                                </span>                                 
                             </div>
+                            <div class="rate-msg-box">
+                                {{ rateM.rateMessage }}
+                           </div>
+                           <div class="rate-time">
+                               {{rateM.time.toDate() | date:'hh:mm aa dd.MMM.yyyy'}}
+                           </div>
                         </div>
                     </div>
 
-                    <div class="rate-box">
-                        <div class="rater-name">
-                            <img [src]="selectedTeacher.img" class="rater-img">
-                            User 12
-                        </div>
-                        <div class="rate-msg">
-
-                            <div class="rate-stars">
-                                <span class="material-icons" *ngFor='let in of arrStars(2); let i = index' [style.color]="'#212529'">
-                                    star
-                                </span>
-                                <div class="rate-msg-box">
-                                    This teacher is awesome. This is an example text. Under construction... This is an example text. Under construction... This is an example text. Under construction... 
-                                </div>
-                            </div>
-                            
-                            
-                        </div>
-                    </div>
                 </div>
             </div>
             </div>

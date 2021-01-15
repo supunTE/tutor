@@ -3,9 +3,10 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { User } from '../interfaces/user';
 import { Teacher } from '../interfaces/teacher';
 import { ClassInterface } from '../interfaces/class';
-import {bookmark} from '../interfaces/bookmark';
-import {joined} from '../interfaces/joined';
-import {message} from '../interfaces/message'
+import { bookmark } from '../interfaces/bookmark';
+import { joined } from '../interfaces/joined';
+import { message } from '../interfaces/message'
+import { rateTeacher } from '../interfaces/rate';
 
 
 @Injectable({
@@ -17,6 +18,10 @@ export class AcconutService {
   
   getUser (user: User){
     return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
+  }
+
+  getUserWithId(uid){
+    return this.afs.doc<User>(`users/${uid}`).valueChanges();
   }
 
   createUser (user: User){
@@ -109,6 +114,17 @@ export class AcconutService {
 
   getAllJoinedClasses(uid){
     return this.afs.collection<joined>(`joined/${uid}/joined`).valueChanges({idField: 'docId'});
+  }
+
+  rateSelectedTeacher(uid, tid, data){
+    return this.afs.doc<rateTeacher>(`rates/teachers/rates/${tid}/rate/${uid}`).set(data)
+  }
+
+  getTeachersRate(tid){
+    return this.afs.collection<rateTeacher>(`rates/teachers/rates/${tid}/rate`, ref => ref
+      .orderBy('time', 'desc')
+      .limit(10))
+      .valueChanges({idField: 'docId'});
   }
 
 
