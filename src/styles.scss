@@ -1,5 +1,30 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400&family=Staatliches&display=swap');
-@import '@angular/material/prebuilt-themes/lightblue-green.css';
+@import '~@angular/material/theming';
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$candy-app-primary: #038bff;
+$candy-app-accent:  #212529;
+
+// The warn palette is optional (defaults to red).
+$candy-app-warn:#dc3545;
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as `color` or `typography`.
+$candy-app-theme: mat-light-theme((
+  color: (
+    primary: $candy-app-primary,
+    accent: $candy-app-accent,
+    warn: $candy-app-warn,  
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($candy-app-theme);
 
 .font-1{
     font-family: 'Rubik', sans-serif;
