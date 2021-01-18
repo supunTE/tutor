@@ -35,7 +35,26 @@
     display: flex;
     flex-direction: row;
     color: black;
-    background-color: #ffffffb3;
+    background-color: #ffffff;
+}
+
+.class-list .class-data-btn{
+   transition: 0.4s;
+}
+
+.class-list .class-data-btn:hover{
+    background-color: #212529;
+    color: white;
+}
+
+.class-list .class-data-mat{
+    padding: 0.4em;
+    margin: 0.5em;
+    font-size: 80%;
+    border-radius: 5px;
+    // border-bottom: 2px solid black;
+    display: flex;
+    flex-direction: row;
 }
 
 .class-list .class-data.more-info-btn{
@@ -48,9 +67,11 @@
     color: white;
 }
 
-.class-list .class-data .material-icons{
-    line-height: 0.8em;
+.class-list .class-data .material-icons, .class-list .class-data-mat .material-icons{
+    font-size: 20px;
 }
+
+
 
 .more-close-btn{
     color: white;
@@ -102,6 +123,11 @@
     font-size: 0.8rem;
 }
 
+.no-slip-text{
+    font-size: 80%;
+    margin: 0 2rem;
+}
+
 .class-list .more-info .class-data-main{
     background-color: #0000007a;
     color: white;
@@ -123,6 +149,7 @@
 
 .class-list .class-data:active ~ .slip-details{
     opacity: 1;
+    z-index: 56;
 }
 
 .slip-details {
@@ -138,7 +165,6 @@
     position: absolute;
     margin-top: -2px;
     border-color: #6c757d;
-    z-index: 56;
 }
 
 .class-list .more-info .more-info-row.functions-row{
@@ -196,6 +222,95 @@
     margin: 0.4em;
 }
 
+// joined classes
+// .joined-classes{
+//     flex-direction: column !important;
+// }
+
+// .waiting-bottom-bar {
+//     width: 100%;
+//     padding: 20px 30px;
+//     border-radius: 5px;
+//     background-color: #f7f7f79e;
+//     backdrop-filter: blur(8.5px);
+//     -webkit-backdrop-filter: blur(8.5px);
+//     -moz-backdrop-filter: blur(8.5px);
+//     -o-backdrop-filter: blur(8.5px);
+//     -ms-backdrop-filter: blur(8.5px);
+// }
+
+.cards-waiting-slip{
+    display: flex;
+    margin: 10px 5px;
+    padding: 0.2em 1em;
+    position: absolute;
+    bottom: -20px;
+    right: 0;
+    border: 1px solid black;
+    border-radius: 20px;
+    color: black;
+    background-color: #ffffff;
+    flex-direction: row;
+    user-select: none;
+}
+
+.cards-waiting-slip p{
+    font-size: 0.8em;
+    margin-bottom: 0;
+}
+
+.cards-waiting-slip .material-icons{
+    opacity: 0;
+    font-size: 1.2em;
+}
+
+.cards-waiting-slip .icon0{
+    animation: hourGlassAnim 1.5s linear infinite;    
+    // transition: 1s;
+}
+
+.cards-waiting-slip .icon1{
+    animation: hourGlassAnim 1.5s 0.5s linear infinite;
+    position: absolute;
+    // transition: 1s;
+}
+
+.cards-waiting-slip .icon2{
+    animation: hourGlassAnim 1.5s 1s linear infinite;
+    position: absolute;
+    // transition: 1s;
+}
+
+
+@keyframes hourGlassAnim{
+    0%{
+        opacity: 0;
+    }
+    50%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
+}
+
+.waiting-bottom-bar .cards{
+    display: flex;
+    flex-direction: row;
+}
+
+.waiting-bottom-bar .cards mat-card.class-item {
+    background-color: #ffffff26;
+    border-bottom: 2px solid #038bff;
+    margin-bottom: 10px;
+    transition: 1s;
+    backdrop-filter: blur(8.5px);
+    -webkit-backdrop-filter: blur(8.5px);
+    -moz-backdrop-filter: blur(8.5px);
+    -o-backdrop-filter: blur(8.5px);
+    -ms-backdrop-filter: blur(8.5px);
+}
+
 @media screen and (max-width: 768px){
 
     .class-list .more-info{
@@ -224,7 +339,12 @@
     }
 
     .class-list .more-info .more-info-row .input-group{
-        padding: 0.5rem 1rem;
+        padding: 0.5rem 0.4rem;
+    }
+
+    .no-slip-text{
+        font-size: 80%;
+        margin: 0 auto;
     }
 
     .more-close-btn{

@@ -7,6 +7,7 @@ import { bookmark } from '../interfaces/bookmark';
 import { joined } from '../interfaces/joined';
 import { message } from '../interfaces/message'
 import { rateTeacher } from '../interfaces/rate';
+import { Slip } from '../interfaces/slip';
 
 
 @Injectable({
@@ -120,11 +121,23 @@ export class AcconutService {
     return this.afs.doc<rateTeacher>(`rates/teachers/rates/${tid}/rate/${uid}`).set(data)
   }
 
+  getRateSelectedTeacher(uid, tid){
+    return this.afs.doc<rateTeacher>(`rates/teachers/rates/${tid}/rate/${uid}`).valueChanges()
+  }
+
+  updateTotalRateSelectedTeacher(tid, count, raters){
+    return this.afs.doc(`users/${tid}`).set({rateTotal: count, ratersTotal: raters}, {merge:true});
+  }
+
   getTeachersRate(tid){
     return this.afs.collection<rateTeacher>(`rates/teachers/rates/${tid}/rate`, ref => ref
       .orderBy('time', 'desc')
       .limit(10))
       .valueChanges({idField: 'docId'});
+  }
+
+  saveSlip(tid, cid, uid, data){
+    return this.afs.doc<Slip>(`slips/classes/slips/${tid}/class/${cid}/user/${uid}`).set(data)
   }
 
 

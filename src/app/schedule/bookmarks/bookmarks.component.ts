@@ -41,6 +41,11 @@ export class BookmarksComponent implements OnInit {
     this.SharedService.toggleBookmarkVisibility();
  }
 
+ openFromClassesTab(id){
+  this.SharedService.toggleBookmarkVisibility();
+  this.SharedService.openFromClassesTab(id);
+}
+
   getSelectedClass(id){
     this.accountService.getSelectedClass(id).subscribe(sClass => this.selectedClass = sClass)
   }

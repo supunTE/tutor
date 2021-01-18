@@ -3,11 +3,13 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import firebase from 'firebase/app';
 import { from, Observable, Subscriber } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { map, take, finalize } from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { ConnectionService } from 'ng-connection-service'
 
+
 import { User } from '../interfaces/user';
+import { Slip } from '../interfaces/slip';
 import { ClassInterface } from '../interfaces/class';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AcconutService } from '../services/acconut.service';
@@ -17,6 +19,7 @@ import { message } from '../interfaces/message';
 import { ProfileComponent } from './profile/profile.component';
 import { SharedService } from '../services/shared.service';
 import { joined } from '../interfaces/joined';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-schedule',
@@ -50,6 +53,11 @@ export class ScheduleComponent implements OnInit {
   searchValue: string = "";
   results: any;
   isConnected = true;
+  paidOptions:boolean = false;
+  noSlip: boolean = false;
+  uploadPercent:  Observable<number>;
+  openClass: boolean = false;
+  downloadURL: Observable<string>;
 
   scheduleForm = new FormGroup({
     className: new FormControl(''),
@@ -79,7 +87,7 @@ export class ScheduleComponent implements OnInit {
     otherDetails: new FormControl('')
   });
   
-  constructor(private _snackBar: MatSnackBar, private route: ActivatedRoute, public auth: AngularFireAuth, 
+  constructor(private storage: AngularFireStorage, private _snackBar: MatSnackBar, private route: ActivatedRoute, public auth: AngularFireAuth, 
     private afs: AngularFirestore, private accountService: AcconutService, private SharedService: SharedService,
     private ConnectionService: ConnectionService) {
       this.ConnectionService.monitor().subscribe(isC => {
@@ -108,10 +116,56 @@ export class ScheduleComponent implements OnInit {
         this.SharedService.barChange.subscribe((value) => {
           this.sideBar = value
         });
-
-
+        this.SharedService.openFromClasses.subscribe((value) => {
+          if(value != ''){
+            this.showBookmarks = false;
+            this.showBookmarkClass = false;
+            this.showJoined = false;
+            this.showJoinedClass = false;
+            this.showClasses = true;
+            this.moreInfoID = value;
+            value = ''
+          }
+        });
       }      
     });
+   }
+
+   selectedSlip: File;
+   inputSlipFile(event){
+    this.selectedSlip = event.target.files[0]
+   }
+
+   uploadSlip(user: User, cid, classData:ClassInterface){
+    if(!this.selectedSlip){
+      this.noSlip = true
+    }else{
+      const filePath = `slips/${cid}/users/${user.uid}`;
+      const fileRef = this.storage.ref(filePath);
+      const task = this.storage.upload(filePath, this.selectedSlip);
+
+      this.uploadPercent = task.percentageChanges(); 
+      task.snapshotChanges().pipe(
+        finalize(() => {
+          this.downloadURL = fileRef.getDownloadURL()
+          this.downloadURL.subscribe(dURL => {
+           const slipData: Slip = {
+            cid: cid,      
+            className: classData.className,
+            teacherName: classData.teacherName,
+            teacherId: classData.teacherID,
+            uid: user.uid,
+            userName: user.displayName,
+            slipLink: dURL,
+            date: new Date()
+          }
+          this.accountService.saveSlip(classData.teacherID, cid, user.uid, slipData);
+        })
+        })
+      )
+      .subscribe()
+      this.joinClass(cid, user.uid, classData.className, classData.teacherName, classData.teacherID, 0)
+    }
    }
 
    openBookmarkedClass(id){

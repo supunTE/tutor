@@ -37,8 +37,19 @@
                             <span class="material-icons">
                                 star
                             </span>
-                            3.5/10
-                        </div>                       
+                            <ng-container *ngIf="selectedTeacher.rateTotal; else noRateTotal">
+                                {{ selectedTeacher.rateTotal*2/ selectedTeacher.ratersTotal | number: '1.1-2' }}/10
+                            </ng-container>              
+                            <ng-template #noRateTotal>
+                                0/10
+                            </ng-template>              
+                        </div>
+                        <ng-container *ngIf="selectedTeacher.ratersTotal; else noRatersTotal">
+                            <p>({{selectedTeacher.ratersTotal}} reviews)</p>
+                        </ng-container>              
+                        <ng-template #noRatersTotal>
+                            <p>(no reviews)</p> 
+                        </ng-template>              
                     </div>
                 </div>
                 <div class="teacher-desc" *ngIf="description">

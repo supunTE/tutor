@@ -40,6 +40,11 @@ export class JoinedInClassesComponent implements OnInit {
   unhide(id){
     this.SharedService.toggleBookmarkVisibility();
  }
+ 
+ openFromClassesTab(id){
+  this.SharedService.toggleBookmarkVisibility();
+  this.SharedService.openFromClassesTab(id);
+}
 
   getSelectedClass(id){
     this.accountService.getSelectedClass(id).subscribe(sClass => this.selectedClass = sClass)

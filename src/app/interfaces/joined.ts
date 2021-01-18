@@ -1,6 +1,6 @@
 export interface joined{
     joined: boolean,
-    complete: boolean,
+    complete: number,
     uid: string,
     classid: string
     className: string,

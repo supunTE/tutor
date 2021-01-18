@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { RouterModule, Routes, Router, ActivatedRoute } from '@angular/router';
 import firebase from 'firebase/app';
 import { Observable, Subscriber, of, Timestamp } from 'rxjs';
+import { finalize, map, take } from 'rxjs/operators';
 import { AcconutService } from '../../services/acconut.service';
 import { message } from '../../interfaces/message'
 import { ClassInterface } from '../../interfaces/class';
@@ -53,17 +54,57 @@ export class ProfileComponent implements OnInit {
 
   submitRate(uid,tid){
     if(this.chatInput.length > 20){
-      const newRate: rateTeacher = {
-        uid: uid,
-        tid: tid,
-        rateMessage: this.chatInput,
-        rateCount: this.stars,
-        time: new Date()
-      }
-  
-      this.accountService.rateSelectedTeacher(uid, tid, newRate);
-      this.notEnoughLetters = false;
-      this.successSubmit = true;
+    
+
+      this.accountService.getTeacher(tid).pipe(take(1), map((teacherData: Teacher) => {
+        const {rateTotal, ratersTotal} = teacherData;
+        return ({rateTotal, ratersTotal});
+      })).subscribe(({rateTotal, ratersTotal}) => {
+
+        this.accountService.getRateSelectedTeacher(uid, tid).pipe(take(1),
+         map((rateData: rateTeacher) => {
+           if(rateData){
+            const {rateCount} = rateData;
+            return ({rateCount});
+           }else{
+             return ({rateCount:0});
+           }
+          
+        })).subscribe(({rateCount}) => {
+          var rateCountData, ratersCountData;
+
+          if(rateCount != 0){
+            rateCountData = (rateTotal - rateCount) + this.stars
+            ratersCountData = ratersTotal;
+          }else{            
+            if(!ratersTotal){
+              ratersCountData = 1;
+              rateCountData = this.stars
+            }else{
+              ratersCountData = ratersTotal + 1;
+              rateCountData = rateTotal + this.stars
+            }
+          }
+
+          // console.log(rateTotal, rateCount, this.stars, rateCountData,rateCountData)
+
+          this.accountService.updateTotalRateSelectedTeacher(tid, rateCountData, ratersCountData)
+
+          const newRate: rateTeacher = {
+            uid: uid,
+            tid: tid,
+            rateMessage: this.chatInput,
+            rateCount: this.stars,
+            time: new Date()
+          }
+      
+          this.accountService.rateSelectedTeacher(uid, tid, newRate);
+          this.notEnoughLetters = false;
+          this.successSubmit = true;   
+
+        });    
+        
+      });         
 
     }else{
       this.notEnoughLetters = true;

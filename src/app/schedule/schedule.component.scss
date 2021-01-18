@@ -37,7 +37,7 @@ button:focus{
     width: 100%;
     padding: 3% 5%;
     z-index: 10;
-    background-color: #303030;
+    background-color: #f7f7f7;
     position: fixed;
     display: flex;
     flex-direction: row;
@@ -47,6 +47,12 @@ button:focus{
 
 .main-btn{
     margin: 0.5em;
+}
+
+.main-btn button.in-tab{
+    background-color: #ffffff;
+    color: black;
+    border: 1px solid black;
 }
 
 .schedule-class{
@@ -70,7 +76,7 @@ button:focus{
 .search-class{
     width: 100%;
     position: fixed;
-    padding: 0.5rem 1rem;
+    padding: 1rem 2.5rem 0;
     margin-top: 5rem;
     margin-bottom: -4rem;
     z-index: 12;
@@ -96,6 +102,7 @@ button:focus{
     margin-bottom: 4rem;
     height: 100%;
     width:  100%;
+    background-color: #98989859;
     overflow-y: scroll;
     display: flex;
     flex-direction: row;

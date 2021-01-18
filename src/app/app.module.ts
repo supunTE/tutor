@@ -13,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { ConnectionServiceModule } from 'ng-connection-service';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -28,6 +29,7 @@ import { LinebrPipe } from './pipes/linebr.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JoinedInClassesComponent } from './schedule/joined-in-classes/joined-in-classes.component';
 import { UserHeadComponent } from './schedule/profile/user-head/user-head.component';
+
 
 @NgModule({
   declarations: [
@@ -61,6 +63,7 @@ import { UserHeadComponent } from './schedule/profile/user-head/user-head.compon
     AngularFirestoreModule,
     CommonModule,
     BrowserAnimationsModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]

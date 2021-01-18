@@ -1,69 +1,6 @@
 @import "../../../shared/variable";
+@import "../more-details.scss";
 
-.class-list mat-card.class-item{
-    background-color: $color-lash;
-    border-bottom: 2px solid $color-primary;
-    // color: white;
-    // padding: 1.2rem;
-    // border-radius: 10px;
-    margin-bottom: 10px;
-    transition: 1s;
-}
-
-.class-list .class-info{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-.class-list .class-info .teacher-name-btn{
-    width: 100%;
-    margin-bottom: 5px;
-}
-
-.class-list .class-data{
-    padding: 0.4em;
-    margin: 0.5em;
-    font-size: 80%;
-    border-radius: 5px;
-    // border-bottom: 2px solid black;
-    display: flex;
-    flex-direction: row;
-    color: black;
-    background-color: #ffffffb3;
-}
-
-.class-list .class-data.more-info-btn{
-    cursor: pointer;
-    transition: 0.4s;
-}
-
-.class-list .class-data.more-info-btn:hover{
-    background-color: #212529;    
-    color: white;
-}
-
-.class-list .class-data .material-icons{
-    margin-top: -0.1em;
-}
-
-.more-close-btn{
-    color: white;
-    font-size: 2em;
-    float: right;
-    cursor: pointer;
-}
-
-.class-list .more-info{
-    width: 100%;
-    padding: 10px;
-    margin-top: 3rem;
-    background-color: $color-lash;
-    border-radius: 5px;
-    transition: 1s, visibility 0s, opacity 1.5s linear;
-}
 
 .class-list .class-info{
     display: flex;
@@ -72,115 +9,15 @@
     justify-content: flex-end;
     align-items: center;
 }
-
-.class-list .more-info-btn.class-data-main{
-    transition: 0.5s;
-    background-color: #212529;
-    color: white;
-}
-
-.class-list .more-info .more-info-row{
-    margin-bottom: 5px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-
-.class-list .more-info .class-data-main{
-    background-color: black;
-    color: white;
-}
-
-.class-list .more-info .other-details{
-    padding: 0.4em;
-    margin: 0.5em;
-    font-size: 80%;
-    border-radius: 5px;
-    // border-bottom: 2px solid black;
-    color: black;
-    background-color: white;
-    width: 100%;
-    height: 100px;
-    overflow-y: scroll;
-}
-
-.class-list .more-info .more-info-row.functions-row{
-    justify-content: flex-end;
-}
-
-.class-list .more-info .more-info-row .class-delete{
-    padding: 0.4em;
-    margin: 0.5em;
-    font-size: 80%;
-    border-radius: 5px;
-    border-bottom: 2px solid black;
-    display: flex;
-    flex-direction: row;
-    color: white;
-    cursor: pointer;
-    transition: 0.2s;
-    background-color: #dc3545;
-}
-
-.class-list .more-info .more-info-row .class-delete:hover{
-    background-color: #ff172f !important;
-}
-
-.class-list .class-bookmark, .class-list .class-ask{
-    margin: 0.5em;
-    font-size: 80%;
-    border-radius: 5px;
-    // border-bottom: 2px solid black;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.class-list .class-ask a{
-    text-decoration: none;
-    color: white;
-}
-
-
-.class-list .class-teacher{
-    background-color: $color-primary;
-    color: white;
-    border-bottom: 2px solid white;
-}
-
-.class-info.bookmark-info button{
-    margin: 0.4em;
-}
-
 
 @media screen and (max-width: 768px){
  
     .class-list{
         max-height: none;
     }
-
-    .more-close-btn{
-        position: absolute;
-        right: 1.5rem;
-        top: 1.5rem;
-    }
-
+    
     .class-list .class-info{
         margin-top: 2.5rem;
     }
 
-    .class-list .more-info{
-        margin-top: 1rem;
-    }
-
-    .class-list .more-info .more-info-row{
-        margin-bottom: 5px;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-    }
 }
