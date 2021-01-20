@@ -29,6 +29,7 @@ import { LinebrPipe } from './pipes/linebr.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JoinedInClassesComponent } from './schedule/joined-in-classes/joined-in-classes.component';
 import { UserHeadComponent } from './schedule/profile/user-head/user-head.component';
+import { LinksComponent } from './schedule/joined-in-classes/links/links.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { UserHeadComponent } from './schedule/profile/user-head/user-head.compon
     ProfileComponent,
     LinebrPipe,
     JoinedInClassesComponent,
-    UserHeadComponent
+    UserHeadComponent,
+    LinksComponent
   ],
   imports: [
     MatSliderModule,

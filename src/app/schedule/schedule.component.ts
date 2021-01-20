@@ -49,8 +49,11 @@ export class ScheduleComponent implements OnInit {
   joinedClasses: Observable<joined[]>;
   // bookmarkedClass: Observable<ClassInterface>;
   // bookmarkClasses: Observable<ClassInterface[]>;
-  moreInfoID;
+  moreInfoID: string = '';
   searchValue: string = "";
+  searchValueTeacher: string = "";
+  searchValueLesson: string = "";
+  searchValueGrade: string = "";
   results: any;
   isConnected = true;
   paidOptions:boolean = false;
@@ -226,8 +229,30 @@ export class ScheduleComponent implements OnInit {
     });
   }
 
-   searchClassF() {
-    this.everyClasses = this.accountService.searchClass(this.searchValue)
+   searchClassF(field) {
+     if(field == 'C'){
+      //  console.log(field)
+      this.everyClasses = this.accountService.searchClass(this.searchValue, 'className')
+      this.searchValueTeacher = ''
+      this.searchValueLesson = ''
+      this.searchValueGrade = ''
+     }else if(field == 'T'){
+      this.everyClasses = this.accountService.searchClass(this.searchValueTeacher, 'teacherName')
+      this.searchValue = ''
+      this.searchValueLesson = ''
+      this.searchValueGrade = ''
+     }else if(field == 'L'){
+      this.everyClasses = this.accountService.searchClass(this.searchValueLesson, 'lesson')
+      this.searchValue = ''
+      this.searchValueTeacher = ''
+      this.searchValueGrade = ''
+     }else if(field == 'Y'){
+      this.everyClasses = this.accountService.searchClass(this.searchValueGrade, 'batchYear')
+      this.searchValue = ''
+      this.searchValueTeacher = ''
+      this.searchValueLesson = ''
+     }
+    
   }
 
    profileBarEnable(id){

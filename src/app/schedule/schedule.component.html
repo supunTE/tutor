@@ -374,26 +374,26 @@
         placeholder="Class Name"> -->
         <mat-form-field>
           <mat-label>Class</mat-label>
-          <input matInput placeholder="Ex. Physics 2021" (keyup)="searchClassF()" [(ngModel)]="searchValue">
+          <input matInput placeholder="Ex. Physics 2021" (keyup)="searchClassF('C')" [(ngModel)]="searchValue">
         </mat-form-field>
         <mat-form-field>
           <mat-label>Teacher</mat-label>
-          <input matInput placeholder="Ex. Teacher Name" (keyup)="searchClassF()" [(ngModel)]="searchValue">
+          <input matInput placeholder="Ex. Teacher Name" (keyup)="searchClassF('T')" [(ngModel)]="searchValueTeacher">
         </mat-form-field>
         <mat-form-field>
           <mat-label>Lesson</mat-label>
-          <input matInput placeholder="Ex. Teacher Name" (keyup)="searchClassF()" [(ngModel)]="searchValue">
+          <input matInput placeholder="Ex. Lesson Name" (keyup)="searchClassF('L')" [(ngModel)]="searchValueLesson">
         </mat-form-field>
         <mat-form-field>
           <mat-label>Batch Year/Grade</mat-label>
-          <input matInput placeholder="Ex. Teacher Name" (keyup)="searchClassF()" [(ngModel)]="searchValue">
+          <input matInput placeholder="Ex. Batch Year/Grade" (keyup)="searchClassF('Y')" [(ngModel)]="searchValueGrade">
         </mat-form-field>
       </div>
     </div>
 
     <!-- show classes for students -->
     <div [class]="showSearch ? 'row class-main extra-top-margin' : 'row class-main'"
-      *ngIf="stateStudent && showClasses">
+     *ngIf="stateStudent && showClasses">
       <div [class]="chatBar ? 'col-md-8 col-12 class-list' : 'col-12 class-list'">
         <div
           [class]="chatBar ? 'row row-cols-1 row-cols-lg-2 g-0 g-md-3' : 'row row-cols-1 row-cols-md-2 row-cols-lg-3 g-0 g-md-3'">

@@ -31,6 +31,7 @@
         <span class="class-data" *ngIf="selectedClass.saturdayData">Saturday: {{selectedClass.saturdayTime}}</span>
         <span class="class-data" *ngIf="selectedClass.sundayData">Sunday: {{selectedClass.sundayTime}}</span>
       </div>
+      <app-links [linksData]="{uid: userA.uid, cid: selectedClass.docId, classData: selectedClass}"></app-links>
       <div class="more-info-row">
         <span class="other-details">
           <h6><b>Other Details</b></h6>

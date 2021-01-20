@@ -1,10 +1,7 @@
-.class-list mat-card.class-item{
+mat-card.class-item{
     background-color: $color-lash-blur;
     border-bottom: 2px solid $color-primary;
-    // color: white;
-    // padding: 1.2rem;
-    // border-radius: 10px;
-    margin-bottom: 10px;
+    border-radius: 10px;
     transition: 1s;
     backdrop-filter: blur(8.5px);
     -webkit-backdrop-filter: blur(8.5px);
@@ -13,7 +10,7 @@
     -ms-backdrop-filter: blur(8.5px);
 }
 
-.class-list .class-info{
+.class-info{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -21,12 +18,12 @@
     align-items: center;
 }
 
-.class-list .class-info .teacher-name-btn{
+.class-info .teacher-name-btn{
     width: 100%;
     margin-bottom: 5px;
 }
 
-.class-list .class-data{
+.class-data{
     padding: 0.4em;
     margin: 0.5em;
     font-size: 80%;
@@ -38,16 +35,16 @@
     background-color: #ffffff;
 }
 
-.class-list .class-data-btn{
+.class-data-btn{
    transition: 0.4s;
 }
 
-.class-list .class-data-btn:hover{
+.class-data-btn:hover{
     background-color: #212529;
     color: white;
 }
 
-.class-list .class-data-mat{
+.class-data-mat{
     padding: 0.4em;
     margin: 0.5em;
     font-size: 80%;
@@ -57,21 +54,19 @@
     flex-direction: row;
 }
 
-.class-list .class-data.more-info-btn{
+.class-data.more-info-btn{
     cursor: pointer;
     transition: 0.4s;
 }
 
-.class-list .class-data.more-info-btn:hover{
+.class-data.more-info-btn:hover{
     background-color: #212529;    
     color: white;
 }
 
-.class-list .class-data .material-icons, .class-list .class-data-mat .material-icons{
+.class-data .material-icons, .class-data-mat .material-icons{
     font-size: 20px;
 }
-
-
 
 .more-close-btn{
     color: white;
@@ -80,7 +75,7 @@
     cursor: pointer;
 }
 
-.class-list .more-info{
+.more-info{
     width: 100%;
     padding: 10px;
     margin-top: 3rem;
@@ -94,13 +89,13 @@
     transition: 1s, visibility 0s, opacity 1.5s linear;
 }
 
-.class-list .more-info-btn.class-data-main{
+.more-info-btn.class-data-main{
     transition: 0.5s;
     background-color: #00000038;
     color: white;
 }
 
-.class-list .more-info .more-info-row{
+.more-info .more-info-row{
     margin-bottom: 5px;
     display: flex;
     flex-direction: row;
@@ -108,17 +103,17 @@
     align-items: center;
 }
 
-.class-list .more-info .more-info-row .input-group{
+.more-info .more-info-row .input-group{
     width: auto;
     height: 100%;
 }
 
-.class-list .more-info .more-info-row .input-group .form-control{
+.more-info .more-info-row .input-group .form-control{
     padding: 0.315rem  0.7rem;
     font-size: 0.8rem;
 }
 
-.class-list .more-info .more-info-row .input-group .btn{
+.more-info .more-info-row .input-group .btn{
     padding: 0.315rem  0.35rem;
     font-size: 0.8rem;
 }
@@ -128,13 +123,13 @@
     margin: 0 2rem;
 }
 
-.class-list .more-info .class-data-main{
+.more-info .class-data-main{
     background-color: #0000007a;
     color: white;
     width: 100%;
 }
 
-.class-list .more-info .other-details{
+.more-info .other-details{
     padding: 0.4em;
     margin: 0.5em;
     font-size: 80%;
@@ -147,7 +142,7 @@
     overflow-y: scroll;
 }
 
-.class-list .class-data:active ~ .slip-details{
+.class-data:active ~ .slip-details{
     opacity: 1;
     z-index: 56;
 }
@@ -167,11 +162,11 @@
     border-color: #6c757d;
 }
 
-.class-list .more-info .more-info-row.functions-row{
+.more-info .more-info-row.functions-row{
     justify-content: flex-end;
 }
 
-.class-list .more-info .more-info-row .class-delete{
+.more-info .more-info-row .class-delete{
     padding: 0.4em;
     margin: 0.5em;
     font-size: 80%;
@@ -185,11 +180,11 @@
     background-color: #dc3545;
 }
 
-.class-list .more-info .more-info-row .class-delete:hover{
+.more-info .more-info-row .class-delete:hover{
     background-color: #ff172f !important;
 }
 
-.class-list .class-bookmark, .class-list .class-ask{
+.class-bookmark, .class-ask{
     margin: 0.5em;
     font-size: 80%;
     border-radius: 5px;
@@ -203,16 +198,16 @@
     transition: 0.2s;
 }
 
-.class-list .class-ask a{
+.class-ask a{
     text-decoration: none;
     color: white;
 }
 
-.class-list .class-bookmark:hover, .class-list .class-ask:hover{
+.class-bookmark:hover, .class-ask:hover{
     // background-color: #ff172f !important;
 }
 
-.class-list .class-teacher{
+.class-teacher{
     background-color: $color-primary;
     color: white;
     border-bottom: 2px solid white;
@@ -313,32 +308,36 @@
 
 @media screen and (max-width: 768px){
 
-    .class-list .more-info{
+    mat-card.class-item{
+        margin-bottom: 10px;
+    }
+
+    .more-info{
         margin-top: 1rem;
     }
 
-    .class-list .more-info .more-info-row{
+    .more-info .more-info-row{
         margin-bottom: 5px;
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
     }
 
-    .class-list .more-info-btn.class-data-main{
+    .more-info-btn.class-data-main{
         width: 100%;
     }
 
-    .class-list span.class-data.class-link{
+    span.class-data.class-link{
         width: 100%;
         overflow-x: scroll;
     }
 
-    .class-list .more-info .other-details{
+    .more-info .other-details{
         width: 100%;
         min-width: initial;
     }
 
-    .class-list .more-info .more-info-row .input-group{
+    .more-info .more-info-row .input-group{
         padding: 0.5rem 0.4rem;
     }
 

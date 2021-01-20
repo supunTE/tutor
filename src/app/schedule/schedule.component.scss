@@ -33,7 +33,7 @@ button:focus{
 }
 
 .top-bar{
-    height: 5rem;
+    height: 5em;
     width: 100%;
     padding: 3% 5%;
     z-index: 10;
@@ -98,11 +98,11 @@ button:focus{
 
 .class-main{
     padding: 1rem 2rem 10rem;
-    margin-top: 5rem;
-    margin-bottom: 4rem;
-    height: 100%;
+    margin-top: 5em;
+    height: calc(90vh - 5em);
     width:  100%;
-    background-color: #98989859;
+    background-color: #e0e0e052;
+    // background-image: url(data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23cacaca' fill-opacity='0.26'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E);
     overflow-y: scroll;
     display: flex;
     flex-direction: row;
@@ -111,7 +111,7 @@ button:focus{
 }
 
 .class-main.extra-top-margin{
-    margin-top: 5rem;
+    margin-top: 10rem;
 }
 
 .class-list {
@@ -211,6 +211,7 @@ button:focus{
     }
 
     .top-bar{
+        height: 5em;
         overflow-y: scroll;
         justify-content: normal;
     }
@@ -221,11 +222,14 @@ button:focus{
     }
 
     .class-main{
+        margin-top: 5em;
+        margin-bottom: 0;
+        height: calc(90vh - 5em);
         padding: 1rem 0rem 10rem;
     }
 
     .class-main.extra-top-margin{
-        // margin-top: 0rem;
+        margin-top: 5rem;
     }    
     
     .class-list .info-unhide{

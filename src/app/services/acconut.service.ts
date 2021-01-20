@@ -53,10 +53,22 @@ export class AcconutService {
     return this.afs.doc<ClassInterface>(`classes/${bookmark.classid}`).valueChanges();
   }
 
-  searchClass(searchValue){
+  searchClass(searchValue, field){
+    console.log(field)
+
     // return this.afs.collection<ClassInterface>(`classes`).valueChanges({idField: 'docId'});
     return this.afs.collection<ClassInterface>(`classes`, ref => ref
-      .orderBy("className")
+      .orderBy(field)
+      .startAt(searchValue.toLowerCase())
+      .endAt(searchValue.toLowerCase()+"\uf8ff")
+      .limit(10))
+      .valueChanges();
+  }
+
+  searchClassTeacherF(searchValue, field){
+    // return this.afs.collection<ClassInterface>(`classes`).valueChanges({idField: 'docId'});
+    return this.afs.collection<ClassInterface>(`classes`, ref => ref
+      .orderBy(field)
       .startAt(searchValue.toLowerCase())
       .endAt(searchValue.toLowerCase()+"\uf8ff")
       .limit(10))
@@ -115,6 +127,10 @@ export class AcconutService {
 
   getAllJoinedClasses(uid){
     return this.afs.collection<joined>(`joined/${uid}/joined`).valueChanges({idField: 'docId'});
+  }
+
+  getSelectedJoinedClass(uid, cid){
+    return this.afs.doc<joined>(`joined/${uid}/joined/${cid}`).valueChanges();
   }
 
   rateSelectedTeacher(uid, tid, data){

@@ -1,0 +1,14 @@
+<ng-container *ngIf="complete==2">
+    <hr>
+    <div class="more-info-row">
+        <span class="class-data class-data-main">Class Links</span>
+            <span class="class-data class-link" *ngIf="joinedClass.linkData">
+              <a href="{{joinedClass.linkData}}" target="blank">{{joinedClass.linkData}}</a>
+              <span class="material-icons">
+                launch
+              </span>
+            </span> 
+        <!-- <span class="class-data" *ngIf="joinedClass.linkData">Links: {{ joinedClass.linkData }}</span> -->
+    </div>
+    <hr>
+</ng-container>
