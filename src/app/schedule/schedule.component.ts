@@ -5,8 +5,8 @@ import firebase from 'firebase/app';
 import { from, Observable, Subscriber } from 'rxjs';
 import { map, take, finalize } from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import { ConnectionService } from 'ng-connection-service'
-
+import { ConnectionService } from 'ng-connection-service';
+import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 
 import { User } from '../interfaces/user';
 import { Slip } from '../interfaces/slip';
@@ -32,7 +32,7 @@ export class ScheduleComponent implements OnInit {
   pathId:string = '';
   classData: ClassInterface;
   userState: string = '';
-  showClasses = true;
+  showClasses = false;
   showSchedule = false;
   scheduleComplete = false;
   showSearch = false;
@@ -61,6 +61,9 @@ export class ScheduleComponent implements OnInit {
   uploadPercent:  Observable<number>;
   openClass: boolean = false;
   downloadURL: Observable<string>;
+  weekRouteMethodEnable = false;
+
+  todayDate; dtEndTxt; dtStartTxt; dtRangeTxt; minRangeDate; maxRangeDate; methodSelect:number = 1;
 
   scheduleForm = new FormGroup({
     className: new FormControl(''),
@@ -70,8 +73,11 @@ export class ScheduleComponent implements OnInit {
     lesson: new FormControl(''),
     category: new FormControl(''),
     batchYear: new FormControl(''),
-    numberOfWeeks: new FormControl(''),
+    durationStart: new FormControl(''),
+    durationEnd: new FormControl(''),
     classesPerWeek: new FormControl(''),
+    classMethod: new FormControl(''),
+    weekData: new FormControl(''),
     mondayData: new FormControl('true'),
     tuesdayData: new FormControl(''),
     wednesdayData: new FormControl(''),
@@ -89,10 +95,21 @@ export class ScheduleComponent implements OnInit {
     linkData: new FormControl(''),
     otherDetails: new FormControl('')
   });
+
+  weekDays = [
+    {value:'monday', key:'mondayTime'},
+    {value:'tuesday', key:'tuesdayTime'},
+    {value:'wednesday', key:'wednesdayTime'},
+    {value:'thursday', key:'thursdayTime'},
+    {value:'friday', key:'fridayTime'},
+    {value:'saturday', key:'saturdayTime'},
+    {value:'sunday', key:'sundayTime'}
+  ]
   
   constructor(private storage: AngularFireStorage, private _snackBar: MatSnackBar, private route: ActivatedRoute, public auth: AngularFireAuth, 
     private afs: AngularFirestore, private accountService: AcconutService, private SharedService: SharedService,
     private ConnectionService: ConnectionService) {
+
       this.ConnectionService.monitor().subscribe(isC => {
         this.isConnected = isC;
 
@@ -220,7 +237,19 @@ export class ScheduleComponent implements OnInit {
 
     this.showJoined = true;
     this.showJoinedClass = false;
+   }
 
+   showS(){
+    this.showSchedule = !this.showSchedule;
+    this.showClasses = true;
+    this.showSearch = false;
+    this.SharedService.toggleSidebarVisibility(false, '', '');    
+
+    this.showBookmarks = false;
+    this.showBookmarkClass = false;
+
+    this.showJoined = false;
+    this.showJoinedClass = false;
    }
 
    openSnackBar(message: string, action: string, duration: number) {
@@ -412,12 +441,71 @@ export class ScheduleComponent implements OnInit {
     }
   }
 
+  classMethodChange(){
+    const classMethodNum = this.scheduleForm.value.classMethod;
+    if(classMethodNum == 1){
+      this.weekRouteMethodEnable = true;
+    }else{
+      this.weekRouteMethodEnable = false;
+    }
+  }
+
+  changeStartDate(event: MatDatepickerInputEvent<Date>){
+      this.dtStartTxt = event.value;
+      this.getDifferences();
+  }
+
+  changeEndDate(event: MatDatepickerInputEvent<Date>){    
+    this.dtEndTxt = event.value;
+    this.getDifferences();
+  }
+
+  getDifferences(){
+    if(this.dtStartTxt && this.dtEndTxt){
+      const diffTime = Math.abs(this.dtEndTxt - this.dtStartTxt);
+      this.dtRangeTxt =  (Math.ceil(diffTime / (1000 * 60 * 60 * 24)))+1 + " Days";
+    }else{
+      this.dtRangeTxt = '';
+    }
+  }
+
+  pickMonthAfter(){
+    this.todayDate = new Date();  
+    this.todayDate.setMonth(this.todayDate.getMonth() + 1)
+    return this.todayDate;
+  }
+
+  pickStartDate(){
+    this.todayDate = new Date();  
+    this.todayDate.setMonth(this.todayDate.getMonth() - 3)
+    return this.todayDate;
+  }
+
+  pickEndDate(){
+    this.todayDate = new Date();  
+    this.todayDate.setMonth(this.todayDate.getMonth() + 3)
+    return this.todayDate;
+  }
+
   ngOnInit(): void {
+    this.dtStartTxt = new Date();  
+    this.scheduleForm.get('durationStart').setValue(this.dtStartTxt);
+
+    this.dtEndTxt = this.pickMonthAfter()
+    this.scheduleForm.get('durationEnd').setValue(this.dtEndTxt);
+
+    this.minRangeDate = this.pickStartDate();
+    this.maxRangeDate = this.pickEndDate();
+
+    this.getDifferences();
+    
+    this.showClasses = true;
+
     this.route.params.subscribe(async params => {
       if(params.id){
         this.chatBar = true;
       }
-  })
+    })
 
    }
 

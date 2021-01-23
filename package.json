@@ -24,6 +24,7 @@
     "@angular/router": "~11.0.3",
     "firebase": "^7.0 || ^8.0",
     "jquery": "^3.5.1",
+    "mat-timepicker": "^5.1.0",
     "ng-connection-service": "^1.0.4",
     "ngx-spinner": "^10.0.1",
     "rxjs": "~6.6.0",

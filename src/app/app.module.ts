@@ -15,6 +15,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ConnectionServiceModule } from 'ng-connection-service';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatTimepickerModule } from 'mat-timepicker';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -59,6 +64,11 @@ import { LinksComponent } from './schedule/joined-in-classes/links/links.compone
     ReactiveFormsModule,
     AppRoutingModule,
     NgxSpinnerModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatTimepickerModule,
+    MatRadioModule,
+    MatNativeDateModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AppRoutingModule,
     AngularFireAuthModule,

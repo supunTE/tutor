@@ -7,6 +7,16 @@
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: center;
+}
+
+.more-info-row .row{
+    margin: 0.5em;
+    width: 100%
+}
+
+.more-info-row .row .col{
+    margin-top: 0rem;
 }
 
 .class-data-main{
@@ -15,6 +25,73 @@
     width: 100%;
 }
 
+.link-time{
+    font-size: 0.9em;
+}
+
 .class-link{
     flex-direction: column;
+    border-color: #2196f3!important;
+}
+
+.card-footer{
+    white-space: nowrap;
+    overflow-x: scroll;
+    display: flex;
+    flex-direction: row;
+}
+
+.card-footer a{
+    font-size: 0.8em;
+}
+
+.card-footer .material-icons{
+    font-size: 1.4em;
+    float: right;
+}
+
+.empty-items{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.empty-items h6{
+    font-size: 0.8em;
+}
+
+.empty-img1{
+    width: 150px;
+    margin: 0.5rem;
+}
+
+.empty-img2{
+    width: 180px;
+    margin: 0.5rem;
+}
+
+@media screen and (max-width: $md-size){
+   .empty-img1{
+        width: 35%;
+        margin: 0.5rem;
+    }
+    
+    .empty-img2{
+        width: 40%;
+        margin: 0.5rem;
+    }
+}
+
+@media screen and (max-width: $sm-size){
+
+    .more-info-row .row .col:first-child{
+        margin-top: 0;
+    }
+
+    .more-info-row .row .col{
+        margin-top: 0.5rem;
+    }
+    
+    
 }

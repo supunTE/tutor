@@ -27,3 +27,15 @@ export interface ClassInterface {
     linkData: string,
     otherDetails:string
 }
+
+export interface ClassLinksInterface {  
+    link: string,
+    name: string,
+    time: Date,
+}
+
+export interface ClassDocsInterface {  
+    link: string,
+    name: string,
+    time: Date,
+}

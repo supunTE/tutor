@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { User } from '../interfaces/user';
 import { Teacher } from '../interfaces/teacher';
-import { ClassInterface } from '../interfaces/class';
+import { ClassInterface, ClassLinksInterface, ClassDocsInterface } from '../interfaces/class';
 import { bookmark } from '../interfaces/bookmark';
 import { joined } from '../interfaces/joined';
 import { message } from '../interfaces/message'
@@ -131,6 +131,14 @@ export class AcconutService {
 
   getSelectedJoinedClass(uid, cid){
     return this.afs.doc<joined>(`joined/${uid}/joined/${cid}`).valueChanges();
+  }
+
+  getLinksInJoinedClass(cid){
+    return this.afs.collection<ClassLinksInterface>(`classes/${cid}/links`).valueChanges();
+  }
+
+  getDocsInJoinedClass(cid){
+    return this.afs.collection<ClassDocsInterface>(`classes/${cid}/documents`).valueChanges();
   }
 
   rateSelectedTeacher(uid, tid, data){

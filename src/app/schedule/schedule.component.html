@@ -116,174 +116,163 @@
       </ng-template>
       <ng-template [ngIf]="stateTeacher">
         <div class="main-part">
-          <button class="btn btn-success" (click)="showSchedule = !showSchedule;" [class]="showJoined ? 'in-tab' : ''">Schedule a class</button>
+          <button mat-raised-button color="primary" (click)="showS()"  [class]="showJoined ? 'in-tab' : ''">Schedule a class</button>
         </div>
       </ng-template>
     </div>
 
     <!-- schedule menu for teachers -->
-    <div class="schedule-class" *ngIf="stateTeacher && showClasses && showSchedule">
-      <form class="row" [formGroup]="scheduleForm" (ngSubmit)="onScheduleSubmit(userA)">
+        
+    <div class="schedule-class large-scroll" *ngIf="stateTeacher && showClasses && showSchedule">
+      <div class="circle1"></div>
+      <div class="circle2"></div>
+      <div class="circle3"></div>
+      <div class="form-glass">
+      <form class="row" *ngIf="scheduleForm" [formGroup]="scheduleForm" (ngSubmit)="onScheduleSubmit(userA)">
         <div class="col-sm-3 section-column">
           <div class="mb-2">
-            <label for="classNameID" class="form-label">Class Name*</label>
-            <input type="text" class="form-control" id="classNameID" formControlName="className"
-              placeholder="Physics Lesson 01 A/L 2021" required>
+            <mat-form-field class="t-input-box">
+              <mat-label for="classNameID">Class Name</mat-label>
+              <input matInput type="text" id="classNameID" formControlName="className" placeholder="Physics Lesson 01 A/L 2021" required>
+            </mat-form-field>
           </div>
           <div class="mb-2">
-            <label for="subjectID" class="form-label">Subject*</label>
-            <input type="text" class="form-control" id="subjectID" formControlName="subject" placeholder="Physics"
+            <mat-form-field class="t-input-box">
+              <mat-label for="subjectID" >Subject</mat-label>
+            <input matInput type="text" id="subjectID" formControlName="subject" placeholder="Physics"
               required>
+            </mat-form-field>
           </div>
           <div class="mb-2">
-            <label for="teacherNameID" class="form-label">Teacher's Name</label>
-            <input type="text" class="form-control" id="teacherNameID" formControlName="teacherName">
+            <mat-form-field class="t-input-box">
+            <mat-label for="teacherNameID">Teacher's Name</mat-label>
+            <input  matInput type="text" id="teacherNameID" formControlName="teacherName">
+            </mat-form-field>
           </div>
           <div class="mb-2">
-            <label for="lessonID" class="form-label">Lesson*</label>
-            <input type="text" class="form-control" id="lessonID" formControlName="lesson"
+            <mat-form-field class="t-input-box">
+            <mat-label for="lessonID">Lesson</mat-label>
+            <input matInput type="text" id="lessonID" formControlName="lesson"
               placeholder="Lesson 01 - Topic" required>
+              </mat-form-field>
           </div>
-          <div class="mb-2">
-            <label for="categoryID" class="form-label">Category*</label>
-            <select class="form-select" id="categoryID" formControlName="category" required>
-              <option value="Theory">Theory</option>
-              <option value="Revision">Revision</option>
-              <option value="Paper">Paper</option>
-            </select>
+          <div class="mb-2">            
+            <mat-form-field class="t-input-box">
+            <mat-label for="categoryID">Category</mat-label>
+            <mat-select id="categoryID" formControlName="category" required>
+              <mat-option value="Theory">Theory</mat-option>
+              <mat-option value="Revision">Revision</mat-option>
+              <mat-option value="Paper">Paper</mat-option>
+            </mat-select>
+            </mat-form-field>
           </div>
+
           <div class="mb-2">
-            <label for="batchYearID" class="form-label">Batch Year*</label>
-            <select class="form-select" id="batchYearID" formControlName="batchYear" required>
-              <option value="20">20</option>
-              <option value="21">21</option>
-              <option value="22">22</option>
-            </select>
+            <mat-form-field class="t-input-box">
+              <mat-label for="batchYearID">Batch Year</mat-label>
+              <mat-select id="batchYearID" formControlName="batchYear" required>
+                <mat-option value="20">20</mat-option>
+                <mat-option value="21">21</mat-option>
+                <mat-option value="22">22</mat-option>
+              </mat-select>
+              </mat-form-field>
           </div>
         </div>
 
         <div class="col-sm-3 section-column">
+          <div class="mb-5">
+
+            <mat-form-field class="t-input-box">
+            <mat-label>Choose a duration</mat-label>
+            <mat-date-range-input [rangePicker]="picker" [min]="minRangeDate" [max]="maxRangeDate">
+              <input matStartDate placeholder="Start date" formControlName="durationStart" (dateChange)="changeStartDate($event)" required>
+              <input matEndDate placeholder="End date" formControlName="durationEnd" (dateChange)="changeEndDate($event)" required>
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker>
+              <mat-date-range-picker-actions>
+                <button mat-button matDateRangePickerCancel>Cancel</button>
+                <button mat-raised-button color="primary" matDateRangePickerApply>Apply</button>
+              </mat-date-range-picker-actions>
+            </mat-date-range-picker>
+                        
+            <mat-error *ngIf="scheduleForm.controls.durationStart.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+            <mat-error *ngIf="scheduleForm.controls.durationEnd.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+            <p class="range-text" *ngIf="!scheduleForm.controls.durationStart.hasError('matStartDateInvalid') && !scheduleForm.controls.durationEnd.hasError('matEndDateInvalid') && dtRangeTxt"> {{ dtRangeTxt }}</p>            
+            
+          </mat-form-field>      
+          </div>
+
           <div class="mb-2">
-            <label for="numberOfWeeksID" class="form-label">Number of weeks*</label>
-            <select class="form-select" id="numberOfWeeksID" formControlName="numberOfWeeks" required>
-              <option value="1">1 Week</option>
-              <option value="2">2 Weeks</option>
-              <option value="3">3 Weeks</option>
-              <option value="3">4 Weeks</option>
-            </select>
+            <mat-form-field class="t-input-box">
+              <mat-label for="classMethodID">Method of Class Scheduling</mat-label>
+              <mat-select id="classMethodID" formControlName="classMethod"  (selectionChange)="classMethodChange()" required>
+                <mat-option value="1">Weekday Routine Method</mat-option>
+                <mat-option value="2">Event Schedule Method</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <p><small><b>Weekday Routine Method</b><br> You can select days and times which you held classes in a week. 
+            Then you can continue with the same routine for next weeks in duration. </small>
+          </p>
+          <p><small><b>Event Schedule Method</b> <br> You can select days and times one by one which you held 
+            classes in the whole duration.</small>
+          </p>          
+        </div>
+
+        <div class="col-sm-3 section-column" *ngIf="weekRouteMethodEnable">
+          <div class="mb-2">
+            <mat-form-field class="t-input-box">
+              <mat-label for="classesPerWeekID">Class days per week</mat-label>
+              <mat-select id="classesPerWeekID" formControlName="classesPerWeek" required>
+                <mat-option value="1">1</mat-option>
+                <mat-option value="2">2</mat-option>
+                <mat-option value="3">3</mat-option>
+                <mat-option value="4">4</mat-option>
+                <mat-option value="5">5</mat-option>
+                <mat-option value="6">6</mat-option>
+                <mat-option value="7">7</mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
           <div class="mb-2">
-            <label for="classesPerWeekID" class="form-label">Classes per week*</label>
-            <select class="form-select" id="classesPerWeekID" formControlName="classesPerWeek" required>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="3">4</option>
-              <option value="3">5</option>
-            </select>
+            <mat-form-field class="t-input-box">
+              <mat-label>Weekdays</mat-label>
+              <mat-select formControlName="weekData" multiple required>
+                <mat-option *ngFor="let day of weekDays" [disabled]="scheduleForm.get('classesPerWeek').value == scheduleForm.get('weekData').value?.length && 
+                !scheduleForm.get('weekData').value?.includes(day.value)"
+                 [value]="day.value">{{day.value | titlecase}}</mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
-          <div class="mb-2">
-            <label class="form-label">Weekdays</label>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" formControlName="mondayData" id="mondayDataID">
-              <label class="form-check-label" for="mondayDataID">
-                Monday
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" formControlName="tuesdayData" id="tuesdayDataID">
-              <label class="form-check-label" for="tuesdayDataID">
-                Tuesday
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" formControlName="wednesdayData" id="wednesdayDataID">
-              <label class="form-check-label" for="wednesdayDataID">
-                Wednesday
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" formControlName="thursdayData" id="thursdayDataID">
-              <label class="form-check-label" for="thursdayDataID">
-                Thursday
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" formControlName="fridayData" id="fridayDataID">
-              <label class="form-check-label" for="fridayDataID">
-                Friday
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" formControlName="saturdayData" id="saturdayDataID">
-              <label class="form-check-label" for="saturdayDataID">
-                Saturday
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" formControlName="sundayData" id="sundayDataID">
-              <label class="form-check-label" for="sundayDataID">
-                Sunday
-              </label>
-            </div>
+          <div class="mb-2">           
+            <ng-container *ngFor="let day of weekDays">
+            <mat-form-field class="t-input-box" *ngIf="scheduleForm.get('weekData').value?.includes(day.value)">
+              <mat-label>{{day.value | titlecase}} Time</mat-label>
+              <input matTimepicker mode="24h" [formControlName]=day.key placeholder="Please select time..." required>
+            </mat-form-field>
+            </ng-container>
           </div>
         </div>
 
         <div class="col-sm-3 section-column">
-          <div class="mb-2">
-            <label class="form-label">Time</label>
-            <div class="input-group mb-3" *ngIf="scheduleForm.get('mondayData').value">
-              <span class="input-group-text time-label">Monday</span>
-              <input type="time" id="mondayTimeID" class="form-control" formControlName="mondayTime"
-                placeholder="Select time">
-            </div>
-            <div class="input-group mb-3" *ngIf="scheduleForm.get('tuesdayData').value">
-              <span class="input-group-text time-label">Tuesday</span>
-              <input type="time" id="tuesdayTimeID" class="form-control" formControlName="tuesdayTime"
-                placeholder="Select time">
-            </div>
-            <div class="input-group mb-3" *ngIf="scheduleForm.get('wednesdayData').value">
-              <span class="input-group-text time-label">Wednesday</span>
-              <input type="time" id="wednesdayTimeID" class="form-control" formControlName="wednesdayTime"
-                placeholder="Select time">
-            </div>
-            <div class="input-group mb-3" *ngIf="scheduleForm.get('thursdayData').value">
-              <span class="input-group-text time-label">Thursday</span>
-              <input type="time" id="thursdayTimeID" class="form-control" formControlName="thursdayTime"
-                placeholder="Select time">
-            </div>
-            <div class="input-group mb-3" *ngIf="scheduleForm.get('fridayData').value">
-              <span class="input-group-text time-label">Friday</span>
-              <input type="time" id="fridayTimeID" class="form-control" formControlName="fridayTime"
-                placeholder="Select time">
-            </div>
-            <div class="input-group mb-3" *ngIf="scheduleForm.get('saturdayData').value">
-              <span class="input-group-text time-label">Saturday</span>
-              <input type="time" id="saturdayTimeID" class="form-control" formControlName="saturdayTime"
-                placeholder="Select time">
-            </div>
-            <div class="input-group mb-3" *ngIf="scheduleForm.get('sundayData').value">
-              <span class="input-group-text time-label">Sunday</span>
-              <input type="time" id="sundayTimeID" class="form-control" formControlName="sundayTime"
-                placeholder="Select time">
-            </div>
-          </div>
-        </div>
+          <div class="mb-2 mt-0">
 
-        <div class="col-sm-3 section-column">
-          <div class="mb-2">
-            <label for="linkDataID" class="form-label">Zoom/Team Link*</label>
-            <input type="text" class="form-control" id="linkDataID" formControlName="linkData" required>
+            <mat-form-field  class="t-input-box">
+              <mat-label for="otherDetailsID">Other details</mat-label>
+              <textarea matInput id="otherDetailsID" formControlName="otherDetails" rows="4" 
+              placeholder="Ex. Students who participated theory class, don't need to participate here... 
+              (Any important notics to students, before the payment) "></textarea>
+            </mat-form-field>
+
           </div>
-          <div class="mb-2">
-            <label for="otherDetailsID" class="form-label">Other details</label>
-            <textarea class="form-control" id="otherDetailsID" formControlName="otherDetails" rows="4"></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary" [disabled]="!scheduleForm.valid">Submit</button>
+          <p><small>You can add meeting <b>links</b> once after you create the class.</small></p>
+          <button type="submit" class="mx-2 btn btn-primary" [disabled]="!scheduleForm.valid">Submit</button>
         </div>
 
 
       </form>
+      </div>
 
       <div class="modal modal-dialog-centered schedule-succcess" tabindex="-1" *ngIf="scheduleComplete"
         id="scheduleSuccess">
