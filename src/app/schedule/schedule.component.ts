@@ -4,9 +4,17 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import firebase from 'firebase/app';
 import { from, Observable, Subscriber } from 'rxjs';
 import { map, take, finalize } from 'rxjs/operators';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConnectionService } from 'ng-connection-service';
-import {MatDatepickerInputEvent} from '@angular/material/datepicker';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+  group
+} from '@angular/animations';
 
 import { User } from '../interfaces/user';
 import { Slip } from '../interfaces/slip';
@@ -24,9 +32,20 @@ import { AngularFireStorage } from '@angular/fire/storage';
 @Component({
   selector: 'app-schedule',
   templateUrl: './schedule.component.html',
-  styleUrls: ['./schedule.component.scss']
+  styleUrls: ['./schedule.component.scss'],
+  animations: [trigger('myInsertRemoveTrigger', [
+    transition(':enter', [
+      style({ opacity: 0, height:0 }),
+      animate('300ms', style({ opacity: 1, height: 'calc(90vh - 5em)' })),
+    ]),
+    transition(':leave', [
+      animate('300ms', style({ opacity: 0, height:0  })),
+    ])
+  ])
+  ]
 })
 export class ScheduleComponent implements OnInit {
+  formValues:any = '';
   stateStudent = false;
   stateTeacher = false;
   pathId:string = '';
@@ -61,30 +80,32 @@ export class ScheduleComponent implements OnInit {
   uploadPercent:  Observable<number>;
   openClass: boolean = false;
   downloadURL: Observable<string>;
-  weekRouteMethodEnable = false;
+  // weekRouteMethodEnable = false;
 
   todayDate; dtEndTxt; dtStartTxt; dtRangeTxt; minRangeDate; maxRangeDate; methodSelect:number = 1;
 
   scheduleForm = new FormGroup({
-    className: new FormControl(''),
-    subject: new FormControl(''),
+    className: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(40)]),
+    subject: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(15)]),
     teacherName: new FormControl({value: '', disabled: true}, Validators.required),
-    teacherID: new FormControl(''),
-    lesson: new FormControl(''),
-    category: new FormControl(''),
-    batchYear: new FormControl(''),
-    durationStart: new FormControl(''),
-    durationEnd: new FormControl(''),
+    lesson: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(15)]),
+    category: new FormControl('', [Validators.required]),
+    batchYear: new FormControl('', [Validators.required]),
+    durationStart: new FormControl('', Validators.required),
+    durationEnd: new FormControl('', Validators.required),
     classesPerWeek: new FormControl(''),
     classMethod: new FormControl(''),
     weekData: new FormControl(''),
-    mondayData: new FormControl('true'),
-    tuesdayData: new FormControl(''),
-    wednesdayData: new FormControl(''),
-    thursdayData: new FormControl(''),
-    fridayData: new FormControl(''),
-    saturdayData: new FormControl(''),
-    sundayData: new FormControl(''),
+    classType: new FormControl(''),
+    moneyAmount: new FormControl('0'),
+    moneyUnit: new FormControl(''), 
+    // mondayData: new FormControl('true'),
+    // tuesdayData: new FormControl(''),
+    // wednesdayData: new FormControl(''),
+    // thursdayData: new FormControl(''),
+    // fridayData: new FormControl(''),
+    // saturdayData: new FormControl(''),
+    // sundayData: new FormControl(''),
     mondayTime: new FormControl(''),
     tuesdayTime: new FormControl(''),
     wednesdayTime: new FormControl(''),
@@ -92,7 +113,6 @@ export class ScheduleComponent implements OnInit {
     fridayTime: new FormControl(''),
     saturdayTime: new FormControl(''),
     sundayTime: new FormControl(''),
-    linkData: new FormControl(''),
     otherDetails: new FormControl('')
   });
 
@@ -112,8 +132,20 @@ export class ScheduleComponent implements OnInit {
 
       this.ConnectionService.monitor().subscribe(isC => {
         this.isConnected = isC;
-
       })
+
+      this.scheduleForm.get('classType').valueChanges
+      .subscribe(value => this.classTypeChange(value));
+
+      this.scheduleForm.get('classMethod').valueChanges
+      .subscribe(value => this.classMethodChange(value));
+
+      this.scheduleForm.get('weekData').valueChanges
+      .subscribe(value => this.weekDataChange(value));
+
+      this.scheduleForm.get('moneyUnit').valueChanges
+      .subscribe(value => this.moneyAmountChange(value));
+
     auth.authState.subscribe(user => {
       if (user) {
         const authUserData = firebase.auth().currentUser;
@@ -171,20 +203,20 @@ export class ScheduleComponent implements OnInit {
           this.downloadURL.subscribe(dURL => {
            const slipData: Slip = {
             cid: cid,      
-            className: classData.className,
-            teacherName: classData.teacherName,
-            teacherId: classData.teacherID,
+            className: classData.main.className,
+            teacherName: classData.main.teacherName,
+            teacherId: classData.main.teacherID,
             uid: user.uid,
             userName: user.displayName,
             slipLink: dURL,
             date: new Date()
           }
-          this.accountService.saveSlip(classData.teacherID, cid, user.uid, slipData);
+          this.accountService.saveSlip(classData.main.teacherID, cid, user.uid, slipData);
         })
         })
       )
       .subscribe()
-      this.joinClass(cid, user.uid, classData.className, classData.teacherName, classData.teacherID, 0)
+      this.joinClass(cid, user.uid, classData.main.className, classData.main.teacherName, classData.main.teacherID, 0)
     }
    }
 
@@ -399,6 +431,7 @@ export class ScheduleComponent implements OnInit {
 
    getUserClasses(user){
      this.userClasses = this.accountService.getUserClass(user);
+     console.log(this.userClasses)
    }
 
    async getValues(user){
@@ -406,7 +439,7 @@ export class ScheduleComponent implements OnInit {
       this.userData = user
       this.scheduleForm.patchValue({
         teacherName: this.userData.displayName,
-        teacherID: this.userData.uid
+        moneyAmount: 0
       });
     })
    }
@@ -416,8 +449,85 @@ export class ScheduleComponent implements OnInit {
       this.accountService.getUser(user).subscribe((user) => {
       const teacherName = user.displayName;
       const teacherID = user.uid;
-      const scheduleValues = { ...this.scheduleForm.value, teacherName: teacherName, teacherID: teacherID };
-      this.accountService.createClass(scheduleValues)
+      this.formValues = this.scheduleForm.value;
+      console.log(this.formValues.classType)
+      if(this.formValues.classType == 'false'){
+        this.formValues.moneyAmount = 0;
+        this.formValues.moneyUnit = '';
+      }
+      console.log(this.formValues.moneyAmount)
+      if(this.formValues.classMethod==2){
+        this.formValues.classesPerWeek = ''
+        this.formValues.weekData = ''
+        this.formValues.mondayTime = ''
+        this.formValues.tuesdayTime = ''
+        this.formValues.wednesdayTime = ''
+        this.formValues.thursdayTime = ''
+        this.formValues.fridayTime = ''
+        this.formValues.saturdayTime = ''
+        this.formValues.sundayTime = ''
+      }
+        if(!this.formValues.weekData.includes('monday')){
+         this.formValues.mondayTime = ''
+        }
+        if(!this.formValues.weekData.includes('tuesday')){
+          this.formValues.tuesdayTime = ''
+         }
+         if(!this.formValues.weekData.includes('wednesday')){
+          this.formValues.wednesdayTime = ''
+         }
+         if(!this.formValues.weekData.includes('thursday')){
+          this.formValues.thursdayTime = ''
+         }
+         if(!this.formValues.weekData.includes('friday')){
+          this.formValues.fridayTime = ''
+         }
+         if(!this.formValues.weekData.includes('saturday')){
+          this.formValues.saturdayTime = ''
+         }
+         if(!this.formValues.weekData.includes('sunday')){
+          this.formValues.sundayTime = ''
+         }
+         
+      // if(this.formValues.weekData.includes())
+
+      // <mat-option value="1">Weekday Routine Method</mat-option>
+      // <mat-option value="2">Event Schedule Method</mat-option>
+      const dataClass: ClassInterface = {
+        main:{
+          className: this.formValues.className,
+          teacherName: teacherName,
+          teacherID: teacherID,
+          subject: this.formValues.subject,        
+          fee: this.formValues.classType,
+          lesson: this.formValues.lesson,
+          category: this.formValues.category,
+          batchYear: this.formValues.batchYear,
+          classMethod: this.formValues.classMethod,
+          otherDetails: this.formValues.otherDetails
+        },    
+        amount:{
+          feeAmount: this.formValues.moneyAmount,
+          moneyunit: this.formValues.moneyUnit,
+        },
+        duration:{
+          duration: this.dtRangeTxt,
+          durationStart: this.formValues.durationStart,
+          durationEnd: this.formValues.durationEnd,
+          classesPerWeek: this.formValues.classesPerWeek,
+        },
+        week:{
+          weekData: this.formValues.weekData,
+          mondayTime: this.formValues.mondayTime,
+          tuesdayTime: this.formValues.tuesdayTime,
+          wednesdayTime: this.formValues.wednesdayTime,
+          thursdayTime: this.formValues.thursdayTime,
+          fridayTime: this.formValues.fridayTime,
+          saturdayTime: this.formValues.saturdayTime,
+          sundayTime: this.formValues.sundayTime,
+        }
+    }
+      this.accountService.createClass(dataClass)
     })
     
    }
@@ -441,13 +551,29 @@ export class ScheduleComponent implements OnInit {
     }
   }
 
-  classMethodChange(){
-    const classMethodNum = this.scheduleForm.value.classMethod;
-    if(classMethodNum == 1){
-      this.weekRouteMethodEnable = true;
-    }else{
-      this.weekRouteMethodEnable = false;
-    }
+  // classMethodChange(){
+  //   const classMethodNum = this.scheduleForm.value.classMethod;
+  //   if(classMethodNum == 1){
+  //     this.weekRouteMethodEnable = true;
+  //   }else{
+  //     this.weekRouteMethodEnable = false;
+  //   }
+  //   console.log(this.weekRouteMethodEnable)
+
+  // }
+
+  classDaysSelectionChanged(){
+    const weekDataControl = this.scheduleForm.get('weekData');
+    const weekDataLen = this.scheduleForm.get('weekData').value?.length;
+    const weekData = this.scheduleForm.get('weekData');    
+    const classesPerWeekValue = this.scheduleForm.value.classesPerWeek;
+
+    weekDataControl.setValidators([Validators.required, Validators.minLength(classesPerWeekValue)]);
+    weekDataControl.updateValueAndValidity();
+    
+    if( classesPerWeekValue < weekDataLen){
+      weekData.setValue(weekData.value.slice(0,classesPerWeekValue))
+    } 
   }
 
   changeStartDate(event: MatDatepickerInputEvent<Date>){
@@ -463,7 +589,12 @@ export class ScheduleComponent implements OnInit {
   getDifferences(){
     if(this.dtStartTxt && this.dtEndTxt){
       const diffTime = Math.abs(this.dtEndTxt - this.dtStartTxt);
-      this.dtRangeTxt =  (Math.ceil(diffTime / (1000 * 60 * 60 * 24)))+1 + " Days";
+      const diffDays = (Math.ceil(diffTime / (1000 * 60 * 60 * 24)))+1
+      if(diffDays<100){
+        this.dtRangeTxt = diffDays  + " Days";
+      }else{
+        this.dtRangeTxt =   " ?? Days";
+      }
     }else{
       this.dtRangeTxt = '';
     }
@@ -477,7 +608,7 @@ export class ScheduleComponent implements OnInit {
 
   pickStartDate(){
     this.todayDate = new Date();  
-    this.todayDate.setMonth(this.todayDate.getMonth() - 3)
+    // this.todayDate.setMonth(this.todayDate.getMonth() - 3)
     return this.todayDate;
   }
 
@@ -486,6 +617,95 @@ export class ScheduleComponent implements OnInit {
     this.todayDate.setMonth(this.todayDate.getMonth() + 3)
     return this.todayDate;
   }
+
+  classTypeChange(value){
+    const moneyUnitControl = this.scheduleForm.get('moneyUnit');
+    const moneyAmountControl = this.scheduleForm.get('moneyAmount');
+    // const moneyUnitValue = this.scheduleForm.value.moneyUnit;
+
+    if(value == 'true'){
+      moneyUnitControl.setValidators([Validators.required]);
+      moneyAmountControl.setValidators([Validators.required]);
+      // if(moneyUnitValue == "lkr"){
+      //   moneyAmountControl.setValidators([Validators.required, Validators.min(100), Validators.max(10000)]);
+      //   moneyAmountControl.updateValueAndValidity();      
+      // }else if(moneyUnitValue == "usd"){
+      //   moneyAmountControl.setValidators([Validators.required, Validators.min(1), Validators.max(50)]);
+      //   moneyAmountControl.updateValueAndValidity();
+      // }else{
+
+      // }
+    }else{
+      moneyUnitControl.clearValidators();
+      moneyAmountControl.clearValidators();
+    }
+
+    moneyUnitControl.updateValueAndValidity();
+    moneyAmountControl.updateValueAndValidity();
+  }
+
+  moneyAmountChange(value){
+    
+    const classTypeValue = this.scheduleForm.value.classType;    
+    const moneyAmountControl = this.scheduleForm.get('moneyAmount');
+    // const moneyUnitValue = this.scheduleForm.value.moneyUnit;
+
+    if(classTypeValue == "true"){
+    if(value == "lkr"){     
+      moneyAmountControl.enable();
+      moneyAmountControl.setValidators([Validators.required, Validators.min(100), Validators.max(10000)]);
+      moneyAmountControl.updateValueAndValidity();      
+    }else if(value == "usd"){
+      moneyAmountControl.enable();
+      moneyAmountControl.setValidators([Validators.required, Validators.min(1), Validators.max(50)]);
+      moneyAmountControl.updateValueAndValidity();
+    }else{
+      moneyAmountControl.clearValidators();
+      moneyAmountControl.updateValueAndValidity();
+      moneyAmountControl.disable();
+    }
+    }else{
+      this.scheduleForm.value.classType = 0;
+      moneyAmountControl.clearValidators();
+      moneyAmountControl.updateValueAndValidity();
+      moneyAmountControl.disable();
+    }
+
+  }
+
+  classMethodChange(value){
+    const classesPerWeekValue = this.scheduleForm.value.classesPerWeek;
+    const classesPerWeekControl = this.scheduleForm.get('classesPerWeek');
+    const weekDataControl = this.scheduleForm.get('weekData');
+
+    if(value == '1'){
+      classesPerWeekControl.setValidators([Validators.required]);
+      weekDataControl.setValidators([Validators.required, Validators.minLength(classesPerWeekValue)]);
+    }else{
+      classesPerWeekControl.clearValidators();
+      if(weekDataControl){
+        weekDataControl.clearValidators();
+      }
+    }
+
+    classesPerWeekControl.updateValueAndValidity();
+    weekDataControl.updateValueAndValidity();
+
+  }
+
+  weekDataChange(value){
+    if(value){
+    for(var i =0; i<7; i++){
+    if(value?.includes(this.weekDays[i].value)){
+      this.scheduleForm.get((this[this.weekDays[i].key])).setValidators([Validators.required]);
+    }else{
+      this.scheduleForm.get((this[this.weekDays[i].key])).clearValidators();
+    }
+    this.scheduleForm.get((this[this.weekDays[i].key])).updateValueAndValidity();
+    }
+  }
+  }
+
 
   ngOnInit(): void {
     this.dtStartTxt = new Date();  

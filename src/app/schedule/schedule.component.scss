@@ -34,7 +34,7 @@
     height: 5em;
     width: 100%;
     padding: 3% 5%;
-    z-index: 10;
+    z-index: 12;
     background-color: #f7f7f7;
     position: fixed;
     display: flex;
@@ -65,8 +65,29 @@
     background: linear-gradient(135deg, #dbf1ff 0%, #bbbeef 100%);
 }
 
+.schedule-class .err-log{
+    color: #dc3545!important;
+    font-size: 0.8rem;
+    margin: -1em 0 1.5rem;
+}
+
 .schedule-class .t-input-box{ 
     width: 100%;
+}
+
+.schedule-class .t-input-box textarea{
+    min-height: 150px;
+    max-height: 300px;
+}
+
+.schedule-class .fee-row{
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.schedule-class .fee-row>*{
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .range-text{
@@ -80,7 +101,7 @@
 }
 
 .form-glass {
-    background: linear-gradient(135deg, #f7f7f7bd, #f7f7f759);
+    background: linear-gradient(135deg, #f7f7f759, #f7f7f7bd);
     padding: 70px 25px;
     border-radius: 20px;
     // background: linear-gradient(135deg, #f7f7f747, #f7f7f738);
@@ -90,7 +111,6 @@
     -moz-backdrop-filter: blur(5px);
     -o-backdrop-filter: blur(5px);
     -ms-backdrop-filter: blur(5px);
-
 }
 
 .circle1 {
@@ -100,7 +120,8 @@
     position: absolute;
     opacity: 0.75;
     border-radius: 50%;
-    right: -20%;
+    top: 10%;
+    right: -10%;
     z-index: -10;
 }
 
@@ -138,7 +159,34 @@
 
 .schedule-succcess{
     display: block;
+    background: linear-gradient(135deg, #dbf1ff26 0%, #ffffffbd 100%);
+    box-shadow: 2px 2px 20px 0px #8484842e;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    -moz-backdrop-filter: blur(2px);
+    -o-backdrop-filter: blur(2px);
+    -ms-backdrop-filter: blur(2px);
     color: black;
+    z-index: 17;
+}
+
+.schedule-succcess .modal-content{
+    box-shadow: 2px 2px 20px 0px #8484842e;
+    border: 0;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    -moz-backdrop-filter: blur(5px);
+    -o-backdrop-filter: blur(5px);
+    -ms-backdrop-filter: blur(5px);
+}
+
+.schedule-succcess .modal-header{
+    border-bottom: 0;
+}
+
+.schedule-succcess .modal-footer{
+    background-color: #dcdcdc61;
+    border-top: 0;
 }
 
 .search-class{
@@ -286,6 +334,25 @@
     .main-btn{
         margin: 0;
         padding-right: 0.5em;
+    }
+
+    .schedule-class{
+        padding: 2.5rem 0.5rem 10rem;
+    }
+
+    .circle1{
+        top: 50%;
+        right: -50%;
+    }
+
+    .circle2{
+        bottom: -180%;
+        left: -20%;
+    }
+
+    .circle3{
+        left: -20%;
+        top: -10%;
     }
 
     .class-main{

@@ -100,7 +100,7 @@
             Find a class</button>
         </div>
         <div class="main-btn">
-          <button mat-raised-button color="primary" (click)="showBMF()"  [class]="showBookmarks ? 'in-tab' : ''" >
+          <button mat-raised-button color="primary" (click)="showBMF()" [class]="showBookmarks ? 'in-tab' : ''">
             <span class="material-icons">
               bookmark
             </span>
@@ -116,129 +116,181 @@
       </ng-template>
       <ng-template [ngIf]="stateTeacher">
         <div class="main-part">
-          <button mat-raised-button color="primary" (click)="showS()"  [class]="showJoined ? 'in-tab' : ''">Schedule a class</button>
+          <button mat-raised-button color="primary" (click)="showS()" [class]="showJoined ? 'in-tab' : ''">
+            <span class="material-icons">
+              today
+            </span>
+            Schedule a class</button>
         </div>
       </ng-template>
     </div>
 
     <!-- schedule menu for teachers -->
-        
-    <div class="schedule-class large-scroll" *ngIf="stateTeacher && showClasses && showSchedule">
+
+    <div @myInsertRemoveTrigger class="schedule-class large-scroll" *ngIf="stateTeacher && showClasses && showSchedule">
       <div class="circle1"></div>
       <div class="circle2"></div>
       <div class="circle3"></div>
       <div class="form-glass">
-      <form class="row" *ngIf="scheduleForm" [formGroup]="scheduleForm" (ngSubmit)="onScheduleSubmit(userA)">
-        <div class="col-sm-3 section-column">
-          <div class="mb-2">
-            <mat-form-field class="t-input-box">
-              <mat-label for="classNameID">Class Name</mat-label>
-              <input matInput type="text" id="classNameID" formControlName="className" placeholder="Physics Lesson 01 A/L 2021" required>
-            </mat-form-field>
-          </div>
-          <div class="mb-2">
-            <mat-form-field class="t-input-box">
-              <mat-label for="subjectID" >Subject</mat-label>
-            <input matInput type="text" id="subjectID" formControlName="subject" placeholder="Physics"
-              required>
-            </mat-form-field>
-          </div>
-          <div class="mb-2">
-            <mat-form-field class="t-input-box">
-            <mat-label for="teacherNameID">Teacher's Name</mat-label>
-            <input  matInput type="text" id="teacherNameID" formControlName="teacherName">
-            </mat-form-field>
-          </div>
-          <div class="mb-2">
-            <mat-form-field class="t-input-box">
-            <mat-label for="lessonID">Lesson</mat-label>
-            <input matInput type="text" id="lessonID" formControlName="lesson"
-              placeholder="Lesson 01 - Topic" required>
+        <form class="row" *ngIf="scheduleForm" [formGroup]="scheduleForm" (ngSubmit)="onScheduleSubmit(userA)">
+          <div class="col-xl-3 col-md-4 col-sm-6 col-12 section-column">
+            <div class="mb-2">
+              <mat-form-field class="t-input-box">
+                <mat-label for="classNameID">Class Name</mat-label>
+                <input matInput type="text" id="classNameID" formControlName="className"
+                  placeholder="Ex:- Physics Lesson 01 A/L 2021" required>
               </mat-form-field>
-          </div>
-          <div class="mb-2">            
-            <mat-form-field class="t-input-box">
-            <mat-label for="categoryID">Category</mat-label>
-            <mat-select id="categoryID" formControlName="category" required>
-              <mat-option value="Theory">Theory</mat-option>
-              <mat-option value="Revision">Revision</mat-option>
-              <mat-option value="Paper">Paper</mat-option>
-            </mat-select>
-            </mat-form-field>
-          </div>
-
-          <div class="mb-2">
-            <mat-form-field class="t-input-box">
-              <mat-label for="batchYearID">Batch Year</mat-label>
-              <mat-select id="batchYearID" formControlName="batchYear" required>
-                <mat-option value="20">20</mat-option>
-                <mat-option value="21">21</mat-option>
-                <mat-option value="22">22</mat-option>
-              </mat-select>
+              <p class="err-log" *ngIf="scheduleForm.get('className').errors?.minlength">Class Name must contain more than 5 letters.</p>
+              <p class="err-log" *ngIf="scheduleForm.get('className').errors?.maxlength">Class Name must not contain more than 40 letters.</p>
+            </div>
+            <div class="mb-2">
+              <mat-form-field class="t-input-box">
+                <mat-label for="subjectID">Subject</mat-label>
+                <input matInput type="text" id="subjectID" formControlName="subject" placeholder="Ex:- Physics"
+                  required>
               </mat-form-field>
-          </div>
-        </div>
+              <p class="err-log" *ngIf="scheduleForm.get('subject').errors?.minlength">Subject Name must contain more than 1 letter.</p>
+              <p class="err-log" *ngIf="scheduleForm.get('subject').errors?.maxlength">Subject Name must not contain more than 15 letters.</p>
+            </div>
+            <div class="mb-2">
+              <mat-form-field class="t-input-box">
+                <mat-label for="teacherNameID">Teacher's Name</mat-label>
+                <input matInput type="text" id="teacherNameID" formControlName="teacherName">
+              </mat-form-field>
+            </div>
+            <div class="mb-2">
+              <mat-form-field class="t-input-box">
+                <mat-label for="lessonID">Lesson</mat-label>
+                <input matInput type="text" id="lessonID" formControlName="lesson" placeholder="Ex:- Lesson 01 - Topic"
+                  required>
+              </mat-form-field>
+              <p class="err-log" *ngIf="scheduleForm.get('lesson').errors?.minlength">Lesson Name must contain more than 1 letter.</p>
+              <p class="err-log" *ngIf="scheduleForm.get('lesson').errors?.maxlength">Lesson Name must not contain more than 15 letters.</p>
+            </div>
+            <div class="mb-2">
+              <mat-form-field class="t-input-box">
+                <mat-label for="categoryID">Category</mat-label>
+                <mat-select id="categoryID" formControlName="category" required>
+                  <mat-option value="Theory">Theory</mat-option>
+                  <mat-option value="Revision">Revision</mat-option>
+                  <mat-option value="Paper">Paper</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
 
-        <div class="col-sm-3 section-column">
-          <div class="mb-5">
+            <div class="mb-2">
+              <mat-form-field class="t-input-box">
+                <mat-label for="batchYearID">Batch Year</mat-label>
+                <mat-select id="batchYearID" formControlName="batchYear" required>
+                  <mat-option value="20">20</mat-option>
+                  <mat-option value="21">21</mat-option>
+                  <mat-option value="22">22</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
 
-            <mat-form-field class="t-input-box">
-            <mat-label>Choose a duration</mat-label>
-            <mat-date-range-input [rangePicker]="picker" [min]="minRangeDate" [max]="maxRangeDate">
-              <input matStartDate placeholder="Start date" formControlName="durationStart" (dateChange)="changeStartDate($event)" required>
-              <input matEndDate placeholder="End date" formControlName="durationEnd" (dateChange)="changeEndDate($event)" required>
-            </mat-date-range-input>
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-date-range-picker #picker>
-              <mat-date-range-picker-actions>
-                <button mat-button matDateRangePickerCancel>Cancel</button>
-                <button mat-raised-button color="primary" matDateRangePickerApply>Apply</button>
-              </mat-date-range-picker-actions>
-            </mat-date-range-picker>
-                        
-            <mat-error *ngIf="scheduleForm.controls.durationStart.hasError('matStartDateInvalid')">Invalid start date</mat-error>
-            <mat-error *ngIf="scheduleForm.controls.durationEnd.hasError('matEndDateInvalid')">Invalid end date</mat-error>
-            <p class="range-text" *ngIf="!scheduleForm.controls.durationStart.hasError('matStartDateInvalid') && !scheduleForm.controls.durationEnd.hasError('matEndDateInvalid') && dtRangeTxt"> {{ dtRangeTxt }}</p>            
-            
-          </mat-form-field>      
+            <div class="mb-2">
+              <mat-form-field class="t-input-box">
+                <mat-label for="classTypeID">Class Type</mat-label>
+                <mat-select id="classTypeID" formControlName="classType" required>
+                  <mat-option value="false">Free Class</mat-option>
+                  <mat-option value="true">Paid Class</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="mb-2" *ngIf="scheduleForm.get('classType').value == 'true'">
+              <div class="row fee-row t-input-box">
+                <mat-form-field class="col-5">
+                  <mat-label for="classTypeID">Money Unit</mat-label>
+                  <mat-select id="classTypeID" formControlName="moneyUnit"
+                    [required]="scheduleForm.get('classType').value == 'true'">
+                    <mat-option value="lkr">LKR(Sri Lankan Rupees)</mat-option>
+                    <mat-option value="usd">USD(United States Dollars)</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="col-7">
+                  <mat-label for="moneyAmountID">Fee Amount</mat-label>
+                  <input matInput type="number" id="moneyAmountID" formControlName="moneyAmount" placeholder="Ex:- 1500"
+                    [required]="scheduleForm.get('classType').value == 'true'">
+                </mat-form-field>
+                <p class="err-log" *ngIf="scheduleForm.get('moneyAmount').errors?.min && scheduleForm.get('moneyUnit').value == 'lkr'">Amount must not be less than 100 LKR.</p>
+                <p class="err-log" *ngIf="scheduleForm.get('moneyAmount').errors?.max && scheduleForm.get('moneyUnit').value == 'lkr'">Amount must be less than 10,000 LKR.</p>
+
+                <p class="err-log" *ngIf="scheduleForm.get('moneyAmount').errors?.min && scheduleForm.get('moneyUnit').value == 'usd'">Amount must not be less than 1 USD.</p>
+                <p class="err-log" *ngIf="scheduleForm.get('moneyAmount').errors?.max && scheduleForm.get('moneyUnit').value == 'usd'">Amount must be less than 50 USD.</p>
+              </div>
+            </div>
           </div>
 
-          <div class="mb-2">
-            <mat-form-field class="t-input-box">
-              <mat-label for="classMethodID">Method of Class Scheduling</mat-label>
-              <mat-select id="classMethodID" formControlName="classMethod"  (selectionChange)="classMethodChange()" required>
-                <mat-option value="1">Weekday Routine Method</mat-option>
-                <mat-option value="2">Event Schedule Method</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <p><small><b>Weekday Routine Method</b><br> You can select days and times which you held classes in a week. 
-            Then you can continue with the same routine for next weeks in duration. </small>
-          </p>
-          <p><small><b>Event Schedule Method</b> <br> You can select days and times one by one which you held 
-            classes in the whole duration.</small>
-          </p>          
-        </div>
+          <div class="col-xl-3 col-md-4 col-sm-6 col-12 section-column">
+            <div class="mb-5">
+              <mat-form-field class="t-input-box">
+                <mat-label>Choose a duration</mat-label>
+                <mat-date-range-input [rangePicker]="picker" [min]="minRangeDate" [max]="maxRangeDate">
+                  <input matStartDate placeholder="Start date" formControlName="durationStart"
+                    (dateChange)="changeStartDate($event)" required>
+                  <input matEndDate placeholder="End date" formControlName="durationEnd"
+                    (dateChange)="changeEndDate($event)" required>
+                </mat-date-range-input>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker>
+                  <mat-date-range-picker-actions>
+                    <button mat-button matDateRangePickerCancel>Cancel</button>
+                    <button mat-raised-button color="primary" matDateRangePickerApply>Apply</button>
+                  </mat-date-range-picker-actions>
+                </mat-date-range-picker>
 
-        <div class="col-sm-3 section-column" *ngIf="weekRouteMethodEnable">
-          <div class="mb-2">
-            <mat-form-field class="t-input-box">
-              <mat-label for="classesPerWeekID">Class days per week</mat-label>
-              <mat-select id="classesPerWeekID" formControlName="classesPerWeek" required>
-                <mat-option value="1">1</mat-option>
-                <mat-option value="2">2</mat-option>
-                <mat-option value="3">3</mat-option>
-                <mat-option value="4">4</mat-option>
-                <mat-option value="5">5</mat-option>
-                <mat-option value="6">6</mat-option>
-                <mat-option value="7">7</mat-option>
-              </mat-select>
-            </mat-form-field>
+                <mat-error *ngIf="scheduleForm.controls.durationStart.hasError('matStartDateInvalid')">Invalid duration
+                  start date!</mat-error>
+                <mat-error *ngIf="scheduleForm.controls.durationEnd.hasError('matEndDateInvalid')">Invalid duration end
+                  date!</mat-error>
+                <p class="range-text"
+                  *ngIf="!scheduleForm.controls.durationStart.hasError('matStartDateInvalid') && !scheduleForm.controls.durationEnd.hasError('matEndDateInvalid') && dtRangeTxt">
+                  {{ dtRangeTxt }}</p>
+
+              </mat-form-field>
+            </div>
+
+            <div class="mb-2">
+              <mat-form-field class="t-input-box">
+                <mat-label for="classMethodID">Method of Class Scheduling</mat-label>
+                <mat-select id="classMethodID" formControlName="classMethod" required>
+                  <mat-option value="1">Weekday Routine Method</mat-option>
+                  <mat-option value="2">Event Schedule Method</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <p><small><b>Weekday Routine Method</b><br> You can select days and times which you held classes in a week.
+                Then you can continue with the same routine for next weeks in duration. </small>
+            </p>
+            <p><small><b>Event Schedule Method</b> <br> You can select days and times one by one which you held
+                classes in the whole duration.</small>
+            </p>
           </div>
-          <div class="mb-2">
+
+          <div class="col-xl-3 col-md-4 col-sm-6 col-12 section-column" *ngIf="scheduleForm.get('classMethod').value == '1'">
+            <hr class="d-md-none">
+            <div class="mb-2">
+              <mat-form-field class="t-input-box">
+                <mat-label for="classesPerWeekID">Class days per week</mat-label>
+                <mat-select id="classesPerWeekID" formControlName="classesPerWeek"
+                  (selectionChange)="classDaysSelectionChanged()"
+                  [required]="scheduleForm.get('classMethod').value == '1'">
+                  <mat-option value="1">1</mat-option>
+                  <mat-option value="2">2</mat-option>
+                  <mat-option value="3">3</mat-option>
+                  <mat-option value="4">4</mat-option>
+                  <mat-option value="5">5</mat-option>
+                  <mat-option value="6">6</mat-option>
+                  <mat-option value="7">7</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="mb-2">
             <mat-form-field class="t-input-box">
               <mat-label>Weekdays</mat-label>
-              <mat-select formControlName="weekData" multiple required>
+              <mat-select formControlName="weekData" multiple [required]="scheduleForm.get('classMethod').value == '1'">
                 <mat-option *ngFor="let day of weekDays" [disabled]="scheduleForm.get('classesPerWeek').value == scheduleForm.get('weekData').value?.length && 
                 !scheduleForm.get('weekData').value?.includes(day.value)"
                  [value]="day.value">{{day.value | titlecase}}</mat-option>
@@ -249,37 +301,40 @@
             <ng-container *ngFor="let day of weekDays">
             <mat-form-field class="t-input-box" *ngIf="scheduleForm.get('weekData').value?.includes(day.value)">
               <mat-label>{{day.value | titlecase}} Time</mat-label>
-              <input matTimepicker mode="24h" [formControlName]=day.key placeholder="Please select time..." required>
+              <input matTimepicker mode="24h" [formControlName]=day.key placeholder="Please select time..." [required]="scheduleForm.get('weekData').value?.includes(day.value)">
             </mat-form-field>
             </ng-container>
           </div>
-        </div>
-
-        <div class="col-sm-3 section-column">
-          <div class="mb-2 mt-0">
-
-            <mat-form-field  class="t-input-box">
-              <mat-label for="otherDetailsID">Other details</mat-label>
-              <textarea matInput id="otherDetailsID" formControlName="otherDetails" rows="4" 
-              placeholder="Ex. Students who participated theory class, don't need to participate here... 
-              (Any important notics to students, before the payment) "></textarea>
-            </mat-form-field>
-
           </div>
-          <p><small>You can add meeting <b>links</b> once after you create the class.</small></p>
-          <button type="submit" class="mx-2 btn btn-primary" [disabled]="!scheduleForm.valid">Submit</button>
-        </div>
+
+          <div class="col-xl-3 col-md-4 col-sm-6 col-12 section-column">
+            <div class="mb-2 mt-0">
+
+              <mat-form-field class="t-input-box">
+                <mat-label for="otherDetailsID">Other details</mat-label>
+                <textarea matInput id="otherDetailsID" class="medium-scroll" formControlName="otherDetails" rows="4"
+                  placeholder="Ex. Students who participated theory class, don't need to participate here... (Any important notics to students, before the payment) "></textarea>
+              </mat-form-field>
+              <!-- {{ scheduleForm.get('otherDetails').value }} -->
+            </div>
+            <p><small>You can add meeting <b>links</b> once after you create the class.</small></p>
+            <button mat-raised-button class="btn-primary" type="mx-2 submit" [disabled]="!scheduleForm.valid">
+              <span class="material-icons">
+                event_available
+              </span>
+              Schedule</button>
+          </div>
 
 
-      </form>
+        </form>
       </div>
 
-      <div class="modal modal-dialog-centered schedule-succcess" tabindex="-1" *ngIf="scheduleComplete"
+      <div class="modal modal-dialog-centered schedule-succcess" tabindex="-1"  *ngIf="scheduleComplete"
         id="scheduleSuccess">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Success</h5>
+              <h5 class="modal-title font-2">Success</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                 (click)="scheduleComplete = !scheduleComplete; showSchedule = !showSchedule"></button>
             </div>
@@ -287,8 +342,11 @@
               <p>Schedule is completed successfuly.</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary"
-                (click)="scheduleComplete = !scheduleComplete; showSchedule = !showSchedule">Okay</button>
+              <button mat-raised-button color="primary" (click)="scheduleComplete = !scheduleComplete; showSchedule = !showSchedule">
+                <span class="material-icons">
+                  done
+                </span>
+                Okay</button>
             </div>
           </div>
         </div>
@@ -296,65 +354,110 @@
     </div>
 
     <!-- Show all list of classes for teacher -->
-    <div class="class-list" *ngIf="stateTeacher && showClasses">
-      <div *ngFor="let class of userClasses | async">
-        <div class="class-item" id="{{class.docId}}">
-          <h4 class="class-name font-2">{{ class.className }}</h4>
-          <div class="class-info">
-            <span class="class-subject class-data">Subject: {{ class.subject }}</span>
-            <span class="class-data">Lesson: {{ class.lesson }}</span>
-            <span class="class-data">Category: {{ class.category }}</span>
-            <span class="class-data">Batch: {{ class.batchYear }}</span>
-            <span
-              [className]="(moreInfoID == class.docId) ? 'class-data more-info-btn class-data-main' : 'class-data more-info-btn'"
-              (click)="unhide(class.docId)">More
-              <span class="material-icons">
-                keyboard_arrow_down
-              </span>
-            </span>
-          </div>
-          <div [className]="(moreInfoID == class.docId) ? 'more-info info-unhide' : 'more-info info-hide'">
-            <div class="more-info-row">
-              <span class="class-data">Number of weeks: {{ class.numberOfWeeks }}</span>
-              <span class="class-data">Classes per week: {{ class.classesPerWeek }}</span>
-            </div>
-            <div class="more-info-row">
-              <span class="class-data class-data-main">Class times</span>
-              <span class="class-data" *ngIf="class.mondayData">Monday: {{class.mondayTime}}</span>
-              <span class="class-data" *ngIf="class.tuesdayData">Tuesday: {{class.tuesdayTime}}</span>
-              <span class="class-data" *ngIf="class.wednesdayData">Wednesday: {{class.wednesdayTime}}</span>
-              <span class="class-data" *ngIf="class.thursdayData">Thursday: {{class.thursdayTime}}</span>
-              <span class="class-data" *ngIf="class.fridayData">Friday: {{class.fridayTime}}</span>
-              <span class="class-data" *ngIf="class.saturdayData">Saturday: {{class.saturdayTime}}</span>
-              <span class="class-data" *ngIf="class.sundayData">Sunday: {{class.sundayTime}}</span>
-            </div>
-            <div class="more-info-row">
-              <span class="class-data class-data-main">Link</span>
-              <span class="class-data" *ngIf="class.linkData">
-                <a href="{{class.linkData}}" target="blank">{{class.linkData}}</a>
-                <span class="material-icons">
-                  launch
-                </span>
-              </span>
-            </div>
-            <div class="more-info-row">
-              <span class="other-details">
-                <h6><b>Other Details</b></h6>
-                {{class.otherDetails}}
-              </span>
-            </div>
-            <div class="more-info-row functions-row">
-              <span class="bg-danger class-delete" (click)="deleteClass(class.docId)">Delete
-                <span class="material-icons">
-                  delete
-                </span>
-              </span>
-            </div>
-          </div>
+    <div class="row class-main"  *ngIf="stateTeacher && showClasses">
+    <div [class]="chatBar ? 'col-md-8 col-12 class-list' : 'col-12 class-list'">
+      <div
+        [class]="chatBar ? 'row row-cols-1 row-cols-lg-2 g-0 g-md-3' : 'row row-cols-1 row-cols-md-2 row-cols-lg-3 g-0 g-md-3'">
+        <div class="col class-list-items" *ngFor="let class of userClasses | async">
+          <mat-card class="class-item" id="{{class.docId}}">
+            <h4 class="class-name font-2">{{ class.main.className }}</h4>
+            <div class="class-info">
+              <span class="class-data">Subject: {{ class.main.subject }}</span>
+              <span class="class-data">Lesson: {{ class.main.lesson }}</span>
+              <span class="class-data">Category: {{ class.main.category }}</span>
+              <span class="class-data">Batch: {{ class.main.batchYear }}</span>
+              <span class="class-data bg-success" *ngIf="!class.main.fee">Free Class</span>
+              <span class="class-data bg-danger text-dark" *ngIf="class.main.fee">Paid Class</span>
 
+              <span
+                [className]="(moreInfoID == class.docId) ? 'class-data more-info-btn class-data-main' : 'class-data more-info-btn'"
+                (click)="unhide(class.docId)">More
+                <span class="material-icons">
+                  keyboard_arrow_down
+                </span>
+              </span>
+            </div>
+          </mat-card>
+          <div [className]="(moreInfoID == class.docId) ? 'info-unhide' : 'info-hide'">
+            <span class="more-close-btn d-block d-md-none" (click)="unhide(class.docId)"><i
+                class="material-icons color-white float-right">close</i></span>
+            <div class="class-info">
+              <span class="class-data">Subject: {{ class.main.subject }}</span>
+              <span class="class-data">Lesson: {{ class.main.lesson }}</span>
+              <span class="class-data">Category: {{ class.main.category }}</span>
+              <span class="class-data">Batch: {{ class.main.batchYear }}</span>
+              <span class="more-close-btn d-none d-md-block" (click)="unhide(class.docId)"><i
+                  class="material-icons color-white float-right">close</i></span>
+            </div>
+            <div class="mat-card mat-focus-indicator more-info">
+              <div class="more-info-row">
+                <span class="class-data">Duration: {{ class.duration.durationStart }} - {{ class.duration.durationEnd }} ({{class.duration.duration}})</span>
+                <span class="class-data">Classes per week: {{ class.duration.classesPerWeek }}</span>
+              </div>
+              <span class="class-data class-data-main" matTooltip="Floating Classes, without a weekly running schedule.">Event Schedule Method</span>
+              <div class="more-info-row" *ngIf="class.main.classMethod==1">
+                <span class="class-data class-data-main">Class times (Weekday Routine Method)</span>
+                <span class="class-data" *ngIf="class.mondayData">Monday: {{class.week.mondayTime}}</span>
+                <span class="class-data" *ngIf="class.tuesdayData">Tuesday: {{class.week.tuesdayTime}}</span>
+                <span class="class-data" *ngIf="class.wednesdayData">Wednesday: {{class.week.wednesdayTime}}</span>
+                <span class="class-data" *ngIf="class.thursdayData">Thursday: {{class.week.thursdayTime}}</span>
+                <span class="class-data" *ngIf="class.fridayData">Friday: {{class.week.fridayTime}}</span>
+                <span class="class-data" *ngIf="class.saturdayData">Saturday: {{class.week.saturdayTime}}</span>
+                <span class="class-data" *ngIf="class.sundayData">Sunday: {{class.week.sundayTime}}</span>
+              </div>
+              <hr>
+              <div class="more-info-row">
+                <span class="other-details">
+                  <h6><b>Other Details</b></h6>
+                  {{class.mainotherDetails}}
+                </span>
+              </div>
+              <div class="more-info-row functions-row">
+                <a mat-raised-button color="primary" class="class-ask"
+                  (click)="deleteClass(class.docId)">
+                  <span class="material-icons">
+                    delete
+                  </span>
+                  Delete
+                </a>
+              </div>
+              <!-- <div class="more-info-row functions-row">
+                <a mat-raised-button color="primary" class="class-ask"
+                  [routerLink]="['/class', {outlets:{'message': [class.docId]}}]"
+                  (click)="QuestionBarEnable(class.docId)" skipLocationChange>
+                  <span class="material-icons">
+                    chat
+                  </span>
+                  Ask Questions
+                </a>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-md-4 d-md-block d-none side-panel" *ngIf="chatBar">
+      <div class="side-panel-body">
+        <div class="message-window" *ngIf="chatBar">
+          <router-outlet *ngIf="sideBar == 'Q'" name="message"></router-outlet>
+          <router-outlet *ngIf="sideBar == 'P'" name="profile"></router-outlet>
         </div>
       </div>
     </div>
+
+    <div class="d-md-none bottom-panel" *ngIf="chatBar">
+      <div class="col-12 col-sm-8 mx-auto">
+        <span class="panel-close-btn" (click)="closeBPanel()"><i class="material-icons">close</i></span>
+        <div class="bottom-panel-body">
+          <div class="message-window" *ngIf="chatBar">
+            <router-outlet *ngIf="sideBar == 'Q'" name="message"></router-outlet>
+            <router-outlet *ngIf="sideBar == 'P'" name="profile"></router-outlet>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
     <!-- search classes for students -->
     <div color="primary" class="search-class" *ngIf="stateStudent && showClasses && showSearch">
@@ -382,7 +485,7 @@
 
     <!-- show classes for students -->
     <div [class]="showSearch ? 'row class-main extra-top-margin' : 'row class-main'"
-     *ngIf="stateStudent && showClasses">
+      *ngIf="stateStudent && showClasses">
       <div [class]="chatBar ? 'col-md-8 col-12 class-list' : 'col-12 class-list'">
         <div
           [class]="chatBar ? 'row row-cols-1 row-cols-lg-2 g-0 g-md-3' : 'row row-cols-1 row-cols-md-2 row-cols-lg-3 g-0 g-md-3'">
@@ -449,40 +552,41 @@
                 <div>
                   <span *ngIf="!class.fee" class="more-info-row">
                     <div class="more-info-row">
-                    <a mat-raised-button class="class-data bg-success text-white"
-                      (click)="joinClass(class.docId, userA.uid, class.className, class.teacherName, class.teacherID, 2)">
-                      <span class="material-icons">
-                        mood
-                      </span>
-                      Free Class - Join</a>
+                      <a mat-raised-button class="class-data bg-success text-white"
+                        (click)="joinClass(class.docId, userA.uid, class.className, class.teacherName, class.teacherID, 2)">
+                        <span class="material-icons">
+                          mood
+                        </span>
+                        Free Class - Join</a>
                     </div>
-                    </span>
+                  </span>
                   <span *ngIf="class.fee">
                     <div class="more-info-row">
-                    <a mat-raised-button class="class-data bg-warning" (click)="paidOptions = true">
-                      <span class="material-icons">
-                        monetization_on
-                      </span>
-                      Paid Class - Join</a>
-                    
+                      <a mat-raised-button class="class-data bg-warning" (click)="paidOptions = true">
+                        <span class="material-icons">
+                          monetization_on
+                        </span>
+                        Paid Class - Join</a>
+
                     </div>
                     <div class="more-info-row" *ngIf="paidOptions">
                       <span class="class-data">Fee: {{class.feeAmount.unit}} {{class.feeAmount.amount}}</span>
                       <span class="class-data class-data-main">Payment Methods</span>
 
                       <span>
-                      <button type="button" class="btn btn-secondary class-data">SLIP</button>
-                      <div class="slip-details">
-                        <b>Account No :- </b> {{class.bankAccount.accountNo}} <br>
-                        <b>Branch :- </b> {{class.bankAccount.branch}} <br>
-                        <b>Owner's Name :- </b> {{class.bankAccount.ownerName}} <br>
-                      </div>
-                    </span>
-                      <div class="input-group">                        
-                        <input type="file" accept="image/png,image/jpg,image/jpeg,image/gif" autocomplete="off" 
-                        class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" 
-                        aria-label="Upload" #uploadSlipInput (change)="inputSlipFile($event)">
-                        <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04" (click)="uploadSlip(userA, class.docId, class)">Upload</button>
+                        <button type="button" class="btn btn-secondary class-data">SLIP</button>
+                        <div class="slip-details">
+                          <b>Account No :- </b> {{class.bankAccount.accountNo}} <br>
+                          <b>Branch :- </b> {{class.bankAccount.branch}} <br>
+                          <b>Owner's Name :- </b> {{class.bankAccount.ownerName}} <br>
+                        </div>
+                      </span>
+                      <div class="input-group">
+                        <input type="file" accept="image/png,image/jpg,image/jpeg,image/gif" autocomplete="off"
+                          class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04"
+                          aria-label="Upload" #uploadSlipInput (change)="inputSlipFile($event)">
+                        <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04"
+                          (click)="uploadSlip(userA, class.docId, class)">Upload</button>
                       </div>
                       <p class="text-danger no-slip-text" *ngIf="noSlip">You must upload your slip first!</p>
                       <!-- {{uploadPercent | async}} -->
@@ -563,23 +667,22 @@
               <div class="class-info bookmark-info">
                 <button mat-raised-button color="primary"
                   [routerLink]="['/class', {outlets:{'profile': 'profile/'+[bookmark.teacherID]}}]"
-                  class="teacher-name-btn"
-                  (click)="profileBarEnable(bookmark.docId)" skipLocationChange>
+                  class="teacher-name-btn" (click)="profileBarEnable(bookmark.docId)" skipLocationChange>
                   <span class="material-icons">
                     person_pin
                   </span>
                   Teacher: {{ bookmark.teacherName }}
                 </button>
-                <span class="btn class-data class-data-btn" 
-                [routerLink]="['/class', {outlets:{'bookmark': 'bookmark/'+[bookmark.classid]}}]"
-                (click)="openBookmarkedClass(bookmark.docId)" skipLocationChange>
+                <span class="btn class-data class-data-btn"
+                  [routerLink]="['/class', {outlets:{'bookmark': 'bookmark/'+[bookmark.classid]}}]"
+                  (click)="openBookmarkedClass(bookmark.docId)" skipLocationChange>
                   <span class="material-icons">
                     launch
                   </span>
                   Open
                 </span>
-                <span class="btn btn-danger text-white class-data-mat" 
-                (click)="deleteBookmark(bookmark.docId, userA.uid)">
+                <span class="btn btn-danger text-white class-data-mat"
+                  (click)="deleteBookmark(bookmark.docId, userA.uid)">
                   <span class="material-icons">
                     delete_forever
                   </span>
@@ -632,64 +735,65 @@
     </div>
 
     <!-- Show all Joined classes -->
-    <div [class]="showSearch ? 'row joined-classes class-main extra-top-margin' : 'row joined-classes class-main'" *ngIf="stateStudent && showJoined">
-        <div [class]="chatBar ? 'col-md-8 col-12 class-list' : 'col-12 class-list'">
-          <div
-            [class]="chatBar ? 'row row-cols-1 row-cols-lg-2 g-0 g-md-3' : 'row row-cols-1 row-cols-md-2 row-cols-lg-3 g-0 g-md-3'">
-            <ng-container *ngFor="let joinClass of joinedClasses | async">
-              <div class="" [class]="!joinClass.complete ? 'class-list-items mb-2' : 'class-list-items'">
-                <mat-card class="class-item">
-                  <h4 class="class-name font-2">{{ joinClass.className }}</h4>
-                  <div class="class-info bookmark-info">
-                    <button mat-raised-button color="primary"
-                      [routerLink]="[{outlets:{'profile': 'profile/'+[joinClass.teacherID]}}]"
-                      class="teacher-name-btn"
-                      (click)="profileBarEnable(joinClass.docId)" skipLocationChange>
-                      <span class="material-icons">
-                        person_pin
-                      </span>
-                      Teacher: {{ joinClass.teacherName }}
-                    </button>
-                    <span class="btn class-data class-data-btn" 
+    <div [class]="showSearch ? 'row joined-classes class-main extra-top-margin' : 'row joined-classes class-main'"
+      *ngIf="stateStudent && showJoined">
+      <div [class]="chatBar ? 'col-md-8 col-12 class-list' : 'col-12 class-list'">
+        <div
+          [class]="chatBar ? 'row row-cols-1 row-cols-lg-2 g-0 g-md-3' : 'row row-cols-1 row-cols-md-2 row-cols-lg-3 g-0 g-md-3'">
+          <ng-container *ngFor="let joinClass of joinedClasses | async">
+            <div class="" [class]="!joinClass.complete ? 'class-list-items mb-2' : 'class-list-items'">
+              <mat-card class="class-item">
+                <h4 class="class-name font-2">{{ joinClass.className }}</h4>
+                <div class="class-info bookmark-info">
+                  <button mat-raised-button color="primary"
+                    [routerLink]="[{outlets:{'profile': 'profile/'+[joinClass.teacherID]}}]" class="teacher-name-btn"
+                    (click)="profileBarEnable(joinClass.docId)" skipLocationChange>
+                    <span class="material-icons">
+                      person_pin
+                    </span>
+                    Teacher: {{ joinClass.teacherName }}
+                  </button>
+                  <span class="btn class-data class-data-btn"
                     [routerLink]="[{outlets:{joined: 'joined/' + [joinClass.classid], profile: null}}]"
                     (click)="openBookmarkedClass(joinClass.docId)" skipLocationChange>
-                      <span class="material-icons">
-                        launch
-                      </span>
-                      Open
+                    <span class="material-icons">
+                      launch
                     </span>
-                    <span class="bg-success text-white class-data-mat" *ngIf="joinClass.complete == 2">
-                      <span class="material-icons">
-                        check
-                      </span>
-                      Joined
+                    Open
+                  </span>
+                  <span class="bg-success text-white class-data-mat" *ngIf="joinClass.complete == 2">
+                    <span class="material-icons">
+                      check
                     </span>
-                    <ng-container *ngIf="joinClass.complete == 1">
-                    <span class="bg-danger text-white class-data-mat" matTooltip="Try resubmitting, contact us if the problem persists.">
+                    Joined
+                  </span>
+                  <ng-container *ngIf="joinClass.complete == 1">
+                    <span class="bg-danger text-white class-data-mat"
+                      matTooltip="Try resubmitting, contact us if the problem persists.">
                       <span class="material-icons">
                         close
                       </span>
                       Payment declined
                     </span>
-                    </ng-container>
-                    <span class="cards-waiting-slip"  *ngIf="joinClass.complete == 0">
-                      <span class="material-icons icon0">
-                        hourglass_empty
-                      </span>
-                      <span class="material-icons icon1">
-                        hourglass_bottom
-                      </span>
-                      <span class="material-icons icon2">
-                        hourglass_top
-                      </span>
-                      <p>Waiting for slip approval</p>
+                  </ng-container>
+                  <span class="cards-waiting-slip" *ngIf="joinClass.complete == 0">
+                    <span class="material-icons icon0">
+                      hourglass_empty
                     </span>
-                  </div>
-                </mat-card>
-              </div>
-            </ng-container>
+                    <span class="material-icons icon1">
+                      hourglass_bottom
+                    </span>
+                    <span class="material-icons icon2">
+                      hourglass_top
+                    </span>
+                    <p>Waiting for slip approval</p>
+                  </span>
+                </div>
+              </mat-card>
+            </div>
+          </ng-container>
 
-            <!-- <div class="waiting-bottom-bar">              
+          <!-- <div class="waiting-bottom-bar">              
               <span class="cards-headding">
                 <span class="material-icons icon0">
                   hourglass_empty
@@ -732,33 +836,33 @@
                 </ng-container>
               </div>
             </div> -->
-                    
-            <div class="bookmark-class" *ngIf="showBookmarkClass">
-              <div class="bookmark-details">
-                <router-outlet name="joined"></router-outlet>
-              </div>
+
+          <div class="bookmark-class" *ngIf="showBookmarkClass">
+            <div class="bookmark-details">
+              <router-outlet name="joined"></router-outlet>
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="col-md-4 d-md-block d-none side-panel" *ngIf="chatBar">
-          <div class="side-panel-body">
-            <div class="message-window">
-              <router-outlet *ngIf="sideBar == 'Q'" name="message"></router-outlet>
-              <router-outlet *ngIf="sideBar == 'P'" name="profile"></router-outlet>
-            </div>
+      <div class="col-md-4 d-md-block d-none side-panel" *ngIf="chatBar">
+        <div class="side-panel-body">
+          <div class="message-window">
+            <router-outlet *ngIf="sideBar == 'Q'" name="message"></router-outlet>
+            <router-outlet *ngIf="sideBar == 'P'" name="profile"></router-outlet>
           </div>
         </div>
+      </div>
 
-        <div class="col-12 d-md-none bottom-panel" *ngIf="chatBar">
-          <span class="panel-close-btn" (click)="closeBPanel()"><i class="material-icons">close</i></span>
-          <div class="bottom-panel-body">
-            <div class="message-window" *ngIf="chatBar">
-              <router-outlet *ngIf="sideBar == 'Q'" name="message"></router-outlet>
-              <router-outlet *ngIf="sideBar == 'P'" name="profile"></router-outlet>
-            </div>
+      <div class="col-12 d-md-none bottom-panel" *ngIf="chatBar">
+        <span class="panel-close-btn" (click)="closeBPanel()"><i class="material-icons">close</i></span>
+        <div class="bottom-panel-body">
+          <div class="message-window" *ngIf="chatBar">
+            <router-outlet *ngIf="sideBar == 'Q'" name="message"></router-outlet>
+            <router-outlet *ngIf="sideBar == 'P'" name="profile"></router-outlet>
           </div>
-        </div>   
+        </div>
+      </div>
     </div>
 
 

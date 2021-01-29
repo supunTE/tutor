@@ -42,7 +42,7 @@ export class AcconutService {
   }
 
   getUserClass(user: User){
-    return this.afs.collection<ClassInterface>(`classes`, ref => ref.where('teacherID', '==', user.uid)).valueChanges({idField: 'docId'});
+    return this.afs.collection<ClassInterface>(`classes`, ref => ref.where('main.teacherID', '==', user.uid)).valueChanges({idField: 'docId'});
   }
 
   getEveryClass(){
