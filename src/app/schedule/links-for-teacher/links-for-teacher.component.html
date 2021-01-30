@@ -1,15 +1,58 @@
-<ng-container>
+<ng-container *ngIf="auth.user | async as userA">
     <hr>
     <div class="links-card more-info-row">
       <span class="class-data class-data-main">
         Class Links
       </span>
-      <span class="class-data add-btn">
-        <span class="material-icons">
-          add
-        </span>
-      Add Class
-    </span>
+      <form class="row" [formGroup]="addLinkForm" (ngSubmit)="onLinkSubmit(userA)">
+          <div class="col-md-3 mb-md-2 link-coulmn">
+            <mat-form-field class="link-input-box">
+              <mat-label>Name</mat-label>
+              <input matInput type="text" formControlName="name"
+                placeholder="Class Day 01" required>
+            </mat-form-field>
+            <p class="err-log" *ngIf="addLinkForm.get('name').errors?.minlength">Name must contain more than 3 letters.</p>
+            <p class="err-log" *ngIf="addLinkForm.get('name').errors?.maxlength">Name must not contain more than 20 letters.</p>
+          </div>
+          <div class="col-md-3 mb-md-2 link-coulmn">
+            <mat-form-field class="link-input-box">
+              <mat-label>Link</mat-label>
+              <input matInput type="url" formControlName="link"
+                placeholder="https://class-link" required>
+            </mat-form-field>
+            <p class="err-log" *ngIf="addLinkForm.get('link').errors?.minlength">Link must contain more than 2 letters.</p>
+            <p class="err-log" *ngIf="addLinkForm.get('link').errors?.maxlength">Link must not contain more than 256 letters.</p>
+          </div>
+          <div class="col-md-3 mb-md-2 link-coulmn">
+            <mat-form-field class="link-input-box">
+              <mat-label>Choose a date</mat-label>
+              <input matInput [matDatepicker]="picker" [min]="minRangeDate" [max]="maxRangeDate" formControlName="time" required>
+              <mat-datepicker-toggle matSuffix [for]="picker">
+                <span  matDatepickerToggleIcon class="material-icons">
+                  keyboard_arrow_down
+                </span>
+                <!-- <mat-icon matDatepickerToggleIcon></mat-icon> -->
+              </mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <p class="err-log" *ngIf="addLinkForm.get('time').errors?.invalid">Invalid Date</p>
+          </div>
+          <div class="col-md-3 mb-md-2 link-coulmn">
+            <mat-form-field class="link-input-box">
+              <mat-label>Other</mat-label>
+              <input matInput type="text" formControlName="otherData"
+                placeholder="Please do homeworks before the class.">
+            </mat-form-field>
+          </div>
+          <!-- button mat-raised-button class="btn-primary" type="mx-2 submit"  -->
+          <button class="class-data add-btn" [disabled]="!addLinkForm.valid">
+            <span class="material-icons">
+              add
+            </span>
+          Add Class Link
+        </button>
+      </form>
+      
     <div class="links-row">
       <div class="row row-cols-md-4 row-cols-sm-3 row-cols-md-1 g-4" *ngIf="(linksClass | async)?.length > 0; else linksEmpty">
         <div class="col col-md-3 col-sm-4 col-12 class-link" *ngFor="let item of linksClass | async; let i = index">
@@ -19,11 +62,20 @@
               <p class="card-text link-time">Time - {{item.time.toDate() | date:'hh:mm aa dd.MMM.yyyy'}}</p>
             </div>
   
-            <div class="card-footer  small-scroll">
+            <div class="card-footer">
+              Link:
+              <a href="{{item.link}}" target="blank" matTooltip="Open Class Link" class="footer-btn">
               <span class="material-icons">
                 launch
               </span>
-              <a href="{{item.link}}" target="blank" matTooltip="Class Link">Zoom Link - {{item.link}}</a>
+              Open
+              </a>
+                <span class="footer-btn">
+                <span class="material-icons">
+                  content_copy
+                </span>
+                <span (click)="copyMessage(item.link)" target="blank" matTooltip="Copy Class Link">Copy</span>
+                </span>
             </div>
           </div>
         </div>
@@ -39,6 +91,14 @@
   
     <div class="links-card more-info-row">
       <span class="class-data class-data-main" >Class Documents</span>
+      <span class="class-data add-btn">
+        <span class="material-icons">
+          add
+        </span>
+      Add Document Link
+    </span>
+
+    <div class="links-row">
       <div class="row row-cols-md-4 row-cols-sm-3 row-cols-md-1 g-4" *ngIf="(documentsClass | async)?.length > 0; else docsEmpty">
         <div class="col col-md-3 col-sm-4 col-12 class-link" *ngFor="let item of documentsClass | async; let i = index">
           <div class="card">
@@ -65,6 +125,7 @@
         <h6 class="empty-links">No documents to show</h6>
       </span>
       </ng-template>
+      </div>
     </div>
     <hr>
   </ng-container>

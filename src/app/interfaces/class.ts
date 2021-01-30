@@ -43,6 +43,7 @@ export interface ClassInterface {
 export interface ClassLinksInterface {  
     link: string,
     name: string,
+    otherData: string,
     time: Date,
 }
 

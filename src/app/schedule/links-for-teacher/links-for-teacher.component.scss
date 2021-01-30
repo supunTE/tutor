@@ -7,16 +7,41 @@
 
 .more-info-row .row{
     margin: 0.5em;
-    width: 100%
+    // width: 100%
 }
 
 .more-info-row .row .col{
     margin-top: 0rem;
 }
 
+.link-coulmn{
+    margin: 0;
+}
+
+.link-input-box{
+    width: 100%;
+}
+
+p.err-log {
+    font-size: 0.8em;
+    margin: -10px 0;
+    color: #d50000;
+}
+
 .add-btn{
-    width: 120px;
-    margin: 10px;
+    width: 180px;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    user-select: none;
+    cursor: pointer;
+    margin: 0 20px;
+    transition: 0.4s;
+}
+
+.add-btn:hover{
+    background: none #212529;
+    color: white;
 }
 
 .links-row{
@@ -26,6 +51,21 @@
     align-items: center;
     justify-content: center;
 }
+
+.links-row .card{
+    background: linear-gradient(135deg, #f7f7f759, #f7f7f7bd);
+    border-radius: 20px !important;
+    border-radius: 20px !important;
+    border: 0;
+    overflow: hidden;
+    box-shadow: 2px 2px 20px 0px #8484842e;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    -moz-backdrop-filter: blur(5px);
+    -o-backdrop-filter: blur(5px);
+    -ms-backdrop-filter: blur(5px);
+}
+
 
 .class-data-main{
     background: none #0000007a;
@@ -44,18 +84,39 @@
 
 .card-footer{
     white-space: nowrap;
-    overflow-x: scroll;
+    // overflow-x: scroll;
+    background-color: #dcdcdc61;
+    padding: 0.4rem;
+    border: 0;
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.footer-btn {
+    background: linear-gradient(135deg, #f7f7f759, #f7f7f7bd);
+    font-size: 0.8em;
+    padding: 0.5rem;
+    margin: 0.2em;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    user-select: none;
+    cursor: pointer;
+    box-shadow: 2px 2px 20px 0px #8484842e;
 }
 
 .card-footer a{
-    font-size: 0.8em;
+    // font-size: 0.8em;
+    text-decoration: none;
+    color: #000000DE;
 }
 
 .card-footer .material-icons{
     font-size: 1.4em;
-    float: right;
+    // float: right;
 }
 
 .empty-items{

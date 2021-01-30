@@ -137,6 +137,10 @@ export class AcconutService {
     return this.afs.collection<ClassLinksInterface>(`classes/${cid}/links`).valueChanges();
   }
 
+  addLinksClass(cid, data){
+    return this.afs.collection<ClassLinksInterface>(`classes/${cid}/links`).add(data);
+  }
+
   getDocsInJoinedClass(cid){
     return this.afs.collection<ClassDocsInterface>(`classes/${cid}/documents`).valueChanges();
   }

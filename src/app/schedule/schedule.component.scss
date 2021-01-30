@@ -1,5 +1,6 @@
 @import "../../shared/variable";
 @import "./more-details.scss";
+@import "./schedule-b.scss";
 
 .off-img{    
     width: 100%;
@@ -253,11 +254,11 @@
     top: 0;
     left: 0;
     // background-color: $color-white-blur;
-    backdrop-filter: blur(8.5px);
-    -webkit-backdrop-filter: blur(8.5px);
-    -moz-backdrop-filter: blur(8.5px);
-    -o-backdrop-filter: blur(8.5px);    
-    -ms-backdrop-filter: blur(8.5px);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    -moz-backdrop-filter: blur(5px);
+    -o-backdrop-filter: blur(5px);    
+    -ms-backdrop-filter: blur(5px);
     background: linear-gradient(135deg, rgba(219, 241, 255, 1) 0%, rgba(187, 190, 239, 1) 100%);
     // box-shadow: 2px 2px 20px 0px #8484842e;
     // backdrop-filter: blur(2px);
@@ -280,165 +281,4 @@
     flex-wrap: wrap;
     justify-content: flex-end;
     align-items: center;
-}
-
-
-.side-panel-body{
-    display: flex;
-    height: 65vh;
-    width: 95%;
-    flex-direction: column;
-}
-
-.side-panel .bookmarks{
-    height: 30%;
-    margin-bottom: 10px;
-    background-color: #3e6e9e;
-    padding: 1.2rem;
-}
-
-.side-panel{   
-    padding: 0.2rem;
-    height: 100%;
-    position: fixed;
-    right: calc(var(--bs-gutter-x)/ 1.5);
-}
-
-.side-panel div{
-    // margin-bottom: 10px;
-}
-
-.side-panel .message-window{
-    height: 65vh;
-}
-
-
-.bookmark-class{
-    visibility: visible;
-    transition: 1s, visibility 0s, opacity 1.5s linear;
-    padding: 1.5rem;
-    position: absolute;
-    z-index: 55;
-    opacity: 1;
-    margin-top: 0;
-    width: 100%;
-    overflow-y: scroll;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    background-color: $color-white-blur;
-    backdrop-filter: blur(8.5px);
-    -webkit-backdrop-filter: blur(8.5px);
-    -moz-backdrop-filter: blur(8.5px);
-    -o-backdrop-filter: blur(8.5px);
-    -ms-backdrop-filter: blur(8.5px);
-}
-
-@media screen and (max-width: 768px){
-    .off-img{
-        padding: 4.5rem;
-    }
-
-    .top-bar{
-        height: 5em;
-        overflow-y: scroll;
-        justify-content: normal;
-    }
-
-    .main-btn{
-        margin: 0;
-        padding-right: 0.5em;
-    }
-
-    .schedule-class{
-        padding: 2.5rem 0.5rem 10rem;
-    }
-
-    .circle1{
-        top: 50%;
-        right: -50%;
-    }
-
-    .circle2{
-        bottom: -180%;
-        left: -20%;
-    }
-
-    .circle3{
-        left: -20%;
-        top: -10%;
-    }
-
-    .class-main{
-        margin-top: 5em;
-        margin-bottom: 0;
-        height: calc(90vh - 5em);
-        padding: 1rem 0rem 10rem;
-    }
-
-    .class-main.extra-top-margin{
-        margin-top: 5rem;
-    }    
-    
-    .class-list .info-unhide{
-        max-height: none;
-    }
-
-    .class-list .info-unhide .class-info{
-        margin-top: 2.5rem;
-    }
-
-    .more-close-btn{
-        position: absolute;
-        right: 1.5rem;
-    }
-
-    .side-panel{   
-        padding: 0.2rem;
-        height: 100%;
-        position: relative;
-    }
-
-    .bottom-panel{
-        height: 100vh;
-        padding: 2.5em 1em;
-        width: 100%;
-        overflow: scroll;
-        margin: auto;
-        flex-direction: column;
-        position: fixed;
-        left: 0;
-        top: 0;
-        z-index: 55;
-        background-color: rgb(48 48 48 / 0.8);
-        backdrop-filter: blur(8.5px);
-        -webkit-backdrop-filter: blur(8.5px);
-        -moz-backdrop-filter: blur(8.5px);
-        -o-backdrop-filter: blur(8.5px);
-        -ms-backdrop-filter: blur(8.5px);
-    }  
-
-    .panel-close-btn{
-        color: white;
-        font-size: 2em;
-        float: right;
-    }
-
-    .bottom-panel-body{
-        display: flex;
-        height: 100%;
-        width: 100%;
-        flex-direction: column;
-    }
-
-    .message-window {
-        height: 100%;
-    }
-
-}
-
-@media screen and (max-width: 400px){
-    .off-img{
-        padding: 5.5rem 2.5rem;
-    }
 }

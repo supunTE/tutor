@@ -455,7 +455,7 @@ export class ScheduleComponent implements OnInit {
         this.formValues.moneyAmount = 0;
         this.formValues.moneyUnit = '';
       }
-      console.log(this.formValues.moneyAmount)
+      // console.log(this.formValues.moneyAmount)
       if(this.formValues.classMethod==2){
         this.formValues.classesPerWeek = ''
         this.formValues.weekData = ''
