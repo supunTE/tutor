@@ -360,25 +360,36 @@
         [class]="chatBar ? 'row row-cols-1 row-cols-lg-2 g-0 g-md-3' : 'row row-cols-1 row-cols-md-2 row-cols-lg-3 g-0 g-md-3'">
         <div class="col class-list-items" *ngFor="let class of userClasses | async">
           <mat-card class="class-item" id="{{class.docId}}">
-            <h4 class="class-name font-2">{{ class.main.className }}</h4>
-            <div class="class-info">
-              <span class="class-data">Subject: {{ class.main.subject }}</span>
-              <span class="class-data">Lesson: {{ class.main.lesson }}</span>
-              <span class="class-data">Category: {{ class.main.category }}</span>
-              <span class="class-data">Batch: {{ class.main.batchYear }}</span>
-              <span class="class-data bg-success" *ngIf="!class.main.fee">Free Class</span>
-              <span class="class-data bg-danger text-dark" *ngIf="class.main.fee">Paid Class</span>
-
-              <span
+            <div class="class-name">
+              <span class="class-data fee-tag bg-success" *ngIf="class.main.fee == 'false'">
+                <span class="material-icons">
+                  mood
+                </span>
+                Free Class
+              </span>
+              <span class="class-data fee-tag bg-danger" *ngIf="class.main.fee == 'true'">
+                <span class="material-icons">
+                monetization_on
+              </span>
+              Paid Class
+            </span>
+              <h4 class="class-name-text font-2">{{ class.main.className }}</h4>
+            </div>
+            <span
                 [className]="(moreInfoID == class.docId) ? 'class-data more-info-btn class-data-main' : 'class-data more-info-btn'"
                 (click)="unhide(class.docId)">More
                 <span class="material-icons">
                   keyboard_arrow_down
                 </span>
               </span>
-            </div>
+            <div class="class-info class-info-card small-scroll">
+              <span class="class-data class-subject">Subject: {{ class.main.subject }}</span>
+              <span class="class-data class-lesson">Lesson: {{ class.main.lesson }}</span>
+              <span class="class-data">Category: {{ class.main.category }}</span>
+              <span class="class-data">Batch: {{ class.main.batchYear }}</span>              
+            </div>            
           </mat-card>
-          <div [className]="(moreInfoID == class.docId) ? 'info-unhide' : 'info-hide'">
+          <div @myInsertRemoveTrigger [className]="(moreInfoID == class.docId) ? 'info-unhide' : 'info-hide'">
             <span class="more-close-btn d-block d-md-none" (click)="unhide(class.docId)"><i
                 class="material-icons color-white float-right">close</i></span>
             <div class="class-info">
@@ -390,12 +401,14 @@
                   class="material-icons color-white float-right">close</i></span>
             </div>
             <div class="mat-card mat-focus-indicator more-info">
+              <h4 class="class-name-text font-2">{{ class.main.className }}</h4>
               <div class="more-info-row">
-                <span class="class-data">Duration: {{ class.duration.durationStart }} - {{ class.duration.durationEnd }} ({{class.duration.duration}})</span>
-                <span class="class-data">Classes per week: {{ class.duration.classesPerWeek }}</span>
+                <span class="class-data">Duration: {{ class.duration.durationStart.toDate() | date:'dd.MM.yyyy' }} - {{ class.duration.durationEnd.toDate() | date:'dd.MM.yyyy' }} ({{class.duration.duration}})</span>
               </div>
-              <span class="class-data class-data-main" matTooltip="Floating Classes, without a weekly running schedule.">Event Schedule Method</span>
+              <span class="class-data class-data-main" *ngIf="class.main.classMethod==2" matTooltip="Floating Classes, without a weekly running schedule.">Event Schedule Method</span>
+  
               <div class="more-info-row" *ngIf="class.main.classMethod==1">
+                <span class="class-data">Classes per week: {{ class.duration.classesPerWeek }}</span>
                 <span class="class-data class-data-main">Class times (Weekday Routine Method)</span>
                 <span class="class-data" *ngIf="class.mondayData">Monday: {{class.week.mondayTime}}</span>
                 <span class="class-data" *ngIf="class.tuesdayData">Tuesday: {{class.week.tuesdayTime}}</span>
@@ -404,12 +417,14 @@
                 <span class="class-data" *ngIf="class.fridayData">Friday: {{class.week.fridayTime}}</span>
                 <span class="class-data" *ngIf="class.saturdayData">Saturday: {{class.week.saturdayTime}}</span>
                 <span class="class-data" *ngIf="class.sundayData">Sunday: {{class.week.sundayTime}}</span>
+                <hr>
               </div>
-              <hr>
+              
+              <app-links-for-teacher [linksData]="{uid: userA.uid, cid: class.docId, classData: class}"></app-links-for-teacher>
               <div class="more-info-row">
                 <span class="other-details">
                   <h6><b>Other Details</b></h6>
-                  {{class.mainotherDetails}}
+                  {{class.main.otherDetails}}
                 </span>
               </div>
               <div class="more-info-row functions-row">

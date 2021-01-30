@@ -1,0 +1,71 @@
+<ng-container>
+    <hr>
+    <div class="links-card more-info-row">
+      <span class="class-data class-data-main">
+        Class Links
+      </span>
+      <span class="class-data add-btn">
+        <span class="material-icons">
+          add
+        </span>
+      Add Class
+    </span>
+    <div class="links-row">
+      <div class="row row-cols-md-4 row-cols-sm-3 row-cols-md-1 g-4" *ngIf="(linksClass | async)?.length > 0; else linksEmpty">
+        <div class="col col-md-3 col-sm-4 col-12 class-link" *ngFor="let item of linksClass | async; let i = index">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{item.name | titlecase}}</h5>
+              <p class="card-text link-time">Time - {{item.time.toDate() | date:'hh:mm aa dd.MMM.yyyy'}}</p>
+            </div>
+  
+            <div class="card-footer  small-scroll">
+              <span class="material-icons">
+                launch
+              </span>
+              <a href="{{item.link}}" target="blank" matTooltip="Class Link">Zoom Link - {{item.link}}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ng-template #linksEmpty>
+        <span class="empty-items">
+        <img src="../../../../assets/images/graphics/link.svg" class="empty-img1" alt="">
+        <h6 class="empty-links">No links to show</h6>
+        </span>
+      </ng-template>
+      </div>
+    </div>
+  
+    <div class="links-card more-info-row">
+      <span class="class-data class-data-main" >Class Documents</span>
+      <div class="row row-cols-md-4 row-cols-sm-3 row-cols-md-1 g-4" *ngIf="(documentsClass | async)?.length > 0; else docsEmpty">
+        <div class="col col-md-3 col-sm-4 col-12 class-link" *ngFor="let item of documentsClass | async; let i = index">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{item.name | titlecase}}</h5>
+              <p class="card-text link-time">Description - {{ item.description }}</p>
+              <p class="card-text link-time">Added on - {{item.time.toDate() | date:'hh:mm aa dd.MMM.yyyy'}}</p>
+            </div>
+  
+            <div class="card-footer  small-scroll">
+              <span class="material-icons">
+                launch
+              </span>
+              <a href="{{item.link}}" target="blank" matTooltip="Document Link">Link - {{item.link}}</a>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <ng-template #docsEmpty>
+        <span class="empty-items">
+        <img src="../../../../assets/images/graphics/blank_canvas.svg" class="empty-img2" alt="">
+        <h6 class="empty-links">No documents to show</h6>
+      </span>
+      </ng-template>
+    </div>
+    <hr>
+  </ng-container>
+  

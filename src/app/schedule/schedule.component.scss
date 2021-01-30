@@ -213,7 +213,7 @@
 }
 
 .class-main{
-    padding: 1rem 2rem 10rem;
+    padding: 3.5rem 2rem 10rem;
     margin-top: 5em;
     height: calc(90vh - 5em);
     width:  100%;
@@ -252,13 +252,27 @@
     height: 100vh;
     top: 0;
     left: 0;
-    background-color: $color-white-blur;
+    // background-color: $color-white-blur;
     backdrop-filter: blur(8.5px);
     -webkit-backdrop-filter: blur(8.5px);
     -moz-backdrop-filter: blur(8.5px);
-    -o-backdrop-filter: blur(8.5px);
+    -o-backdrop-filter: blur(8.5px);    
     -ms-backdrop-filter: blur(8.5px);
+    background: linear-gradient(135deg, rgba(219, 241, 255, 1) 0%, rgba(187, 190, 239, 1) 100%);
+    // box-shadow: 2px 2px 20px 0px #8484842e;
+    // backdrop-filter: blur(2px);
+    // -webkit-backdrop-filter: blur(2px);
+    // -moz-backdrop-filter: blur(2px);
+    // -o-backdrop-filter: blur(2px);
+    // -ms-backdrop-filter: blur(2px);
+    // color: black;
+    // z-index: 17;
 }
+
+.class-list .info-unhide .class-name-text{
+    text-transform: uppercase;
+    margin: 10px;
+}   
 
 .class-list .info-unhide .class-info{
     display: flex;

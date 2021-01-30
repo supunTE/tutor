@@ -1,19 +1,75 @@
 mat-card.class-item{
-    background-color: $color-lash-blur;
-    border-bottom: 2px solid $color-primary;
-    border-radius: 10px;
+    // background-color: $color-lash-blur;
+    // border-bottom: 2px solid $color-primary;
+    background: linear-gradient(135deg, #f7f7f759, #f7f7f7bd);
+    padding: 40px 25px 50px;
+    margin: 10px;
+    border-radius: 20px;
+    box-shadow: 2px 2px 20px 0px #8484842e;
     transition: 1s;
-    backdrop-filter: blur(8.5px);
-    -webkit-backdrop-filter: blur(8.5px);
-    -moz-backdrop-filter: blur(8.5px);
-    -o-backdrop-filter: blur(8.5px);
-    -ms-backdrop-filter: blur(8.5px);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    -moz-backdrop-filter: blur(5px);
+    -o-backdrop-filter: blur(5px);
+    -ms-backdrop-filter: blur(5px);
+}
+
+.class-item .class-name{
+    background: linear-gradient(135deg, #f7f7f759, #f7f7f7bd);
+    padding: 10px 15px;
+    border-radius: 20px;
+    box-shadow: 2px 2px 20px 0px #8484842e;
+    height: 120px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    -moz-backdrop-filter: blur(5px);
+    -o-backdrop-filter: blur(5px);
+    -ms-backdrop-filter: blur(5px);
+}
+
+.class-item .class-name .class-name-text{
+    font-size: 1.5rem;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+}
+
+.class-item .class-name .fee-tag{
+    color: #fff;
+    position: absolute;
+    top: -20px;
+    left: -15px;
+    padding: 0.4em 0.8em;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.class-item .class-name .fee-tag .material-icons{
+    font-size: 24px;
+    margin-right: 5px;
 }
 
 .class-info{
+    
+}
+
+.class-info.class-info-card{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    // overflow-x: scroll;
     justify-content: flex-start;
     align-items: center;
 }
@@ -24,15 +80,38 @@ mat-card.class-item{
 }
 
 .class-data{
-    padding: 0.4em;
-    margin: 0.5em;
+    padding: 0.4em 0.8em;
+    margin: 0.3em;
     font-size: 80%;
-    border-radius: 5px;
+    border-radius: 20px;
+    white-space: nowrap;
+    background: linear-gradient(135deg, #f7f7f759, #f7f7f7bd);
+    border-radius: 20px;
+    box-shadow: 2px 2px 20px 0px #8484842e;
     // border-bottom: 2px solid black;
+    // border: 1px solid #00000029;
+    text-transform: capitalize;
     display: flex;
+    // align-items: center;
+    // justify-content: center;
+    // text-align: center;
     flex-direction: row;
     color: black;
-    background-color: #ffffff;
+    // background-color: #ffffff;
+}
+
+.class-info-card .class-data{
+    flex: 1;
+}
+
+.class-data.class-subject{
+    flex: 1 1 100% !important;
+    // background: none #c2c2c2;
+}
+
+.class-data.class-lesson{
+    flex: 1 1 100% !important;
+    // background: none #c2c2c2;
 }
 
 .class-data-btn{
@@ -57,10 +136,18 @@ mat-card.class-item{
 .class-data.more-info-btn{
     cursor: pointer;
     transition: 0.4s;
+    position: absolute;
+    bottom: 175px;
+    right: 10px;
+    background: none white;
+    width: 100px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
 }
 
 .class-data.more-info-btn:hover{
-    background-color: #212529;    
+    background: none #212529;    
     color: white;
 }
 
@@ -78,8 +165,13 @@ mat-card.class-item{
 .more-info{
     width: 100%;
     padding: 10px;
-    margin-top: 3rem;
+    margin-top: 2rem;
     background-color: $color-lash-blur;
+    background: linear-gradient(135deg, #f7f7f759, #f7f7f7bd);
+    padding: 40px 25px 50px;
+    // margin: 10px;
+    border-radius: 20px !important;
+    box-shadow: 2px 2px 20px 0px #8484842e;
     backdrop-filter: blur(8.5px);
     -webkit-backdrop-filter: blur(8.5px);
     -moz-backdrop-filter: blur(8.5px);
@@ -91,7 +183,7 @@ mat-card.class-item{
 
 .more-info-btn.class-data-main{
     transition: 0.5s;
-    background-color: #00000038;
+    background: none #00000038;
     color: white;
 }
 
@@ -124,9 +216,9 @@ mat-card.class-item{
 }
 
 .more-info .class-data-main{
-    background-color: #0000007a;
+    background: none #0000007a;
     color: white;
-    width: 100%;
+    // width: 100%;
 }
 
 .more-info .other-details{

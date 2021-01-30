@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=News+Cycle&display=swap');
 @import '~@angular/material/theming';
 @include mat-core();
 
@@ -8,7 +8,7 @@
 }
 
 .font-2{
-  font-family: 'Staatliches', cursive;
+  font-family: 'News Cycle', sans-serif;
 }
 
 .small-scroll::-webkit-scrollbar {
@@ -42,6 +42,17 @@
 .large-scroll::-webkit-scrollbar-thumb:hover {
   background: #888888; 
 }
+
+.bg-success{
+  background: none #4caf50 !important;
+}
+// #087f23
+
+.bg-danger{
+  background: none #f44336 !important;
+}
+// #ba000d
+
 
 button:focus{
   outline: -webkit-focus-ring-color auto 0px;

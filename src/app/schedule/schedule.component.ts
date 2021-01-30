@@ -431,7 +431,7 @@ export class ScheduleComponent implements OnInit {
 
    getUserClasses(user){
      this.userClasses = this.accountService.getUserClass(user);
-     console.log(this.userClasses)
+    //  console.log(this.userClasses)
    }
 
    async getValues(user){
@@ -450,7 +450,7 @@ export class ScheduleComponent implements OnInit {
       const teacherName = user.displayName;
       const teacherID = user.uid;
       this.formValues = this.scheduleForm.value;
-      console.log(this.formValues.classType)
+      // console.log(this.formValues.classType)
       if(this.formValues.classType == 'false'){
         this.formValues.moneyAmount = 0;
         this.formValues.moneyUnit = '';
