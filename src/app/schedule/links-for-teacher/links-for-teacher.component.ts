@@ -20,6 +20,7 @@ import { AcconutService } from 'src/app/services/acconut.service';
     link: string;
     minRangeDate; maxRangeDate;
     todayDate: Date;
+    classId: string;
 
   
     @Input('linksData')
@@ -30,6 +31,7 @@ import { AcconutService } from 'src/app/services/acconut.service';
     addLinkForm = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
       link: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(256)]),
+      date: new FormControl('', Validators.required),
       time: new FormControl('', Validators.required),
       otherData: new FormControl(''),
     })
@@ -60,6 +62,21 @@ import { AcconutService } from 'src/app/services/acconut.service';
       return this.todayDate;
     }
   
+    onLinkSubmit(user){
+      const formValues = this.addLinkForm.value;
+
+      const dataValues: ClassLinksInterface = {
+        link: formValues.link,
+        uid: user.uid,
+        name: formValues.name,
+        otherData: formValues.otherData,
+        date: formValues.date,
+        time: formValues.time,
+        nowTime: new Date()
+      }
+      this.accountService.addLinksClass(this.classId, dataValues)
+    }
+
     pickEndDate(){
       this.todayDate = new Date();  
       this.todayDate.setMonth(this.todayDate.getMonth() + 3)
@@ -71,6 +88,7 @@ import { AcconutService } from 'src/app/services/acconut.service';
       //   this.joinedClass = dt;
       //   console.log(dt)
       // })
+      this.classId = data.cid
       this.linksClass = this.accountService.getLinksInJoinedClass(data.cid)
       this.documentsClass = this.accountService.getDocsInJoinedClass(data.cid)
     }

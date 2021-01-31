@@ -23,10 +23,10 @@
             <p class="err-log" *ngIf="addLinkForm.get('link').errors?.minlength">Link must contain more than 2 letters.</p>
             <p class="err-log" *ngIf="addLinkForm.get('link').errors?.maxlength">Link must not contain more than 256 letters.</p>
           </div>
-          <div class="col-md-3 mb-md-2 link-coulmn">
+          <div class="col-lg-2 col-md-3 mb-md-2 link-coulmn">
             <mat-form-field class="link-input-box">
-              <mat-label>Choose a date</mat-label>
-              <input matInput [matDatepicker]="picker" [min]="minRangeDate" [max]="maxRangeDate" formControlName="time" required>
+              <mat-label>Date</mat-label>
+              <input matInput [matDatepicker]="picker" [min]="minRangeDate" [max]="maxRangeDate" formControlName="date" required>
               <mat-datepicker-toggle matSuffix [for]="picker">
                 <span  matDatepickerToggleIcon class="material-icons">
                   keyboard_arrow_down
@@ -37,7 +37,13 @@
             </mat-form-field>
             <p class="err-log" *ngIf="addLinkForm.get('time').errors?.invalid">Invalid Date</p>
           </div>
-          <div class="col-md-3 mb-md-2 link-coulmn">
+          <div class="col-lg-2 col-md-3 mb-md-2 link-coulmn">
+            <mat-form-field class="link-input-box">
+              <mat-label>Time</mat-label>
+              <input matTimepicker mode="24h" formControlName="time" placeholder="Please select time..." required>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-2 col-md-12 mb-md-2 link-coulmn">
             <mat-form-field class="link-input-box">
               <mat-label>Other</mat-label>
               <input matInput type="text" formControlName="otherData"
@@ -58,8 +64,8 @@
         <div class="col col-md-3 col-sm-4 col-12 class-link" *ngFor="let item of linksClass | async; let i = index">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">{{item.name | titlecase}}</h5>
-              <p class="card-text link-time">Time - {{item.time.toDate() | date:'hh:mm aa dd.MMM.yyyy'}}</p>
+              <h5 class="card-title" *ngIf="item.name">{{item.name | titlecase}}</h5>
+              <p class="card-text link-time" *ngIf="item.time && item.date">Time - {{item.time.toDate() | date:'hh:mm aa'}} {{item.date.toDate() | date:'dd.MMM.yyyy'}}</p>
             </div>
   
             <div class="card-footer">

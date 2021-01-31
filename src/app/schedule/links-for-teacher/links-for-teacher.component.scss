@@ -6,8 +6,11 @@
 }
 
 .more-info-row .row{
-    margin: 0.5em;
-    // width: 100%
+    margin: 1.5em 0.5em 1em;
+}
+
+.links-row .row{
+    width: 100%
 }
 
 .more-info-row .row .col{
@@ -37,9 +40,14 @@ p.err-log {
     cursor: pointer;
     margin: 0 20px;
     transition: 0.4s;
+    border: 0;
 }
 
-.add-btn:hover{
+.add-btn[disabled]{
+    background: rgba(0, 0, 0, 0.12)
+}
+
+.add-btn:not([disabled]):hover{
     background: none #212529;
     color: white;
 }
@@ -128,6 +136,7 @@ p.err-log {
 
 .empty-items h6{
     font-size: 0.8em;
+    margin-bottom: 4em;
 }
 
 .empty-img1{

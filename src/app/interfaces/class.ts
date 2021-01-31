@@ -42,9 +42,12 @@ export interface ClassInterface {
 
 export interface ClassLinksInterface {  
     link: string,
+    uid:string,
     name: string,
     otherData: string,
+    date: Date,
     time: Date,
+    nowTime: Date
 }
 
 export interface ClassDocsInterface {  
